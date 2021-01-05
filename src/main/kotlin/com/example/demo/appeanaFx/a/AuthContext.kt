@@ -2,7 +2,7 @@ package AppeanaFx.a
 
 import tornadofx.AuthContext
 
-interface AuthContext {
+private interface AuthContext {
     var authContext: AuthContext
     fun main() {
         authContext.run {

@@ -1,4 +1,4 @@
-package AppeanaFx.c
+package com.example.demo.appeanaFx.c
 
 import tornadofx.Component
 

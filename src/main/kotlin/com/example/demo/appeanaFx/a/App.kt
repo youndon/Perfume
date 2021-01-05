@@ -1,14 +1,10 @@
-package AppeanaFx.a
+package com.example.demo.appeanaFx.a
 
-import javafx.beans.property.SimpleObjectProperty
-import jdk.jfr.Frequency
 import tornadofx.*
 import tornadofx.App
-import java.awt.image.BufferedImage
 
-class App {
-    val appProperty = SimpleObjectProperty<App>()
-    var app by appProperty
+private class App {
+    lateinit var app :App
 
     init {
         app.run {

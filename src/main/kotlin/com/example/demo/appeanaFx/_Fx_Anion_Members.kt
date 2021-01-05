@@ -1,12 +1,10 @@
-//package AppeanaFx
+//package com.example.demo.appeanaFx
 //
-//import javafx.scene.control.*
-//import javafx.scene.image.Image
-//import javafx.util.Duration
+//
 //import tornadofx.*
 //import tornadofx.osgi.impl.*
 //
-//fun fsefesf(){
+//private fun some(){
 //
 //    RESIZE_TYPE_KEY
 //    TRANSITIONING_PROPERTY
@@ -16,94 +14,75 @@
 //    viewModelBundle
 //    launch<App>()
 //    ChangeListener<Any> { observable, oldValue, newValue -> }
-//    Point2D(1.0)
-//    Point3D(1.0)
-//    tornadofx.TableViewResizeCallback { param: TableView.ResizeFeatures<out Any>? -> null}
-//    tornadofx.TreeTableViewResizeCallback { param: TreeTableView.ResizeFeatures<out Any>? -> null}
-//    Vector2D(1.0)
-//    Vector3D(1.0)
-//    addStageIcon(Image(""))
-////    alert()
+//    TableViewResizeCallback { }
+//    TreeTableViewResizeCallback { }
+//    addStageIcon()
+//    alert()
 //    beforeShutdown{}
-////    bindStringProperty()
-////    booleanBinding()
-////    booleanListBinding()
-//    booleanProperty()
+//    bindStringProperty()
+//    booleanBinding()
+//    booleanListBinding()
 //    box(null)
 //    c("",1.0)
 //    chooseDirectory {  }
 //    chooseFile("",arrayOf())
 //    command {  }
-//    confirm("","", ButtonType.NEXT, ButtonType.CLOSE,null,null) {}
+//    confirm() {}
 //    confirmation("")
 //    cssclass()
 //    csselement()
 //    cssid()
 //    cssproperty<Any> { any -> "" }
 //    csspseudoclass()
-////    doubleBinding()
-//    doubleProperty()
+//    doubleBinding()
 //    dumpStylesheets()
 //    error("")
-////    find<>()
-////    floatBinding()
-//    floatProperty()
+//    find<>()
+//    floatBinding()
 //    getDefaultConverter<Any>()
 //    importStylesheet<Stylesheet>()
 //    information("")
 //    insets()
-//    intProperty()
-////    integerBinding()
-////    listProperty()
+//    integerBinding()
 //    loadFont("",1)
 //    loadJsonArray("")
 //    loadJsonModel<JsonModel>("")
 //    loadJsonObject("")
-////    longBinding()
-//    longProperty(1L)
-////    mapProperty()
+//    longBinding()
 //    mixin { }
 //    multi("")
-////    nonNullObjectBinding()
-////    objectBinding()
-//    objectProperty(null)
-////    tornadofx.observable()
-//    observableFloatArrayOf()
-//    observableIntArrayOf()
-//    observableListOf<Any>()
-//    observableMapOf<Any,Any>()
-//    observableSetOf<Any>()
-////    opcr()
+//    nonNullObjectBinding()
+//    objectBinding()
+//    observable()
+//    opcr()
 //    parallelTransition {  }
-//    pause(Duration.INDEFINITE)
-//    tornadofx.point(1,1)
-////    populateTree()
-////    property()
-////    proxyprop()
-////    proxypropDouble()
+//    pause()
+//    point(1,1)
+//    populateTree()
+//    property()
+//    proxyprop()
+//    proxypropDouble()
 //    reloadStylesheetsOnFocus()
 //    reloadViewsOnFocus()
 //    removeStylesheet<Stylesheet>()
-////    resizeCall()
+//    resizeCall()
 //    runAsync { }
 //    runLater {}
 //    sequentialTransition {  }
-////    setInScope()
-////    setProperty()
-//    setStageIcon(Image(""))
+//    setInScope()
+//    setStageIcon()
 //    singleAssign<Any>()
-////    stringBinding()
-//    stringProperty()
+//    stringBinding()
 //    task {  }
 //    terminateAsyncExecutors(1L)
 //    timeline { }
-////    tornadofx.validator()
+//    validator()
 //    warning("")
 //    weak("")
 //
 //    /** tornadofx.osgi.impl: */
-////    fxBundle
-////    fxBundleContext
+//    fxBundle
+//    fxBundleContext
 //    getBundleId<Any>()
 //
 //    /** tornadofx.adapters: */

@@ -3,7 +3,7 @@ package AppeanaFx.a
 import javafx.scene.Node
 import tornadofx.AnchorPaneConstraint
 
-class AnchorPaneConstraint {
+private class AnchorPaneConstraint {
     lateinit var anchorPaneConstraint:AnchorPaneConstraint
     init {
         AnchorPaneConstraint()

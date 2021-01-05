@@ -1,8 +1,8 @@
-package AppeanaFx.a
+package com.example.demo.appeanaFx.a
 
 import tornadofx.AbstractField
 
-abstract class AbstractField {
+private abstract class AbstractField {
     lateinit var abstractField:AbstractField
     init {
         //

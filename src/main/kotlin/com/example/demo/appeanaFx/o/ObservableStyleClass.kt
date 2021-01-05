@@ -2,7 +2,7 @@ package AppeanaFx.o
 
 import tornadofx.ObservableStyleClass
 
-class ObservableStyleClass {
+private class ObservableStyleClass {
     lateinit var observableStyleClass: ObservableStyleClass
     init {
         observableStyleClass.run {
