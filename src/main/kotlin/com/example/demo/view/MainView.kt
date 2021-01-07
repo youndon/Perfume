@@ -1,54 +1,35 @@
 package com.example.demo.view
 
-import com.sun.org.apache.xpath.internal.operations.Bool
-import javafx.beans.property.SimpleBooleanProperty
-import javafx.beans.property.SimpleStringProperty
-import javafx.geometry.Insets
-import javafx.geometry.Orientation
-import javafx.geometry.Pos
-import javafx.scene.Parent
-import javafx.scene.control.TreeItem
 import javafx.scene.input.KeyCode
-import javafx.scene.layout.Border
-import javafx.scene.layout.Priority
-import javafx.scene.paint.Color
-import javafx.scene.text.FontPosture
-import javafx.util.Duration
+import net.objecthunter.exp4j.Expression
+import net.objecthunter.exp4j.ExpressionBuilder
+import sun.security.x509.Extension
 import tornadofx.*
-import tornadofx.getValue
-import tornadofx.setValue
-import java.awt.Color.BLUE
-import java.awt.List
-import java.util.*
 
-class MainView : View("MainView!!") {
-    lateinit var dd : Fieldset
+open class MainView() : View("MainView!!") {
+    override val root = form {
+        setPrefSize(400.0, 500.0)
+        val input = textfield() {
+            setOnKeyPressed {
+                when(it.code) {
+                    KeyCode.ENTER -> text = try {
+                        ExpressionBuilder(text).build().evaluate().toString()
+                    } catch (ex: Exception) {
+                        "ops!!"
+                    }
+                }
+            }
+        }
+        buttonbar { button("pro").action { tooltip("coming soon") };button("(").action { input.text+="(" };button(")").action { input.text+=")" };button("C").action { input.text = "" } }
+        buttonbar { button("7").action { input.text+="7" };button("8").action { input.text+="8" };button("9").action { input.text+="9" };button("/").action { input.text+="/" } }
+        buttonbar { button("4").action { input.text+="4" };button("5").action { input.text+="5" };button("6").action { input.text+="6" };button("*").action { input.text+="*" } }
+        buttonbar { button("1").action { input.text+="1" };button("2").action { input.text+="2" };button("3").action { input.text+="3" };button("-").action { input.text+="-" } }
+        buttonbar { button("0").action { input.text+="0" };button(".").action { input.text+="." };
+            button("=").action { input.text = try {
+                     ExpressionBuilder(input.text).build().evaluate().toString()
+                           } catch (ex: Exception) {
+            "ops!!"
+        } };button("+").action { input.text+="+" } }
 
-  override val root = vbox {
-        setPrefSize(400.0, 400.0)
-      dd.form
     }
-
-
 }
-
-
-
-
-
-
-
-
-/* setOnMouseDragged {
-                    this.translateX = it.sceneX
-                    this.translateY = it.screenY
-                }*/
-/*   setOnKeyPressed {
-               when (it.code) {
-                   KeyCode.LEFT -> translateX-=10
-                   KeyCode.RIGHT -> translateX+=10
-                   KeyCode.UP -> translateY-=10
-                   KeyCode.DOWN -> translateY+=10
-               }
-           }*/
-

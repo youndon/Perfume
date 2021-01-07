@@ -37,7 +37,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             addTo(pane())
 //            addDecorator() // todo
             addChildIfPossible(this)
-            addStageIcon(Image(""))
+            addStageIcon(Image("Amazing.jpg"))
             addClass("")
             addPseudoClass("")
             addViewsWhen {viewProvider: ViewProvider -> true}
