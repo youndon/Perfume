@@ -29,34 +29,45 @@ import java.nio.channels.SelectableChannel
 
 
 @Suppress("NON_EXHAUSTIVE_WHEN")
-open class MainView() : View("MainView!!") {
+open class MainView() : View() {
 
     override val root = form {
         setPrefSize(400.0, 500.0)
         primaryStage.isResizable = false
-
+        style {
+            backgroundColor += Color.DARKSLATEGRAY
+        }
         val input = textfield() {
             alignment = Pos.CENTER_RIGHT
             prefHeight = 70.0
-            font = Font.font(30.0)
+            font = Font.font("Ubuntu Light",40.0)
+
+            style {
+                textFill = Color.WHITE
+                backgroundColor += Color.DARKSLATEGRAY
+            }
 
             // to filter type of input(Numbers & MathematicsSymbols).
             textProperty().onChange {
                     if (!text.matches("\\d*".toRegex())) {
-                        text = text.replace("[^\\d+*/\\-().^%!]".toRegex(), "")
+                        text = text.replace("[^\\d+*/\\-().^%e]".toRegex(), "")
                     }
                 }
         }
         val result = label("0") {
+            useMaxWidth = true
             prefHeight = 70.0
-            font = Font.font(30.0)
-            }
+            paddingRight = 10.0
+            alignment = Pos.CENTER_RIGHT
+            textFill = Color.WHITE
+            font = Font.font("Ubuntu Light",40.0)
+        }
 
 
-        setOnKeyPressed {
+       setOnKeyPressed {
             when (it.code) {
                 KeyCode.ENTER ->  try {
-                    result.text =ExpressionBuilder(input.text).build().evaluate().toString()
+                    result.text =ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
                     input.clear()
                 } catch (ex: Exception) {
                    result.text = "0"
@@ -65,22 +76,23 @@ open class MainView() : View("MainView!!") {
             }
         }
 
-        buttonbar { button("pro").action { tooltip("coming soon") };button("(").action { input.text+="(" };button(")").action { input.text+=")" };button("C").action { input.clear() } }
+        buttonbar { button("pro").action { tooltip("coming soon") };button("(").action { input.text+="(" };button(")").action { input.text+=")" };button("C").action { input.clear();result.text="0" } }
         buttonbar { button("7").action { input.text+="7" };button("8").action { input.text+="8" };button("9").action { input.text+="9" };button("/").action { input.text+="/" } }
         buttonbar { button("4").action { input.text+="4" };button("5").action { input.text+="5" };button("6").action { input.text+="6" };button("*").action { input.text+="*" } }
         buttonbar { button("1").action { input.text+="1" };button("2").action { input.text+="2" };button("3").action { input.text+="3" };button("-").action { input.text+="-" } }
         buttonbar { button("0").action { input.text+="0" };button(".").action { input.text+="." };
             button("=").action {
-                 try {
-                     result.text =ExpressionBuilder(input.text).build().evaluate().toString()
-                    input.clear()
-                } catch (ex: Exception) {
-                     result.text = "0"
-                     input.clear()
-                 }
-            };button("+").action { input.text+="+" } }
-
-
+                try {
+                        result.text =ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
+                        input.clear()
+                    } catch (ex: Exception) {
+                        result.text = "0"
+                        input.clear()
+                    }
+                }
+            ;button("+").action { input.text+="+" }
+        }
     }
+
 }
 
