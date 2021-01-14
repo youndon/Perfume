@@ -6,8 +6,8 @@
         <compilerSettings />
         <compilerArguments>
           <option name="jvmTarget" value="1.8" />
-          <option name="languageVersion" value="1.2" />
-          <option name="apiVersion" value="1.2" />
+          <option name="languageVersion" value="1.4" />
+          <option name="apiVersion" value="1.4" />
           <option name="pluginOptions">
             <array />
           </option>
@@ -17,7 +17,6 @@
           <option name="errors">
             <ArgumentParseErrors />
           </option>
-          <option name="coroutinesWarn" value="true" />
         </compilerArguments>
       </configuration>
     </facet>
@@ -25,7 +24,7 @@
       <configuration />
     </facet>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -54,13 +53,13 @@
     <orderEntry type="library" name="Maven: no.tornado:tornadofx:1.7.17" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.json:javax.json-api:1.1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.2.60" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.2.60" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.2.60" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.2.60" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.2.60" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.30-M1" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.4.30-M1" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.30-M1" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test:1.2.60" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-common:1.2.60" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.30-M1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test:1.4.30-M1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test-common:1.4.30-M1" level="project" />
   </component>
 </module>

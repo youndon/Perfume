@@ -6,13 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="tornadofx-empty-project" />
         <module name="tornadofx-empty-maven-project" />
         <module name="Perfume" />
+        <module name="tornadofx-empty-project" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Perfume" target="1.5" />
+      <module name="Perfume" target="8" />
       <module name="tornadofx-empty-maven-project" target="1.5" />
       <module name="tornadofx-empty-project" target="1.5" />
     </bytecodeTargetLevel>
