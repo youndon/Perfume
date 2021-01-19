@@ -28,22 +28,17 @@ import java.awt.event.ActionEvent
 import java.beans.EventHandler
 import java.nio.channels.SelectableChannel
 
+class Appeana_Calculator() : View() {
 
-@Suppress("NON_EXHAUSTIVE_WHEN")
-open class Appeana_Calculator() : View() {
-
-    override val root = form {
+    override val root = vbox {
         setPrefSize(400.0, 500.0)
         primaryStage.isResizable = false
-        primaryStage.initStyle(StageStyle.UTILITY)
-        style {
-            backgroundColor += Color.TRANSPARENT
-        }
+
+        //
         val input = textfield() {
             alignment = Pos.CENTER_RIGHT
             prefHeight = 70.0
             font = Font.font("Ubuntu Light",40.0)
-
             style {
                 textFill = Color.WHITE
                 backgroundColor += Color.DARKSLATEGRAY
@@ -56,16 +51,20 @@ open class Appeana_Calculator() : View() {
                 }
             }
         }
+
         val result = label("0") {
-            useMaxWidth = true
-            prefHeight = 70.0
-            paddingRight = 10.0
-            alignment = Pos.CENTER_RIGHT
-            textFill = Color.WHITE
-            font = Font.font("Ubuntu Light",40.0)
+            minHeight = 70.0
+            style {
+                useMaxWidth = true
+                paddingRight = 10.0
+                alignment = Pos.CENTER_RIGHT
+                font = Font.font("Ubuntu Light",33.0)
+                textFill = Color.WHITE
+                backgroundColor += Color.DARKSLATEGRAY
+            }
         }
 
-
+        //
         setOnKeyPressed {
             when (it.code) {
                 KeyCode.ENTER ->  try {
@@ -78,23 +77,43 @@ open class Appeana_Calculator() : View() {
             }
         }
 
-        buttonbar { button("pro").action { tooltip("coming soon") };button("(").action { input.text+="(" };button(")").action { input.text+=")" };button("C").action { input.clear();result.text="0" } }
-        buttonbar { button("7").action { input.text+="7" };button("8").action { input.text+="8" };button("9").action { input.text+="9" };button("/").action { input.text+="/" } }
-        buttonbar { button("4").action { input.text+="4" };button("5").action { input.text+="5" };button("6").action { input.text+="6" };button("*").action { input.text+="*" } }
-        buttonbar { button("1").action { input.text+="1" };button("2").action { input.text+="2" };button("3").action { input.text+="3" };button("-").action { input.text+="-" } }
-        buttonbar { button("0").action { input.text+="0" };button(".").action { input.text+="." };
-            button("=").action {
-                try {
-                    result.text =ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
-                    input.clear()
-                } catch (ex: Exception) {
-                    result.text = "0"
-                    input.clear()
+        // the buttons:
+        listOf(listOf("Av","(",")","C"),
+            listOf("7","8","9","/"),
+            listOf("4","5","6","*"),
+            listOf("1","2","3","-"),
+            listOf("0",".","=","+")).
+        forEach {
+            buttonbar {
+                style {
+                    paddingRight=20
+                    paddingBottom=7
+                    backgroundColor += Color.DARKSLATEGRAY
+                }
+                it.toList().forEach {
+                    button(it.toString()){
+                      setPrefSize(100.0,100.0)
+                        style {
+                            font = Font.font("Ubuntu Light",23.0)
+                            textFill = Color.BLACK
+                        }
+                        action {
+                            if (it=="="){
+                                try {
+                                    result.text =ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
+                                    input.clear()
+                                } catch (ex: Exception) {
+                                    result.text = "0"
+                                    input.clear()
+                                }
+                            } else {
+                                input.text+=it
+                            }
+                        }
+                    }
                 }
             }
-            ;button("+").action { input.text+="+" }
         }
     }
 
 }
-

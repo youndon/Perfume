@@ -1,11 +1,5 @@
 package com.example.demo.view
 
-import javafx.scene.Parent
-import javafx.scene.image.Image
-import javafx.scene.image.ImageView
-import javafx.scene.input.KeyCombination
-import javafx.stage.Modality
-import javafx.stage.StageStyle
 import tornadofx.*
 
 class MainView :View(){
