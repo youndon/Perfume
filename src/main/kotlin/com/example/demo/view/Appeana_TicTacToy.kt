@@ -3,26 +3,20 @@ package com.example.demo.view
 import javafx.scene.text.Font
 import tornadofx.*
 
-fun main() {
-        launch<MainApp>()
+fun main() { launch<MainApp>() }
 
-}
-class MainApp: App(MainView::class)
+class MainApp: App(Appeana_TicTacToy::class)
 
-class Appeana_TicTacToy:View()  {
+class Appeana_TicTacToy: View()  {
     var cc = "❌"
-    var cont = 0
         override val root = vbox {
-            if (cont==9){
-                // refresh
-            }
-            (0..2).forEach { _ ->
+           (0..2).forEach { _ ->
                 buttonbar {
                     (0..2).forEach { _ ->
                         button {
                             setPrefSize(100.0,100.0)
                             font = Font.font("Ubuntu",35.0)
-                            action {
+                            setOnMouseClicked {
                                 if (text.isEmpty()){
                                     if (cc=="❌"){
                                         text=cc
@@ -31,7 +25,6 @@ class Appeana_TicTacToy:View()  {
                                         text=cc
                                         cc="❌"
                                     }
-                                    cont+=1
                                 }
                             }
                         }

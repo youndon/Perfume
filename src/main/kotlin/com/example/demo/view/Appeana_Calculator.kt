@@ -1,6 +1,5 @@
 package com.example.demo.view
 
-import AppeanaFx.s.Selectable
 import javafx.application.Application
 import javafx.beans.value.ChangeListener
 import javafx.geometry.Pos
@@ -14,8 +13,7 @@ import kotlin.math.absoluteValue
 import javafx.beans.value.ObservableValue
 import javafx.geometry.Insets
 import javafx.scene.Scene
-import javafx.scene.layout.Border
-import javafx.scene.layout.BorderStroke
+import javafx.scene.layout.*
 
 import javafx.scene.layout.TilePane
 import javafx.scene.text.TextAlignment
@@ -106,6 +104,9 @@ class Appeana_Calculator() : View() {
                                     result.text = "0"
                                     input.clear()
                                 }
+                            } else if (it=="C"){
+                                result.text = "0"
+                                input.clear()
                             } else {
                                 input.text+=it
                             }
