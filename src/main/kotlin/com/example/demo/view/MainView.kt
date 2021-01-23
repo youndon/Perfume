@@ -1,63 +1,61 @@
 package com.example.demo.view
 
+import javafx.scene.media.Media
+import javafx.scene.media.MediaPlayer
 import javafx.scene.text.Font
+import javafx.util.Duration
 import tornadofx.*
+import java.awt.Button
+import java.nio.file.Path
+import java.nio.file.Paths
+import kotlin.concurrent.thread
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
-class MainView :View() {
+fun main() {  launch<MainTic>()  }
+
+class MainTic:App(MainView::class)
+class MainView:View() {
+    private val song = Media(Paths.get("Coldplay-Flags.mp3").toUri().toString())
+    private val mediaPlayer = MediaPlayer(song)
     override val root = form {
-        setPrefSize(200.0, 200.0)
-        /*
-        with(primaryStage){
-            fullScreenExitHint // return the hint when full screen is active.
-            isFullScreen
-            isAlwaysOnTop // for make the window always visible on top.
-            isResizable
-            fullScreenExitKeyCombination // TODO: 14.01.2021
-            title
-            icons
-            isIconified
-            isMaximized // for toke all the screen size when is open
-            modality
-            style
-            maxHeight
-            maxWidth
-            minHeight
-            minWidth
-        }
-         */
-        var cc = "❌"
-        var cont = 0
-        var dd = (0..8).toList()
-        datagrid(dd) {
-           minHeight=300.0
-           minWidth=300.0
-            cellWidth = 80.0
-            cellHeight = 80.0
-            cellCache {
-                button {
-                   useMaxWidth=true
-                    useMaxHeight=true
-                    font = Font.font("Ubuntu", 33.0)
-                    if (cont == 8) {
-                        dd.forEach {
-
-                        }
-                    }
-                    setOnMouseClicked {
-                        if (text.isEmpty()) {
-                            if (cc == "❌") {
-                                text = cc
-                                cc = "Ｏ"
-                            } else if (cc == "Ｏ") {
-                                text = cc
-                                cc = "❌"
-                            }
-                            cont += 1
-                        }
+        setPrefSize(500.0,100.0)
+        mediaPlayer.isAutoPlay=true
+        mediaPlayer.volume=0.0
+        mediaPlayer.cycleCount=1
+        mediaPlayer.balance=0.0
+        mediaPlayer.rate= 1.0
+        mediaPlayer.currentRate
+        mediaPlayer.bufferProgressTime
+        mediaPlayer.startTime= Duration.seconds(0.0)
+        mediaPlayer.stopTime= song.duration
+        mediaPlayer.seek(Duration.seconds(50.0))
+        mediaPlayer.setOnPlaying {
+            title = "${song.metadata["artist"].toString()}-${song.metadata["title"].toString()}"
+            text ("") {
+                thread {
+                    (0..song.duration.toSeconds().toInt()).forEach {
+                        text = (it.toDouble()).toString()
+                        Thread.sleep(1000)
                     }
                 }
             }
+            progressbar {
+                setPrefSize(400.0,1.0)
+                thread {
+                    (0..song.duration.toSeconds().toInt()).forEach { it ->
+                        progress = it.toDouble()/song.duration.toSeconds().toInt()
+                        Thread.sleep(1000)
+                    }
+                }
+            }
+        }
 
+        button("done").action {
+        }
+        button("dispose").action {
+            mediaPlayer.dispose()
         }
     }
+
 }

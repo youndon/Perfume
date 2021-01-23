@@ -26,7 +26,7 @@ import java.awt.event.ActionEvent
 import java.beans.EventHandler
 import java.nio.channels.SelectableChannel
 
-class Appeana_Calculator() : View() {
+class CalculatorView() : View() {
 
     override val root = vbox {
         setPrefSize(400.0, 500.0)

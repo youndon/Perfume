@@ -1,6 +1,6 @@
 package AppeanaFx.i
 
-import tornadofx.Controller
+import tornadofx.*
 import tornadofx.InternalWindow
 
 class InternalWindow {
@@ -10,7 +10,7 @@ class InternalWindow {
             this.overlay
             this.fillOverlay()
             this.close()
-//            this.open()
+            this.open(find(View::class),this)
         }
     }
 }

@@ -2,7 +2,7 @@ package AppeanaFx.f
 
 import tornadofx.Fieldset
 
-class FieldSet {
+class Fieldset {
     lateinit var fieldset: Fieldset
     init {
         fieldset.run {

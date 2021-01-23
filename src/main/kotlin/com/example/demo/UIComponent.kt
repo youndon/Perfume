@@ -42,7 +42,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             addPseudoClass("")
             addViewsWhen {viewProvider: ViewProvider -> true}
             applyCss()
-            app
+            app.run {
+                /**/
+            }
             autosize()
             arc()
             accordion()
@@ -252,7 +254,8 @@ private class UI(override val root: Parent) :UIComponent() { init {
             lookupAll("")
             line()
             loadConfig()
-            log
+            log.run {
+            }
             loadFXML<Node>()
             loadFont("",1)
             loadJsonArray("")
@@ -398,7 +401,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             onHover {  }
 
             // p.
-            parent
+            parent.run {
+
+            }
             parentToLocal(0.0,0.0)
             parentProperty()
             properties
@@ -411,7 +416,23 @@ private class UI(override val root: Parent) :UIComponent() { init {
             path()
             polygon()
             polyline()
-            primaryStage
+            primaryStage.apply{
+                fullScreenExitHint // return the hint when full screen is active.
+                isFullScreen
+                isAlwaysOnTop // for make the window always visible on top.
+                isResizable
+                fullScreenExitKeyCombination // TODO: 14.01.2021
+                title
+                icons
+                isIconified
+                isMaximized // for toke all the screen size when is open
+                modality
+                style
+                maxHeight
+                maxWidth
+                minHeight
+                minWidth
+            }
             param<Fragment>()
             params
             paramsProperty
@@ -487,7 +508,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
 //            stringBinding() // todo
             shortcut(""){}
             shortpress(true) {}
-            scope
+            scope.run {
+
+            }
             savable
             savableWhen { needsLayoutProperty()}
             subscribedEvents
@@ -602,7 +625,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             // w.
             whenVisible { }
             wrapIn(parent)
-            workspace
+            workspace.run {
+
+            }
             whenCreated { }
             whenDeleted { }
             whenRefreshed { }

@@ -1,6 +1,7 @@
 package AppeanaFx.v
 
 import tornadofx.ValidationContext
+import tornadofx.observable
 
 class ValidationContext {
     lateinit var validationContext: ValidationContext
@@ -11,11 +12,11 @@ class ValidationContext {
             this.valid
             this.validators
 //            this.addValidator() // todo
-            this.error()
-            this.info()
-            this.success()
+            this.error("")
+            this.info("")
+            this.success("")
             this.validate()
-            this.warning()
+            this.warning("")
         }
 //        validationContext.Validator()
     }
