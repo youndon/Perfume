@@ -1,7 +1,6 @@
 package com.example.demo.app
 
-import com.example.demo.view.AudioPlayerView
-import com.example.demo.view.MainView
+import com.example.demo.view.Appeana_AudioPlayer
 import tornadofx.App
 
-class MyApp :App(AudioPlayerView::class)
+class MyApp :App(Appeana_AudioPlayer::class)
