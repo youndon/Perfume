@@ -1,4 +1,4 @@
-package AppeanaFx.h
+package com.example.demo.appeanaFx.h
 
 import tornadofx.HttpClientEngine
 

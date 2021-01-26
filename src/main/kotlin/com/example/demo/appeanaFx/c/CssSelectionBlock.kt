@@ -8,12 +8,12 @@ class CssSelectionBlock {
         cssSelectionBlock.run {
             this.log
             this.selections
-//            this.and()
-//            this.child()
-//            this.contains()
-//            this.mix()
-//            this.next()
-//            this.sibling()
+            this.and("") {}
+            this.child(""){}
+            this.contains(""){}
+            this.mix(cssSelectionBlock)
+            this.next(""){}
+            this.sibling(""){}
         }
     }
 }

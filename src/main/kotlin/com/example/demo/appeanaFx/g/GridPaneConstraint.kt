@@ -1,9 +1,12 @@
 package AppeanaFx.g
 
+import javafx.scene.Node
 import tornadofx.GridPaneConstraint
+import tornadofx.UIComponent
 
 class GridPaneConstraint {
     lateinit var gridPaneConstraint: GridPaneConstraint
+    lateinit var node: Node
     init {
         gridPaneConstraint.run {
             this.columnIndex
@@ -18,7 +21,7 @@ class GridPaneConstraint {
             this.vAlignment
             this.vGrow
             this.fillHeightWidth(true)
-//            this.applyToNode() // todo
+            this.applyToNode(node) // todo
             this.columnRowIndex(1,1)
         }
     }

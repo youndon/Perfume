@@ -1,9 +1,12 @@
 package AppeanaFx.d
 
 import tornadofx.DataGrid
+import tornadofx.Fragment
+import tornadofx.UIComponent
+import tornadofx.View
 
 class DataGrid {
-    lateinit var dataGrid: DataGrid<Any>
+    lateinit var dataGrid: DataGrid<View>
     init {
         dataGrid.run {
             this.cellCache
@@ -12,7 +15,7 @@ class DataGrid {
             this.cellFactory
             this.cellFactoryProperty
             this.cellFormat
-            this.cellFormat {  }
+            this.cellFormat { }
             this.cellFormatProperty
             this.cellFragment
             this.cellFragmentProperty

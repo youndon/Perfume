@@ -1,5 +1,7 @@
 package AppeanaFx.k
 
+import javafx.animation.KeyValue
+import javafx.beans.value.WritableValue
 import tornadofx.KeyFrameBuilder
 
 class KeyFrameBuilder {
@@ -10,7 +12,7 @@ class KeyFrameBuilder {
             this.keyValues
             this.name
 //            this.keyvalue()
-//            this.plusAssign()
+//            this.plusAssign() // +=
             this.setOnFinished {  }
         }
     }

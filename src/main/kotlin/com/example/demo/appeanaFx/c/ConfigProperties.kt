@@ -7,16 +7,15 @@ class ConfigProperties {
     init {
         configProperties.run {
             this.configurable
-//            this.boolean()
-//            this.int()
-//            this.double()
-//            this.string()
-//            this.set()
-//            this.save()
-//            this.jsonArray()
-//            this.jsonModel()
-//            this.jsonModels()
-//            this.jsonObject()
+            this.boolean("")
+            this.int("")
+            this.double("")
+            this.string("")
+            this.set(Pair("",1))
+            this.save()
+            this.jsonArray("")
+//            this.jsonModel("") // TODO: 1/26/21
+            this.jsonObject("")
         }
     }
 

@@ -6,10 +6,10 @@ class InterceptorListener {
     lateinit var interceptorListener:InterceptorListener
     init {
         interceptorListener
-//                .run {
+//            .run {
 //            this.context
 //            this.tracker
-//            this.serviceChanged()
+//            this.serviceChanged() // todo some libraries is missing
 //        }
     }
 }

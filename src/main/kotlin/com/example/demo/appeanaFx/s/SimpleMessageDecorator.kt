@@ -2,7 +2,7 @@ package AppeanaFx.s
 
 import tornadofx.SimpleMessageDecorator
 
-class SimpleMessageDecorator {
+class  SimpleMessageDecorator {
     lateinit var simpleMessageDecorator: SimpleMessageDecorator
     init {
         simpleMessageDecorator.run {

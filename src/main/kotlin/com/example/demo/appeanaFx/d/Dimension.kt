@@ -8,11 +8,11 @@ class Dimension {
         dimension.run {
             this.units
             this.value
-//            this.div()
-//            this.minus()
-//            this.plus()
-//            this.rem()
-//            this.times()
+            this.div(1)
+            this.minus(1)
+            this.plus(1)
+            this.rem(1)
+            this.times(1)
             this.unaryMinus()
             this.unaryPlus()
         }

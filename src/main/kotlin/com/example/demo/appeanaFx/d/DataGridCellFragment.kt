@@ -2,7 +2,7 @@ package AppeanaFx.d
 
 import tornadofx.DataGridCellFragment
 
-abstract class DataGridCellFragment {
+abstract class DataGridCellFragment<T> {
     lateinit var dataGridCellFragment: DataGridCellFragment<*>
     init {
         dataGridCellFragment.run {

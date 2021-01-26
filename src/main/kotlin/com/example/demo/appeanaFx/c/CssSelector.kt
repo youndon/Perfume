@@ -1,6 +1,7 @@
 package AppeanaFx.c
 
 import tornadofx.CssSelector
+import tornadofx.CssSubRule
 
 class CssSelector {
     lateinit var cssSelector: CssSelector
@@ -8,7 +9,7 @@ class CssSelector {
         cssSelector.run {
             this.rule
             this.simpleRender()
-//            this.strings()
+            this.strings(listOf(),CssSubRule.Relation.DESCENDANT)
         }
     }
 }

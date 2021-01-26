@@ -8,8 +8,8 @@ class KeyboardRow {
         keyboardRow.run {
             this.keys
             this.keyboard
-            this.key { }
-            this.spacer()
+            this.key("","",1,1,1){ it }
+            this.spacer(1,1)
             this.toJSON()
         }
     }

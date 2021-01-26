@@ -7,7 +7,6 @@ class Configurable {
     init {
         configurable.run {
             this.config
-//            this.configCharset
             this.configPath
             this.loadConfig()
         }

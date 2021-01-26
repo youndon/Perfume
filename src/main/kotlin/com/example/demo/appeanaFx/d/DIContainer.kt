@@ -5,6 +5,6 @@ import tornadofx.DIContainer
 interface DIContainer {
      var dIContainer: DIContainer
     fun main(){
-//        dIContainer.getInstance()
+        dIContainer.getInstance(this::class)
     }
 }

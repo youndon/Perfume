@@ -1,9 +1,11 @@
 package AppeanaFx.l
 
+import javafx.scene.Node
 import tornadofx.LayoutDebugger
 
 class LayoutDebugger {
     lateinit var layoutDebugger: LayoutDebugger
+    lateinit var node : Node
     init {
         layoutDebugger.run {
             this.clickHandler
@@ -18,6 +20,6 @@ class LayoutDebugger {
             this.selectedNode
             this.stackpane
         }
-//        layoutDebugger.NodeTreeItem()
+        layoutDebugger.NodeTreeItem(LayoutDebugger.NodeContainer(node))
     }
 }

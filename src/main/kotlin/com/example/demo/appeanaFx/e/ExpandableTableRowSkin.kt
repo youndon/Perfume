@@ -5,8 +5,7 @@ import tornadofx.ExpandableTableRowSkin
 class ExpandableTableRowSkin {
     lateinit var expandableTableRowSkin: ExpandableTableRowSkin<*>
     init {
-        expandableTableRowSkin
-                .run {
+        expandableTableRowSkin.run {
             this.expanded
             this.expander
             this.tableRow

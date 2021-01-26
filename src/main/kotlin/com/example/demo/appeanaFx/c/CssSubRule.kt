@@ -2,7 +2,7 @@ package AppeanaFx.c
 
 import tornadofx.CssSubRule
 
-class CssSubRule {
+private class CssSubRule {
     lateinit var cssSubRule: CssSubRule
     init {
         cssSubRule.run {

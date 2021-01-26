@@ -6,7 +6,7 @@ class JsonBuilder {
     lateinit var jsonBuilder: JsonBuilder
     init {
         jsonBuilder.run {
-//            this.add()
+            this.add("","")
             this.build()
         }
     }

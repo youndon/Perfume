@@ -5,11 +5,11 @@ import tornadofx.HttpClientRequest
 class HttpClientRequest {
     lateinit var httpClientRequest: HttpClientRequest
     init {
-        httpClientRequest
-//                .run {
+        httpClientRequest.run {
+            this.engine
 //            this.client
-//            this.engine
 //            this.request
-//        }
+            this.method
+        }
     }
 }
