@@ -1,14 +1,17 @@
 package AppeanaFx.s
 
+import javafx.beans.property.SimpleStringProperty
 import tornadofx.SingleAssign
+import tornadofx.find
 import kotlin.reflect.KProperty
 
 interface SingleAssign {
      var singleAssign: SingleAssign<Int>
-    fun main(){
+
+    fun some(){
         singleAssign.run {
-//            this.getValue() // todo
-            this.isInitialized()
+//            this.isInitialized
+//            this.getValue("") // todo
 //            this.setValue() // todo
         }
     }

@@ -645,9 +645,6 @@ private class UI(override val root: Parent) :UIComponent() { init {
             queryAccessibleAttribute(AccessibleAttribute.BOUNDS)
             quadcurve { }
 
-
-
-
         }
     }
 }

@@ -26,6 +26,10 @@ import java.awt.event.ActionEvent
 import java.beans.EventHandler
 import java.nio.channels.SelectableChannel
 
+fun main() {
+    launch<CalculatorApp>()
+}
+class CalculatorApp:App(CalculatorView::class)
 class CalculatorView() : View() {
 
     override val root = vbox {
@@ -94,6 +98,7 @@ class CalculatorView() : View() {
                         style {
                             font = Font.font("Ubuntu Light",23.0)
                             textFill = Color.BLACK
+                            backgroundRadius += CssBox(10.px,10.px,10.px,10.px)
                         }
                         action {
                             if (it=="="){

@@ -9,3 +9,4 @@ class SmartResize {
 //        smartResize.requestResize() // todo
     }
 }
+

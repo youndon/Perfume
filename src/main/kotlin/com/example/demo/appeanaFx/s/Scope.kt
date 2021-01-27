@@ -1,6 +1,7 @@
 package AppeanaFx.s
 
 import tornadofx.Scope
+import tornadofx.View
 import tornadofx.set
 
 class Scope {
@@ -9,7 +10,7 @@ class Scope {
         scope.run {
             this.hasActiveWorkspace
             this.workspace
-//            this.set() todo
+//            this.set() // todo
             this.workspace(workspace)
             this.deregister()
             this.invoke()

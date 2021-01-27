@@ -7,7 +7,6 @@ interface TornadoFXColumn {
     fun main(){
         tornadoFXColumn.run {
             this.column
-            this
             this.maxWidth
             this.maxWidthProperty
             this.minWidth

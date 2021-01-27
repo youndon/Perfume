@@ -10,7 +10,7 @@ class TableViewEditModel {
             this.selectedItemDirty
             this.selectedItemDirtyState
             this.tableView
-            this.enableDirtyTracking()
+            this.enableDirtyTracking(true)
             this.getDirtyState("")
             this.isDirty("")
             this.commitSelected()
