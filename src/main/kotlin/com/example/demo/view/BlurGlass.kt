@@ -1,7 +1,6 @@
-package com.example.demo.app
+package com.example.demo.view
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
-import javafx.application.Platform
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.EventHandler

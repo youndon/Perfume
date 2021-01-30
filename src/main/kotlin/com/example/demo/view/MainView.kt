@@ -3,6 +3,7 @@ package com.example.demo.view
 import com.example.demo.app.Styles
 import com.sun.scenario.effect.ImageData
 import javafx.geometry.Pos
+import javafx.scene.Parent
 import javafx.scene.control.Button
 import javafx.scene.image.Image
 import javafx.scene.layout.BackgroundSize
@@ -38,20 +39,6 @@ fun main() {  launch<MainTic>()  }
 class MainTic:App(MainView::class)
 
 class MainView:View() {
-    override val root = vbox {
-        setPrefSize(300.0,300.0)
-        button {
-            setPrefSize(100.0,60.0)
-            style {
-//                backgroundImage += URL(Paths.get("coolicons-feature-card.png").toUri().toString()).toURI()
-//                backgroundPosition += BackgroundPosition.DEFAULT
-//                backgroundSize += BackgroundSize.DEFAULT
-//                backgroundRepeat += Pair(BackgroundRepeat.NO_REPEAT,BackgroundRepeat.NO_REPEAT)
-                backgroundRadius += CssBox(50.0.px,50.0.px, 50.0.px,50.0.px)
-                backgroundInsets
-                backgroundColor
-            }
-        }
-    }
-
+    override val root: Parent
+        get() = TODO("Not yet implemented")
 }

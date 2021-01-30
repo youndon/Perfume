@@ -15,7 +15,7 @@ class BrowserModel(address:String):ViewModel(){
 }
 class BrowserView :View(){
     private var webView = webview()
-    var browserModel = BrowserModel("http://www.HD.com")
+    var browserModel = BrowserModel("http://www.duckduckgo.com")
     override val root = gridpane {
         row {
             hbox {
@@ -27,6 +27,9 @@ class BrowserView :View(){
                 }
                 textfield {
                     textProperty().bindBidirectional(browserModel.url)
+                    action {
+                        webView.engine.load(browserModel.url.value)
+                    }
                 }
                 button("search").action {
                     webView.engine.load(browserModel.url.value)
@@ -36,6 +39,8 @@ class BrowserView :View(){
         row {
             children.add(webView)
            webView.engine.load(browserModel.url.value)
+            useMaxHeight=true
+            useMaxWidth=true
 
         }
     }
