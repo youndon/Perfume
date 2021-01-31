@@ -1,8 +1,10 @@
 package com.example.demo.javaFx
 
+import com.example.demo.app.Styles
 import javafx.animation.Interpolator
 import javafx.css.PseudoClass
 import javafx.event.Event
+import javafx.event.EventHandler
 import javafx.event.EventType
 import javafx.geometry.Orientation
 import javafx.geometry.Point2D
@@ -11,6 +13,7 @@ import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
 import javafx.scene.control.TreeItem
 import javafx.scene.image.Image
+import javafx.scene.input.Mnemonic
 import javafx.stage.Modality
 import javafx.stage.StageStyle
 import javafx.util.Duration
@@ -18,6 +21,7 @@ import tornadofx.*
 import tornadofx.osgi.ViewProvider
 import tornadofx.osgi.addViewsWhen
 import tornadofx.osgi.impl.*
+import javax.swing.text.html.StyleSheet
 
 private class UI(override val root: Parent) :UIComponent() { init {
         with(root){
@@ -30,9 +34,6 @@ private class UI(override val root: Parent) :UIComponent() { init {
             accessibleRoleDescriptionProperty()
             accessibleText
             accessibleTextProperty()
-//            addEventFilter() // todo
-//            addEventHandler() // todo
-//            addStylesheet() // todo
             add(this)
             addTo(pane())
 //            addDecorator() // todo
@@ -43,7 +44,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             addViewsWhen {viewProvider: ViewProvider -> true}
             applyCss()
             app.run {
-                /**/
+                this
             }
             autosize()
             arc()
@@ -56,9 +57,12 @@ private class UI(override val root: Parent) :UIComponent() { init {
             baselineOffset
             blendMode
             blendModeProperty()
-            boundsInLocal
+            boundsInLocal.run {
+                this
+            }
             boundsInLocalProperty()
-            boundsInParent
+            boundsInParent.run {
+            }
             boundsInParentProperty()
             bindClass("".observable())
             buildEventDispatchChain(null)
@@ -79,7 +83,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             box("...")
 
             // c.
-            c("#ffff")
+            c("#ffff") // color.
             childrenUnmodifiable
             cache("") { parent }
             cacheProperty()
@@ -87,7 +91,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             cacheHintProperty()
             clip
             clipProperty()
-            clipboard
+            clipboard.run {
+                this
+            }
             contentBias
             cursor
             cursorProperty()
@@ -102,7 +108,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             close()
             closeable
             closeableWhen { needsLayoutProperty()}
-            config
+            config.run {
+                this
+            }
             configPath
             contextmenu()
             confirm("","", ButtonType.APPLY, ButtonType.CANCEL,null, "") {}
@@ -164,7 +172,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             focusedProperty()
             findAll<Fragment>()
             find<Fragment>()
-            fxmlLoader
+            fxmlLoader.run {
+                this
+            }
             fxml<Node>()
             fxid<Node>()
 //            fxBundle // todo
@@ -172,7 +182,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             forwardWorkspaceActions(this@UI)
 //            floatBinding() // todo
             fragment<Fragment>()
-            fiveDigits
+            fiveDigits.run {
+                this
+            }
             fieldset()
             field()
             flowpane()
@@ -183,7 +195,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             // h.
             heading
             headingProperty
-            hostServices
+            hostServices.run {
+                this
+            }
             hgrow
             hasProperties()
             hoverProperty()
@@ -255,6 +269,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             line()
             loadConfig()
             log.run {
+                this
             }
             loadFXML<Node>()
             loadFont("",1)
@@ -280,7 +295,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             mnemonicTarget()
             move(Duration.ONE, Point2D.ZERO)
             modalStage
-            messages
+            messages.run {
+                this
+            }
             menubutton()
             menubar()
             mixin { }
@@ -295,88 +312,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
 //            nonNullObjectBinding() // todo
 
             // o.
-            onContextMenuRequested
-            onContextMenuRequestedProperty()
-            onDragDetected
-            onDragDetectedProperty()
-            onDragDone
-            onDragDoneProperty()
-            onDragDropped
-            onDragDroppedProperty()
-            onDragEntered
-            onDragEnteredProperty()
-            onDragExited
-            onDragExitedProperty()
-            onDragOver
-            onDragOverProperty()
-            onInputMethodTextChanged
-            onInputMethodTextChangedProperty()
-            onKeyPressed
-            onKeyPressedProperty()
-            onKeyReleased
-            onKeyReleasedProperty()
-            onKeyTyped
-            onKeyTypedProperty()
-            onMouseClicked
-            onMouseClickedProperty()
-            onMouseDragged
-            onMouseDraggedProperty()
-            onMouseDragEntered
-            onMouseDragEnteredProperty()
-            onMouseDragExited
-            onMouseDragExitedProperty()
-            onMouseDragOver
-            onMouseDragOverProperty()
-            onMouseDragReleased
-            onMouseDragReleasedProperty()
-            onMouseMoved
-            onMouseMovedProperty()
-            onMouseEntered
-            onMouseEnteredProperty()
-            onMouseExited
-            onMouseExitedProperty()
-            onMousePressed
-            onMousePressedProperty()
-            onMouseReleased
-            onMouseReleasedProperty()
-            onRotate
-            onRotateProperty()
-            onRotationFinished
-            onRotationFinishedProperty()
-            onRotationStarted
-            onRotationStartedProperty()
-            onTouchPressed
-            onTouchPressedProperty()
-            onScroll
-            onScrollProperty()
-            onScrollFinished
-            onScrollFinishedProperty()
-            onScrollStarted
-            onScrollStartedProperty()
-            onSwipeDown
-            onSwipeDownProperty()
-            onSwipeLeft
-            onSwipeLeftProperty()
-            onSwipeRight
-            onSwipeRightProperty()
-            onSwipeUp
-            onSwipeUpProperty()
-            onTouchMoved
-            onTouchMovedProperty()
-            onTouchReleased
-            onTouchReleasedProperty()
-            onTouchStationary
-            onTouchStationaryProperty()
-            onZoom
-            onZoomProperty()
-            onZoomFinished
-            onZoomFinishedProperty()
-            onZoomStarted
-            onZoomStartedProperty()
-            onDock()
-            onDockListeners
-            onUndock()
-            onUndockListeners
+
             opacity
             opacityProperty()
             onDoubleClick {  }
@@ -402,7 +338,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
 
             // p.
             parent.run {
-
+                this
             }
             parentToLocal(0.0,0.0)
             parentProperty()
@@ -451,9 +387,9 @@ private class UI(override val root: Parent) :UIComponent() { init {
             populateTree<String>(TreeItem(""),{ TreeItem() },{null})
 
             // r.
-            requestLayout()
             rotate
             rotationAxis
+            requestLayout()
             rotationAxisProperty()
             relocate(0.0,0.0)
             removeEventFilter<Event>(EventType.ROOT) {}
@@ -491,13 +427,168 @@ private class UI(override val root: Parent) :UIComponent() { init {
             scaleZ
             scaleZProperty()
 //            scatterchart() // todo
-            scene
+            scene.run {
+                root
+                rootProperty()
+                accelerators
+                antiAliasing
+                addEventFilter(EventType(""), EventHandler {  })
+                addEventHandler(EventType(""), EventHandler {  })
+                addMnemonic(Mnemonic(null,null))
+                addStylesheet(Styles::class)
+                camera
+                cameraProperty()
+                fill
+                fillProperty()
+                height
+                heightProperty()
+                width
+                widthProperty()
+                mnemonics
+                nodeOrientation
+                nodeOrientationProperty()
+                properties
+                snapshot(null)
+                startDragAndDrop()
+                startFullDrag()
+                stylesheets
+                userAgentStylesheet
+                userAgentStylesheetProperty()
+                userData
+                window
+                windowProperty()
+                x
+                xProperty()
+                y
+                yProperty()
+                onContextMenuRequested
+                onContextMenuRequestedProperty()
+                onDragDetected
+                onDragDetectedProperty()
+                onDragDone
+                onDragDoneProperty()
+                onDragDropped
+                onDragDroppedProperty()
+                onDragEntered
+                onDragEnteredProperty()
+                onDragExited
+                onDragExitedProperty()
+                onDragOver
+                onDragOverProperty()
+                onInputMethodTextChanged
+                onInputMethodTextChangedProperty()
+                onKeyPressed
+                onKeyPressedProperty()
+                onKeyReleased
+                onKeyReleasedProperty()
+                onKeyTyped
+                onKeyTypedProperty()
+                onMouseClicked
+                onMouseClickedProperty()
+                onMouseDragged
+                onMouseDraggedProperty()
+                onMouseDragEntered
+                onMouseDragEnteredProperty()
+                onMouseDragExited
+                onMouseDragExitedProperty()
+                onMouseDragOver
+                onMouseDragOverProperty()
+                onMouseDragReleased
+                onMouseDragReleasedProperty()
+                onMouseMoved
+                onMouseMovedProperty()
+                onMouseEntered
+                onMouseEnteredProperty()
+                onMouseExited
+                onMouseExitedProperty()
+                onMousePressed
+                onMousePressedProperty()
+                onMouseReleased
+                onMouseReleasedProperty()
+                onRotate
+                onRotateProperty()
+                onRotationFinished
+                onRotationFinishedProperty()
+                onRotationStarted
+                onRotationStartedProperty()
+                onTouchPressed
+                onTouchPressedProperty()
+                onScroll
+                onScrollProperty()
+                onScrollFinished
+                onScrollFinishedProperty()
+                onScrollStarted
+                onScrollStartedProperty()
+                onSwipeDown
+                onSwipeDownProperty()
+                onSwipeLeft
+                onSwipeLeftProperty()
+                onSwipeRight
+                onSwipeRightProperty()
+                onSwipeUp
+                onSwipeUpProperty()
+                onTouchMoved
+                onTouchMovedProperty()
+                onTouchReleased
+                onTouchReleasedProperty()
+                onTouchStationary
+                onTouchStationaryProperty()
+                onZoom
+                onZoomProperty()
+                onZoomFinished
+                onZoomFinishedProperty()
+                onZoomStarted
+                onZoomStartedProperty()
+                onDock()
+                onDockListeners
+                onUndock()
+                onUndockListeners
+                setOnContextMenuRequested {  }
+                setOnDragDetected {  }
+                setOnDragDone {  }
+                setOnDragDropped {  }
+                setOnDragEntered {  }
+                setOnDragExited {  }
+                setOnDragOver {  }
+                setOnInputMethodTextChanged {  }
+                setOnKeyPressed {  }
+                setOnKeyReleased {  }
+                setOnKeyTyped {  }
+                setOnMouseClicked {  }
+                setOnMouseDragged {  }
+                setOnMouseDragEntered {  }
+                setOnMouseDragExited {  }
+                setOnMouseDragOver {  }
+                setOnMouseDragReleased {  }
+                setOnMouseMoved {  }
+                setOnMouseEntered {  }
+                setOnMouseExited {  }
+                setOnMousePressed {  }
+                setOnMouseReleased {  }
+                setOnRotate {  }
+                setOnRotationFinished {  }
+                setOnRotationStarted {  }
+                setOnScroll {  }
+                setOnScrollFinished {  }
+                setOnScrollStarted {  }
+                setOnSwipeDown {  }
+                setOnSwipeRight {  }
+                setOnSwipeLeft {  }
+                setOnSwipeUp {  }
+                setOnTouchMoved {  }
+                setOnTouchPressed {  }
+                setOnTouchReleased {  }
+                setOnTouchStationary {  }
+                setOnZoom {  }
+                setOnZoomFinished {  }
+                setOnZoomStarted {  }
+
+            }
             sceneProperty()
             sceneToLocal(1.0,1.0)
             setEventDispatcher{event, eventDispatchChain -> event }
             styleClass
             styleableParent
-//            snapshot() // todo
             startDragAndDrop()
             startFullDrag()
             svgpath { }
@@ -509,7 +600,10 @@ private class UI(override val root: Parent) :UIComponent() { init {
             shortcut(""){}
             shortpress(true) {}
             scope.run {
-
+                deregister()
+                hasActiveWorkspace
+                invoke(this@UI::class)
+                workspace(workspace)
             }
             savable
             savableWhen { needsLayoutProperty()}
@@ -530,45 +624,6 @@ private class UI(override val root: Parent) :UIComponent() { init {
             slideshow { }
             svgpath { }
             sequentialTransition { }
-            setOnContextMenuRequested {  }
-            setOnDragDetected {  }
-            setOnDragDone {  }
-            setOnDragDropped {  }
-            setOnDragEntered {  }
-            setOnDragExited {  }
-            setOnDragOver {  }
-            setOnInputMethodTextChanged {  }
-            setOnKeyPressed {  }
-            setOnKeyReleased {  }
-            setOnKeyTyped {  }
-            setOnMouseClicked {  }
-            setOnMouseDragged {  }
-            setOnMouseDragEntered {  }
-            setOnMouseDragExited {  }
-            setOnMouseDragOver {  }
-            setOnMouseDragReleased {  }
-            setOnMouseMoved {  }
-            setOnMouseEntered {  }
-            setOnMouseExited {  }
-            setOnMousePressed {  }
-            setOnMouseReleased {  }
-            setOnRotate {  }
-            setOnRotationFinished {  }
-            setOnRotationStarted {  }
-            setOnScroll {  }
-            setOnScrollFinished {  }
-            setOnScrollStarted {  }
-            setOnSwipeDown {  }
-            setOnSwipeRight {  }
-            setOnSwipeLeft {  }
-            setOnSwipeUp {  }
-            setOnTouchMoved {  }
-            setOnTouchPressed {  }
-            setOnTouchReleased {  }
-            setOnTouchStationary {  }
-            setOnZoom {  }
-            setOnZoomFinished {  }
-            setOnZoomStarted {  }
 
             // t.
             transforms
@@ -608,7 +663,6 @@ private class UI(override val root: Parent) :UIComponent() { init {
             terminateAsyncExecutors(1L)
 
             // u.
-            userData
             usesMirroring()
             unsubscribe<FXEvent> {  }
             uiComponent<Fragment>()
@@ -626,7 +680,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             whenVisible { }
             wrapIn(parent)
             workspace.run {
-
+                this
             }
             whenCreated { }
             whenDeleted { }
