@@ -27,20 +27,26 @@ import java.beans.EventHandler
 import java.nio.channels.SelectableChannel
 
 fun main() {
-    launch<CalculatorApp>()
+    launch<Appeana_Calculator>()
 }
-class CalculatorApp:App(CalculatorView::class)
+class Appeana_Calculator:App(CalculatorView::class)
 class CalculatorView() : View() {
-
+    // the buttons:
+    val list = listOf(
+        listOf("AV", "(", ")", "AC"),
+        listOf("7", "8", "9", "/"),
+        listOf("4", "5", "6", "*"),
+        listOf("1", "2", "3", "-"),
+        listOf("0", ".", "=", "+")
+    )
     override val root = vbox {
         setPrefSize(400.0, 500.0)
         primaryStage.isResizable = false
-
-        //
+        primaryStage.initStyle(StageStyle.TRANSPARENT)
         val input = textfield() {
             alignment = Pos.CENTER_RIGHT
             prefHeight = 70.0
-            font = Font.font("Ubuntu Light",40.0)
+            font = Font.font("Ubuntu Light", 40.0)
             style {
                 textFill = Color.WHITE
                 backgroundColor += Color.DARKSLATEGRAY
@@ -53,14 +59,13 @@ class CalculatorView() : View() {
                 }
             }
         }
-
         val result = label("0") {
             minHeight = 70.0
             style {
                 useMaxWidth = true
                 paddingRight = 10.0
                 alignment = Pos.CENTER_RIGHT
-                font = Font.font("Ubuntu Light",33.0)
+                font = Font.font("Ubuntu Light", 33.0)
                 textFill = Color.WHITE
                 backgroundColor += Color.DARKSLATEGRAY
             }
@@ -69,8 +74,8 @@ class CalculatorView() : View() {
         //
         setOnKeyPressed {
             when (it.code) {
-                KeyCode.ENTER ->  try {
-                    result.text =ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
+                KeyCode.ENTER -> try {
+                    result.text = ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
                     input.clear()
                 } catch (ex: Exception) {
                     result.text = "0"
@@ -78,48 +83,44 @@ class CalculatorView() : View() {
                 }
             }
         }
-
-        // the buttons:
-        listOf(listOf("Av","(",")","C"),
-               listOf("7","8","9","/"),
-               listOf("4","5","6","*"),
-               listOf("1","2","3","-"),
-               listOf("0",".","=","+")).
-        forEach {
-            buttonbar {
-                style {
-                    paddingRight=20
-                    paddingBottom=7
-                    backgroundColor += Color.DARKSLATEGRAY
-                }
-                it.toList().forEach {
-                    button(it.toString()){
-                      setPrefSize(100.0,100.0)
-                        style {
-                            font = Font.font("Ubuntu Light",23.0)
-                            textFill = Color.BLACK
-                            backgroundRadius += CssBox(10.px,10.px,10.px,10.px)
-                        }
-                        action {
-                            if (it=="="){
-                                try {
-                                    result.text =ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
-                                    input.clear()
-                                } catch (ex: Exception) {
+        gridpane {
+            list.forEach {
+                row {
+                    style {
+                        paddingRight = 20
+                        paddingBottom = 7
+                        backgroundColor += Color.DARKSLATEGRAY
+                    }
+                    it.toList().forEach {
+                        button(it.toString()) {
+                            setPrefSize(100.0, 100.0)
+                            style {
+                                font = Font.font("Ubuntu Light", 23.0)
+                                textFill = Color.BLACK
+//                                backgroundRadius += CssBox(10.px, 10.px, 10.px, 10.px)
+                            }
+                            action {
+                                if (it == "=") {
+                                    try {
+                                        result.text =
+                                            ExpressionBuilder(input.text).build().evaluate().toBigDecimal().toString()
+                                        input.clear()
+                                    } catch (ex: Exception) {
+                                        result.text = "0"
+                                        input.clear()
+                                    }
+                                } else if (it == "C") {
                                     result.text = "0"
                                     input.clear()
+                                } else {
+                                    input.text += it
                                 }
-                            } else if (it=="C"){
-                                result.text = "0"
-                                input.clear()
-                            } else {
-                                input.text+=it
                             }
                         }
                     }
                 }
             }
         }
-    }
 
+    }
 }

@@ -1,10 +1,11 @@
-package com.example.demo.view
+package com.example.demo.box
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.EventHandler
 import javafx.scene.*
+import javafx.scene.control.Button
 import javafx.scene.effect.*
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
@@ -15,29 +16,36 @@ import javafx.scene.shape.Rectangle
 import javafx.stage.*
 import javafx.util.Duration
 import tornadofx.*
+import tornadofx.Stylesheet.Companion.button
 import java.awt.AWTException
 import java.awt.Robot
+import kotlin.reflect.KClass
+import kotlin.reflect.full.createInstance
 import kotlin.system.exitProcess
 
 fun main() {
-    launch<BlurGlassApp>()
+    launch<BlurGlassView>()
 }
-class BlurGlassApp:App(BlurGlassView::class)
-class BlurGlassView : View() {
-    override var root = form {
+//class BlurGlassApp:App(BlurGlassView::class)
+class BlurGlassView : App() {
+    private val BLUR_AMOUNT = 25.0
+    private val frostEffect = BoxBlur(BLUR_AMOUNT, BLUR_AMOUNT, 3)
+    private val blurbackground = ImageView()
+    private val layout = StackPane()
+    override fun start(stage: Stage) {
         layout.children.setAll(blurbackground)
+        layout.children.setAll()
         layout.style = "-fx-background-color: null"
-        val scene = Scene(layout,400.0, 500.0,Color.TRANSPARENT)
-//        Platform.setImplicitExit(false)
         makeSmoke(stage)
         stage.initStyle(StageStyle.TRANSPARENT)
-        stage.scene = scene
-        stage.show()
-        scene.setOnMouseClicked {
-            if (it.clickCount==2){
-                exitProcess(0)
+        stage.scene = Scene(layout,400.0, 500.0,Color.TRANSPARENT).also { it ->
+            it.setOnMouseClicked {
+                if (it.clickCount==2){
+                    exitProcess(0)
+                }
             }
         }
+        stage.show()
         blurbackground.image = copyBackground(stage)
         blurbackground.effect = frostEffect
         makeDraggable(stage, layout)
@@ -59,16 +67,6 @@ class BlurGlassView : View() {
             null
         }
     }
-
-    // create some content to be displayed on top of the frozen glass panel.
-//    private fun createContent(): Label {
-//        val label = Label("Create a new question for drop shadow effects.\n\nDrag to move\n\nDouble click to close")
-//        label.paddingAll = 10.0
-//        label.style = "-fx-font-size: 15px; -fx-text-fill: green;"
-//        label.maxWidth = 250.0
-//        label.isWrapText = true
-//        return label
-//    }
 
     // makes a stage draggable using a given node.
     private fun makeDraggable(stage: Stage, node: Node) {
@@ -116,21 +114,9 @@ class BlurGlassView : View() {
     }
 
     private fun makeSmoke(stage: Stage): Rectangle {
-        return Rectangle(
-            stage.width,
-            stage.height,
-            Color.BLACK.deriveColor(
-                0.0, 1.0, 1.0, 0.5
+        return Rectangle(stage.width,stage.height,Color.BLUE.deriveColor(
+                1.0, 0.5, 0.5, 0.5
             )
         )
-    }
-
-    companion object {
-        private const val BLUR_AMOUNT = 25.0
-        private val frostEffect: Effect = BoxBlur(BLUR_AMOUNT, BLUR_AMOUNT, 3)
-        private val blurbackground = ImageView()
-        private val layout = StackPane()
-        private val stage = Stage()
-
     }
 }

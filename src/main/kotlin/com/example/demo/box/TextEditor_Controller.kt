@@ -1,4 +1,4 @@
-package com.example.demo
+package com.example.demo.box
 
 import javafx.application.Platform
 import javafx.event.ActionEvent
