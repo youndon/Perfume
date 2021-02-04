@@ -30,7 +30,7 @@ fun main() {
     launch<Appeana_Calculator>()
 }
 class Appeana_Calculator:App(CalculatorView::class)
-class CalculatorView() : View() {
+class CalculatorView() : UIComponent() {
     // the buttons:
     val list = listOf(
         listOf("AV", "(", ")", "AC"),

@@ -1,34 +1,20 @@
 package com.example.demo.view
 
-import com.sun.org.apache.xalan.internal.lib.ExsltDatetime.time
-import javafx.application.Platform
 import javafx.beans.InvalidationListener
-import javafx.event.EventHandler
 import javafx.geometry.Pos
-import javafx.scene.image.Image
-import javafx.scene.layout.Background
-import javafx.scene.layout.BackgroundImage
 import javafx.scene.media.Media
 import javafx.scene.media.MediaPlayer
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import tornadofx.*
-import java.awt.Button
-import java.io.File
-import java.net.URI
-import java.net.URL
 import java.nio.file.Paths
 import java.text.SimpleDateFormat
-import kotlin.concurrent.thread
-import kotlin.time.DurationUnit
 import kotlin.time.ExperimentalTime
-import kotlin.time.toDuration
 
 fun main() {
     launch<AudioApp>()
 }
 class AudioApp:App(Appeana_AudioPlayer::class)
-class Appeana_AudioPlayer:View() {
+class Appeana_AudioPlayer:UIComponent() {
     private val song = Media(Paths.get("Coldplay-Flags.mp3").toUri().toString())
     private val mediaplayer = MediaPlayer(song)
     private var play = button(){
@@ -85,8 +71,7 @@ class Appeana_AudioPlayer:View() {
     override val root = gridpane {
         primaryStage.minWidth=500.0
         setPrefSize(500.0, 100.0)
-        mediaplayer.isAutoPlay = true
-
+        mediaplayer.isAutoPlay=true
         // title this song:
         mediaplayer.setOnPlaying { // this method use jest once for the class.
             title = "${song.metadata["artist"].toString()}-${song.metadata["title"].toString()}"
@@ -100,6 +85,11 @@ class Appeana_AudioPlayer:View() {
                    .trimStart { it==':' }
             }).toString()
 
+        }
+        row {
+            button("open").action{
+//                println(media.toString().trimMargin("file:").toString())
+            }
         }
         row {
             alignment=Pos.CENTER

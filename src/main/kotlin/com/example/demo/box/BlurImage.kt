@@ -20,24 +20,21 @@ fun main() {
 }
 
 class PartiallyBlurredImage : App() {
-    private val image: Image = Image(Paths.get("accept them or walk away.jpeg").toUri().toString())
     private val width = 600.0
     private val height = 800.0
     override fun start(stage: Stage) {
-        val plainImage: ImageView = createImageView()
-        val blurredImage: ImageView = createImageView()
-        val blur = GaussianBlur(20.0)
-        blurredImage.effect = blur
+        val plainImage = createImageView()
+        val blurredImage = createImageView()
+        blurredImage.effect = GaussianBlur(20.0)
         plainImage.clip = Rectangle(0.0, 0.0, width / 2, height)
         blurredImage.clip = Rectangle(width / 2, 0.0, width / 2, height)
-        val partiallyBlurredImage = StackPane(plainImage, blurredImage)
-        val scene = Scene(ScrollPane(partiallyBlurredImage))
+        val scene = Scene(ScrollPane(StackPane(plainImage, blurredImage)))
         stage.scene = scene
         stage.show()
     }
 
     private fun createImageView(): ImageView {
-        val imageView = ImageView(image)
+        val imageView = ImageView(Image(Paths.get("accept them or walk away.jpeg").toUri().toString()))
         imageView.fitWidth = width
         imageView.fitHeight = height
         imageView.isPreserveRatio = true

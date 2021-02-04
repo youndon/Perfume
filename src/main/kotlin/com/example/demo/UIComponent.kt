@@ -235,7 +235,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             icon
             iconProperty
             init()
-            inject<Controller>()
+//            inject()
             imageview()
             isInsideRow()
 //            include() // todo parebt type
@@ -611,7 +611,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             subscribe<FXEvent> { }
             stackpane { }
             stackpaneConstraints { }
-            setInScope<ScopedInstance>(workspace)
+//            setInScope<ScopedInstance>(workspace)
             setWindowMaxSize(1,1)
             setWindowMinSize(1,1)
 //            stackedbarchart() // todo Axis<X>?
@@ -679,9 +679,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
             // w.
             whenVisible { }
             wrapIn(parent)
-            workspace.run {
-                this
-            }
+            workspace
             whenCreated { }
             whenDeleted { }
             whenRefreshed { }

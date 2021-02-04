@@ -12,7 +12,7 @@ fun main() {
     launch<TextEditorApp>()
 }
 class TextEditorApp:App(Appeana_TextEditor::class)
-class Appeana_TextEditor : View() {
+class Appeana_TextEditor : UIComponent() {
     var cc = textarea()
     var fc = FileChooser()
     override val root = gridpane {
