@@ -44,7 +44,18 @@ private class UI(override val root: Parent) :UIComponent() { init {
             addViewsWhen {viewProvider: ViewProvider -> true}
             applyCss()
             app.run {
-                this
+                this.configBasePath
+                this.createPrimaryScene(this@UI)
+//                this.fire()
+//                this.inject()
+//                this.k()
+//                this.onBeforeShow()
+                this.primaryView
+                this.resources
+                this.scope
+                this.shouldShowPrimaryStage()
+//                this.trayicon()
+                this.workspace
             }
             autosize()
             arc()
@@ -58,7 +69,18 @@ private class UI(override val root: Parent) :UIComponent() { init {
             blendMode
             blendModeProperty()
             boundsInLocal.run {
-                this
+                this.depth
+                this.height
+                this.width
+                this.isEmpty
+                this.maxX
+                this.maxY
+                this.maxZ
+                this.minX
+                this.minY
+                this.minZ
+//                this.contains()
+//                this.intersects()
             }
             boundsInLocalProperty()
             boundsInParent.run {
@@ -92,7 +114,26 @@ private class UI(override val root: Parent) :UIComponent() { init {
             clip
             clipProperty()
             clipboard.run {
-                this
+                this.clear()
+                this.contentTypes
+                this.files
+//                this.getContent()
+//                this.hasContent()
+                this.hasFiles()
+                this.hasHtml()
+                this.hasImage()
+                this.hasRtf()
+                this.hasString()
+                this.hasUrl()
+                this.html
+                this.image
+//                this.put()
+//                this.putFiles()
+//                this.putString()
+                this.rtf
+                this.setContent {  }
+                this.string
+                this.url
             }
             contentBias
             cursor
@@ -109,7 +150,15 @@ private class UI(override val root: Parent) :UIComponent() { init {
             closeable
             closeableWhen { needsLayoutProperty()}
             config.run {
-                this
+//                this.boolean()
+                this.configurable
+//                this.double()
+//                this.int()
+//                this.jsonArray()
+//                this.jsonModel()
+//                this.jsonObject()
+                this.save()
+//                this.set()
             }
             configPath
             contextmenu()
@@ -173,7 +222,20 @@ private class UI(override val root: Parent) :UIComponent() { init {
             findAll<Fragment>()
             find<Fragment>()
             fxmlLoader.run {
-                this
+                this.builderFactory
+                this.charset
+                this.classLoader
+                this.location
+                this.namespace
+                this.resources
+                this.controllerFactory
+//                this.getController()
+//                this.setController()
+//                this.setControllerFactory {  }()
+//                this.setBuilderFactory { }
+//                this.load()
+//                this.getRoot()
+//                this.setRoot()
             }
             fxml<Node>()
             fxid<Node>()
@@ -183,7 +245,19 @@ private class UI(override val root: Parent) :UIComponent() { init {
 //            floatBinding() // todo
             fragment<Fragment>()
             fiveDigits.run {
-                this
+                this.decimalFormatSymbols
+                this.groupingSize
+                this.isDecimalSeparatorAlwaysShown
+                this.isParseBigDecimal
+                this.multiplier
+                this.negativePrefix
+                this.negativeSuffix
+                this.positivePrefix
+                this.positiveSuffix
+                this.toLocalizedPattern()
+                this.toPattern()
+//                this.applyLocalizedPattern()
+//                this.applyPattern()
             }
             fieldset()
             field()
@@ -196,7 +270,10 @@ private class UI(override val root: Parent) :UIComponent() { init {
             heading
             headingProperty
             hostServices.run {
-                this
+                this.codeBase
+                this.documentBase
+//                this.resolveURI()
+//                this.showDocument()
             }
             hgrow
             hasProperties()
@@ -269,7 +346,30 @@ private class UI(override val root: Parent) :UIComponent() { init {
             line()
             loadConfig()
             log.run {
-                this
+//                this.addHandler()
+//                this.removeHandler()
+//                this.config()
+//                this.entering()
+//                this.exiting()
+                this.filter
+//                this.fine()
+//                this.finer()
+//                this.finest()
+                this.handlers
+//                this.info()
+//                this.isLoggable()
+                this.level
+//                this.log()
+//                this.logp()
+//                this.logrb()
+                this.name
+                this.parent
+                this.resourceBundle
+                this.resourceBundleName
+//                this.severe()
+//                this.throwing()
+                this.useParentHandlers
+//                this.warning()
             }
             loadFXML<Node>()
             loadFont("",1)
@@ -296,7 +396,18 @@ private class UI(override val root: Parent) :UIComponent() { init {
             move(Duration.ONE, Point2D.ZERO)
             modalStage
             messages.run {
-                this
+//                this[]
+                this.baseBundleName
+//                this.containsKey()
+//                this.format()
+                this.keySet()
+//                this.get()
+//                this.getStringArray()
+//                this.getString()
+//                this.getObject()
+                this.keys
+                this.keySet()
+                this.locale
             }
             menubutton()
             menubar()
@@ -312,7 +423,6 @@ private class UI(override val root: Parent) :UIComponent() { init {
 //            nonNullObjectBinding() // todo
 
             // o.
-
             opacity
             opacityProperty()
             onDoubleClick {  }
@@ -338,7 +448,29 @@ private class UI(override val root: Parent) :UIComponent() { init {
 
             // p.
             parent.run {
-                this
+                this.arc()
+//                this.addStylesheet()
+                this.childrenUnmodifiable
+                this.circle()
+                this.cubiccurve()
+                this.ellipse {  }
+//                this.findAll()
+                this.gridpaneColumnConstraints
+                this.gridpaneColumnConstraints {  }
+                this.isNeedsLayout
+                this.layout()
+                this.line {  }
+//                this.lookup()
+                this.needsLayoutProperty()
+                this.path()
+                this.polygon()
+                this.polyline()
+                this.quadcurve {  }
+                this.rectangle {  }
+                this.requestLayout()
+                this.stylesheets
+                this.stylesheet {  }
+                this.svgpath()
             }
             parentToLocal(0.0,0.0)
             parentProperty()

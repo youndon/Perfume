@@ -101,7 +101,7 @@ class Appeana_AudioPlayer:UIComponent() {
                                         currenttime.text = SimpleDateFormat("ss")
                                             .parse(mediaplayer?.currentTime!!.toSeconds().toString())
                                             .toString()
-                                            .drop(11)
+                                            .drop(11) // sunstring!!
                                             .dropLast(9)
                                             .trimStart { it == '0' }
                                             .trimStart { it == ':' }

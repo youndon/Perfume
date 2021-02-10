@@ -1,0 +1,15 @@
+@font-face {
+    font-family: Lunchtime Doubly So Regular;
+    src: url("../font/lunchds.ttf");
+}
+
+.button {
+    -fx-font-family: "Lunchtime Doubly So Regular";
+    -fx-font-size: 25px;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-text-fill: red;
+}

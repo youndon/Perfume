@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.CheckBox?>
+<AnchorPane fx:id="background" prefHeight="400.0" prefWidth="400.0" stylesheets="@../styles/overallStyle.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hegyi.botond.controllers.SettingsViewController">
+    <VBox fx:id="everything" layoutX="-4.0" prefHeight="400.0" prefWidth="400.0" stylesheets="@../styles/SettingsViewStyle.css">
+        <Label fx:id="settingsLabel" text="Settings" />
+        <HBox fx:id="inputsAndLabels" prefHeight="100.0" prefWidth="200.0">
+            <VBox fx:id="labels" prefHeight="124.0" prefWidth="145.0">
+                <Label text="Move Up:"/>
+                <Label text="Move Down:"/>
+                <Label text="Move Right:"/>
+                <Label text="Move Left:"/>
+            </VBox>
+            <VBox fx:id="inputs" prefHeight="200.0" prefWidth="100.0">
+                <TextField fx:id="upText" onKeyReleased="#changeText" prefWidth="100" />
+                <TextField fx:id="downText" onKeyReleased="#changeText" prefWidth="100" />
+                <TextField fx:id="rightText" onKeyReleased="#changeText" prefWidth="100" />
+                <TextField fx:id="leftText" onKeyReleased="#changeText" prefWidth="100" />
+            </VBox>
+        </HBox>
+        <HBox fx:id="displayScore">
+            <Label text="Display score:" />
+            <CheckBox fx:id="scoreCheckBox" onAction="#check"/>
+        </HBox>
+        <HBox fx:id="buttons" prefHeight="100.0" prefWidth="200.0">
+            <Button mnemonicParsing="false" onAction="#reset" text="Reset" />
+            
+            <Button fx:id="backBtn" mnemonicParsing="false" onAction="#back" text="Back" />
+        </HBox>
+    </VBox>
+</AnchorPane>
