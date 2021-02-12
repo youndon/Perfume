@@ -101,7 +101,7 @@ class Appeana_AudioPlayer:UIComponent() {
                                         currenttime.text = SimpleDateFormat("ss")
                                             .parse(mediaplayer?.currentTime!!.toSeconds().toString())
                                             .toString()
-                                            .drop(11) // sunstring!!
+                                            .drop(11) // substring!!
                                             .dropLast(9)
                                             .trimStart { it == '0' }
                                             .trimStart { it == ':' }
@@ -154,8 +154,7 @@ class Appeana_AudioPlayer:UIComponent() {
                         .toURI()
                         .toURL()
                         .toExternalForm()
-                )
-                    .toString()
+                ).toString()
             )
         )
     enum class Max(var id:String , var shape:String){
