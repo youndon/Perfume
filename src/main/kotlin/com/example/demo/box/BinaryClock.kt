@@ -17,16 +17,16 @@ class BC() {
         return binary(go().second.toString().last())
     }
      fun ss(): String {
-        return if (go().second in 0..9) "0000"
-        else binary(go().second.toString()[0])
+        return if (go().second in 0..9) " 000"
+        else binary(go().second.toString().first())
     }
     // minute.
      fun m():String {
         return binary(go().minute.toString().last())
     }
      fun mm(): String {
-        return if (go().minute in 0..9) "0000"
-        else binary(go().minute.toString()[0])
+        return if (go().minute in 0..9) " 000"
+        else binary(go().minute.toString().first())
     }
     // hours.
      fun h():String {
@@ -34,6 +34,6 @@ class BC() {
     }
          fun hh(): String {
         return if (go().hour in 0..9) "  00"
-        else binary(go().hour.toString()[0])
+        else binary(go().hour.toString().first())
     }
 }
