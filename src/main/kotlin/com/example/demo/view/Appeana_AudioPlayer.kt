@@ -1,5 +1,8 @@
 package com.example.demo.view
 
+import javafx.animation.Animation
+import javafx.animation.KeyFrame
+import javafx.animation.Timeline
 import javafx.beans.InvalidationListener
 import javafx.geometry.Pos
 import javafx.scene.media.Media
@@ -7,6 +10,7 @@ import javafx.scene.media.MediaPlayer
 import javafx.scene.paint.Color
 import javafx.stage.FileChooser
 import javafx.stage.Stage
+import javafx.util.Duration
 import tornadofx.*
 import java.nio.file.Paths
 import java.text.SimpleDateFormat

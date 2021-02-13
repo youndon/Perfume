@@ -1,25 +1,11 @@
 package com.example.demo.view
 
-import com.example.demo.box.BC
-import javafx.beans.InvalidationListener
-import javafx.event.Event
-import javafx.event.EventType
-import javafx.scene.control.Label
-import javafx.scene.input.KeyEvent
-import tornadofx.*
 import javafx.animation.Animation
-
 import javafx.animation.KeyFrame
-
-import java.time.LocalTime
-
 import javafx.animation.Timeline
-import javafx.event.ActionEvent
-
-import javafx.fxml.FXML
-import javafx.scene.Parent
-import javafx.util.Duration.*
-import java.time.Duration
+import javafx.util.Duration.ZERO
+import javafx.util.Duration.seconds
+import tornadofx.*
 
 
 fun main() {
@@ -28,36 +14,28 @@ fun main() {
 class MainLand:App(ViewLand::class)
 
 class ViewLand:UIComponent() {
-    val time = arrayListOf(BC().ss(), BC().s())
-    var txt = Label()
     override val root = hbox {
-
-        label {
-            val ss = Timeline(
-                KeyFrame(
-                    ZERO, {
-//                            LocalTime.now().hour.toString() + ":" + LocalTime.now().minute.toString() + ":" + LocalTime.now().second.toString()
-                    }),
-                KeyFrame(seconds(1.0))
-            )
-            ss.cycleCount = Animation.INDEFINITE
-            ss.play()
+        setPrefSize(230.0,170.0)
+        (0..5).forEach { ti ->
+            label {
+                val ss = Timeline(
+                    KeyFrame(ZERO, {
+                            when (ti) {
+                                0 -> {text = BC().hh().replaceFirst('◯',' ').replaceFirst('◯',' ')}
+                                1 -> {text = BC().h().replaceFirst('◯',' ')}
+                                2 -> {text = BC().mm().replaceFirst('◯',' ')}
+                                3 -> {text = BC().m()}
+                                4 -> {text = BC().ss().replaceFirst('◯',' ')}
+                                5 -> {text = BC().s()}
+                            }
+                        }),
+                    KeyFrame(seconds(1.0)))
+                ss.cycleCount = Animation.INDEFINITE
+                ss.play()
+                style{
+                    fontSize = 2.pc
+                }
+            }
         }
     }
-
 }
-//    override val root = hbox {
-//        setPrefSize(200.0, 200.0)
-//        time.forEach {
-//            vbox {
-//                it.forEach {
-//                    label {
-//                        text = it.toString()
-//                        style {
-//                            fontSize = 35.px
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }

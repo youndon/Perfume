@@ -4,23 +4,23 @@ import javafx.animation.Timeline
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.embed.swing.SwingFXUtils
 import javafx.event.EventHandler
-import javafx.scene.*
-import javafx.scene.control.Button
-import javafx.scene.effect.*
+import javafx.scene.Cursor
+import javafx.scene.Node
+import javafx.scene.Scene
+import javafx.scene.effect.BoxBlur
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
-import javafx.stage.*
+import javafx.stage.Stage
+import javafx.stage.StageStyle
 import javafx.util.Duration
-import tornadofx.*
-import tornadofx.Stylesheet.Companion.button
+import tornadofx.App
+import tornadofx.launch
 import java.awt.AWTException
 import java.awt.Robot
-import kotlin.reflect.KClass
-import kotlin.reflect.full.createInstance
 import kotlin.system.exitProcess
 
 fun main() {
