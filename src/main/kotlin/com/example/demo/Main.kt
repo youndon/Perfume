@@ -1,5 +1,6 @@
 package com.example.demo
 
+import com.example.demo.box.SnakeGame
 import sun.util.resources.LocaleData
 import java.awt.image.BufferedImage
 import java.sql.Time
@@ -10,6 +11,7 @@ import java.time.LocalTime
 import java.util.*
 
 fun main() {
+
 
 
 
