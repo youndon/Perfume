@@ -42,7 +42,7 @@ class SnakeGame : App() {
                         tick(gc)
                         return
                     }
-                    if (now - lastTick > 100000 / speed) {
+                    if (now - lastTick > 1 / speed) {
                         lastTick = now
                         tick(gc)
                     }
@@ -80,7 +80,7 @@ class SnakeGame : App() {
     }
 
     companion object {
-        var speed = 5
+        var speed = 3
         var foodcolor = 0
         var width = 20
         var height = 20
@@ -108,33 +108,33 @@ class SnakeGame : App() {
                 Dir.UP -> {
                     snake[0].y--
                     if (snake[0].y < 0) {
-                        gameOver = true
+//                        gameOver = true
                     }
                     snake[0].y++
                     if (snake[0].y > height) {
-                        gameOver = true
+//                        gameOver = true
                     }
                 }
                 Dir.DOWN -> {
                     snake[0].y++
                     if (snake[0].y > height) {
-                        gameOver = true
+//                        gameOver = true
                     }
                 }
                 Dir.LEFT -> {
                     snake[0].x--
                     if (snake[0].x < 0) {
-                        gameOver = true
+//                        gameOver = true
                     }
                     snake[0].x++
                     if (snake[0].x > width) {
-                        gameOver = true
+//                        gameOver = true
                     }
                 }
                 Dir.RIGHT -> {
                     snake[0].x++
                     if (snake[0].x > width) {
-                        gameOver = true
+//                        gameOver = true
                     }
                 }
             }
@@ -146,7 +146,7 @@ class SnakeGame : App() {
             // self destroy
             for (i in 1 until snake.size) {
                 if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
-                    gameOver = true
+//                    gameOver = true
                     break
                 }
             }
@@ -203,7 +203,7 @@ class SnakeGame : App() {
                     }
                 }
                 foodcolor = rond.nextInt(5)
-                speed++
+                speed//++
                 break
             }
         }

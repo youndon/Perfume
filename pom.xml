@@ -14,7 +14,13 @@
         <tornadofx.version>1.7.17</tornadofx.version>
     </properties>
 
+
     <dependencies>
+        <dependency>
+            <groupId>org.apache.bcel</groupId>
+            <artifactId>bcel</artifactId>
+            <version>6.5.0</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/nu.pattern/opencv -->
         <dependency>
             <groupId>nu.pattern</groupId>

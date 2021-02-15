@@ -1,6 +1,5 @@
 package com.example.demo.javaFx
 
-import com.example.demo.app.Styles
 import javafx.animation.Interpolator
 import javafx.css.PseudoClass
 import javafx.event.Event
@@ -490,7 +489,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
                 isAlwaysOnTop // for make the window always visible on top.
                 isResizable
                 fullScreenExitKeyCombination // TODO: 14.01.2021
-                title
+                title // title of the main window.
                 icons
                 isIconified
                 isMaximized // for toke all the screen size when is open
@@ -567,7 +566,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
                 addEventFilter(EventType(""), EventHandler {  })
                 addEventHandler(EventType(""), EventHandler {  })
                 addMnemonic(Mnemonic(null,null))
-                addStylesheet(Styles::class)
+//                addStylesheet()
                 camera
                 cameraProperty()
                 fill

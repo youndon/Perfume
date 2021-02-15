@@ -60,10 +60,11 @@ class Appeana_SnakeGame:UIComponent() {
     }
     private fun upDate(){
 
-        if (keysMap[KeyCode.UP]==true) head.translateY-=10
-        if (keysMap[KeyCode.DOWN]==true) head.translateY+=10
-        if (keysMap[KeyCode.LEFT]==true) head.translateX-=10
-        if (keysMap[KeyCode.RIGHT]==true) head.translateX+=10
+//        if (keysMap[KeyCode.UP]==true) head.translateY-=10
+//        if (keysMap[KeyCode.DOWN]==true) head.translateY+=10
+//        if (keysMap[KeyCode.LEFT]==true) head.translateX-=10
+//        if (keysMap[KeyCode.RIGHT]==true) head.translateX+=10
+
 
         if (head.boundsInParent.intersects(food.boundsInParent)){
             food.translateX = Random.nextDouble(10.0,480.0)

@@ -11,8 +11,8 @@ import kotlin.random.Random
 fun main() {
     launch<CircleApp>()
 }
-class CircleApp:App(Appeana_CircleGame::class)
-class Appeana_CircleGame:UIComponent(){
+class CircleApp: App(Appeana_CircleGame::class)
+class Appeana_CircleGame: UIComponent(){
     private var player = Circle()
     private var food = Circle()
     private val keysMap = hashMapOf<KeyCode,Boolean>()

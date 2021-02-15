@@ -1,17 +1,10 @@
 package com.example.demo
 
-import com.example.demo.box.SnakeGame
-import sun.util.resources.LocaleData
-import java.awt.image.BufferedImage
-import java.sql.Time
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.util.*
+import java.io.FileOutputStream
+import java.net.URL
+import java.nio.channels.Channels
 
 fun main() {
-
 
 
 
