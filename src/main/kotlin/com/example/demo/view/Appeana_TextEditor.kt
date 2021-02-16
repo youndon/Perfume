@@ -7,6 +7,7 @@ import javafx.scene.text.Font
 import javafx.stage.FileChooser
 import tornadofx.*
 import java.io.*
+import kotlin.system.exitProcess
 
 fun main() {
     launch<TextEditorApp>()
@@ -19,7 +20,7 @@ class Appeana_TextEditor : UIComponent() {
         cc.font = Font.font("Manjari Thin", 30.0)
         fc.initialDirectory = File("/home/")
         fc.initialFileName = "untitled.txt"
-        fc.title
+        fc.title = "..."
         fc.extensionFilters
         fc.selectedExtensionFilter
         primaryStage.setOnCloseRequest {
@@ -34,7 +35,7 @@ class Appeana_TextEditor : UIComponent() {
                     saveFile()
                 }
                 ButtonType.NO -> {
-                    this@Appeana_TextEditor.close()
+                    exitProcess(0)
                 }
             }
 
@@ -70,8 +71,10 @@ class Appeana_TextEditor : UIComponent() {
             var text: String
             BufferedReader(FileReader(fc.showOpenDialog(primaryStage)))
                 .use { buffReader ->
-                    buffReader.readLine().also { text = it } != null
-                    cc.appendText(text)
+                    buffReader.readLines().forEach {
+                        text = "$it\n"
+                        cc.appendText(text)
+                    }
                 }
         }
     }
