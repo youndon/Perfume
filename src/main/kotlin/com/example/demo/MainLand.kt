@@ -1,7 +1,9 @@
 package com.example.demo.view
 
 import com.github.axet.vget.VGet
+import dorkbox.notify.Notify
 import javafx.scene.control.Alert
+import javafx.scene.control.RadioButton
 import tornadofx.*
 import java.io.FileOutputStream
 import java.net.URL
@@ -18,23 +20,10 @@ class MainLand:App(ViewLand::class)
 class ViewLand:UIComponent() {
     override val root = form {
         setPrefSize(300.0, 300.0)
-       val url =  textfield(" https://www.youtube.com/watch?v=ZfYfhk1vB64") {
-
+        val ss =textfield("ZfYfhk1vB64") {  }
+        val cc = textfield("/home/yon/") {  }
+        button("download!").action {
+            YDQ().audioOnly(ss.text,cc.text)?.get()
         }
-        val path = textfield("/yon/home/") {
-
-        }
-
-        button("download").action{
-            try {
-                val v = VGet(URL(url.text), File(path.text))
-//                v.download()
-                println(v.video.title)
-            }catch (ex:Exception){
-                alert(Alert.AlertType.WARNING,ex.message.toString())
-            }
-
-        }
-
     }
 }

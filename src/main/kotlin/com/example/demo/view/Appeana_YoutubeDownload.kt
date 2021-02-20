@@ -72,6 +72,10 @@ class Appeana_YoutubeDownload:UIComponent() {
                 exitProcess(0)
             }
         }
+        checkbox {
+
+        }
+
     }
 }
 
