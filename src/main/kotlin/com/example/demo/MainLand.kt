@@ -20,10 +20,6 @@ class MainLand:App(ViewLand::class)
 class ViewLand:UIComponent() {
     override val root = form {
         setPrefSize(300.0, 300.0)
-        val ss =textfield("ZfYfhk1vB64") {  }
-        val cc = textfield("/home/yon/") {  }
-        button("download!").action {
-            YDQ().audioOnly(ss.text,cc.text)?.get()
-        }
+
     }
 }

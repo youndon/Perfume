@@ -5,14 +5,11 @@ import com.github.kiulian.downloader.YoutubeDownloader
 import com.github.kiulian.downloader.model.Extension
 import com.github.kiulian.downloader.model.quality.AudioQuality
 import com.github.kiulian.downloader.model.quality.VideoQuality
-import com.github.kiulian.downloader.model.subtitles.SubtitlesInfo
 import dorkbox.notify.Notify
 import dorkbox.notify.Pos
-import javafx.collections.ObservableList
 import javafx.scene.control.Alert
 import javafx.scene.control.RadioButton
 import tornadofx.alert
-import tornadofx.observable
 import java.io.File
 import java.net.URL
 import java.util.*
@@ -64,38 +61,42 @@ class YoutubeDownloader () {
             })
     }
 
-    fun videoOnly(url: String?, path: String?): Future<File>? {
+    fun videoListQuality(url:String?): ArrayList<VideoQuality> {
+        val listQuality = arrayListOf<VideoQuality>()
+        downloader().getVideo(id(url)).videoFormats().forEach {
+            listQuality.add(it.videoQuality())
+        }
+        return listQuality
+    }
+
+    fun videoQuality(url: String?, path: String?,quality:VideoQuality?): Future<File>? {
         val videoid = downloader().getVideo(id(url))
-        return videoid.downloadAsync(videoid.findVideoWithQuality(VideoQuality.highres)[0],
+        return videoid.downloadAsync(videoid.findVideoWithQuality(quality)[0],
             File(filepath(url, path)),
             object : OnYoutubeDownloadListener {
                 override fun onDownloading(p0: Int) {
                     println("$p0%")
                 }
-
                 override fun onFinished(p0: File?) {
-                    println("Done!")
+                    notification()?.showInformation()
                 }
-
                 override fun onError(p0: Throwable?) {
                     alert(Alert.AlertType.ERROR, p0?.localizedMessage.toString())
                 }
             })
     }
 
-    fun videoQuality(url:String?): ArrayList<RadioButton> {
-        val dd = arrayListOf<RadioButton>()
-        downloader().getVideo(id(url)).videoFormats().forEach {
-            dd.add(RadioButton("${it.qualityLabel()} - " +
-                    "${it.height()}*${it.width()} - " +
-                    "${it.bitrate()}"))
+    fun audioListQuality(url: String?): ArrayList<AudioQuality> {
+        val listQuality = arrayListOf<AudioQuality>()
+        downloader().getVideo(id(url)).audioFormats().forEach {
+            listQuality.add(it.audioQuality())
         }
-        return dd
+        return listQuality
     }
 
-    fun audioOnly(url: String?, path: String?): Future<File>? {
+    fun audioQuality(url: String?, path: String?,quality:AudioQuality?): Future<File>? {
         val videoid = downloader().getVideo(id(url))
-        return videoid.downloadAsync(videoid.findAudioWithQuality(AudioQuality.medium)[0],
+        return videoid.downloadAsync(videoid.findAudioWithQuality(quality)[0],
             File(filepath(url, path)),
             object : OnYoutubeDownloadListener {
                 override fun onDownloading(p0: Int) {
@@ -108,29 +109,6 @@ class YoutubeDownloader () {
                     alert(Alert.AlertType.ERROR, p0?.message.toString())
                 }
             })
-    }
-
-    fun audioQuality(url: String?): ArrayList<RadioButton> {
-        val dd = arrayListOf<RadioButton>()
-        downloader().getVideo(id(url)).audioFormats().forEach {
-            dd.add(RadioButton("${it.audioQuality()}-${it.averageBitrate()}"))
-        }
-        return dd
-    }
-
-    fun allSubtitles(url: String?, path: String?) {
-        val file = "${filepath(url, path)}/Subtitles"
-        return downloader().getVideoSubtitles(id(url)).forEach { subInfo ->
-            subInfo.subtitles
-                .formatTo(Extension.WEBVTT)
-                .download().also {
-                    File(file).mkdir()
-                    File(file + "/${subInfo.language}.vtt").run {
-                        this.createNewFile()
-                        this.appendText(it)
-                    }
-                }
-        }
     }
 
     fun thumbnails(url: String?, path: String?): Boolean {
@@ -161,11 +139,22 @@ class YoutubeDownloader () {
         return list
     }
 
-    fun cc(url: String?, path: String?) {
-
+    fun allSubtitles(url: String?, path: String?) {
+        val file = "${filepath(url, path)}/Subtitles"
+        return downloader().getVideoSubtitles(id(url)).forEach { subInfo ->
+            subInfo.subtitles
+                .formatTo(Extension.WEBVTT)
+                .download().also {
+                    File(file).mkdir()
+                    File(file + "/${subInfo.language}.vtt").run {
+                        this.createNewFile()
+                        this.appendText(it)
+                    }
+                }
+        }
     }
 
-    fun cclist(url: String?): ArrayList<RadioButton> {
+    fun ccList(url: String?): ArrayList<RadioButton> {
         val list = arrayListOf<RadioButton>()
         downloader().getVideoSubtitles(id(url)).forEach {
             list.add(RadioButton(it.language))
@@ -173,12 +162,27 @@ class YoutubeDownloader () {
         return list
     }
 
+    fun cc(url: String?, path: String?,index:Int?) {
+        val file = filepath(url, path)
+        downloader().getVideoSubtitles(id(url))[index!!].run {
+            this.subtitles
+                .formatTo(Extension.WEBVTT)
+                .download().also {
+                    File(file).mkdir()
+                    File("$file/${this.language}.vtt").run {
+                        this.createNewFile()
+                        this.appendText(it)
+                    }
+                }
+        }
+    }
+
     private fun notification(): Notify? {
         return Notify.create()
             .darkStyle()
             .position(Pos.TOP_RIGHT)
             .text("Downloaded filename is complete!")
-            .title("YDQ")
+            .title("KYD")
     }
 
 }

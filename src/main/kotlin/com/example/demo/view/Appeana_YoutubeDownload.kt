@@ -1,40 +1,108 @@
 package com.example.demo.view
 
+import com.github.kiulian.downloader.model.quality.AudioQuality
+import com.github.kiulian.downloader.model.quality.VideoQuality
 import javafx.scene.control.*
 import tornadofx.*
-import tornadofx.osgi.addViewsWhen
 import java.io.File
 import kotlin.system.exitProcess
 
-typealias YDQ = com.example.demo.box.YoutubeDownloader
+typealias KYD = com.example.demo.box.YoutubeDownloader
 fun main() {
     launch<YoutubeDownloadApp>()
 }
 class YoutubeDownloadApp:App(Appeana_YoutubeDownload::class)
 
-class Appeana_YoutubeDownload:UIComponent() {
+class Appeana_YoutubeDownload:UIComponent("KYD") {
     private var url = TextField()
     private var path = TextField()
     private var videoWithAudio = CheckBox()
-    private var audioOnly = CheckBox()
-    private var videoOnly = CheckBox()
-    private var subtitles = CheckBox()
+    private var audioQuality = CheckBox()
+    private var audioListQuality = ComboBox<AudioQuality>()
+    private var videoQuality = CheckBox()
+    private var videoListQuality = ComboBox<VideoQuality>()
+    private var AllSubtitles = CheckBox()
+    private var cc = CheckBox()
     private var details = CheckBox()
+    private var ccList = ComboBox<RadioButton>()
 
     override val root = form {
         setPrefSize(600.0, 200.0)
         vbox {
             spacing = 10.0
-            url = textfield() {
-            }
+            url = textfield {}
             path = textfield {
                 text = "${System.getProperty("user.home")}/Downloads/"
             }
-            hbox {
+            vbox {
+                spacing = 7.0
                 videoWithAudio = checkbox("videoWithAudio")
-                videoOnly = checkbox("videoOnly")
-                audioOnly = checkbox("audioOnly")
-                subtitles = checkbox("subtitles")
+                borderpane {
+                    left{
+                        videoQuality = checkbox("videoQuality"){
+                            setOnAction {
+                                try {
+                                    videoListQuality.items = KYD().videoListQuality(url.text).observable()
+                                } catch (ex: Exception) {
+                                    alert(Alert.AlertType.WARNING, ex.localizedMessage)
+                                }
+                            }
+                        }
+                    }
+                    right{
+                        videoListQuality = combobox {
+                            this.visibleWhen {
+                                videoQuality.selectedProperty()
+                            }
+                            this.visibleRowCount = 3
+                        }
+                    }
+                }
+                borderpane {
+                    left {
+                        audioQuality = checkbox("audioQuality") {
+                            setOnAction {
+                                try {
+                                    audioListQuality.items = KYD().audioListQuality(url.text).observable()
+                                } catch (ex: Exception) {
+                                    alert(Alert.AlertType.WARNING, ex.localizedMessage)
+                                }
+                            }
+                        }
+                    }
+                    right {
+                        audioListQuality = combobox{
+                            this.visibleWhen {
+                                audioQuality.selectedProperty()
+                            }
+                            this.visibleRowCount = 3
+                        }
+                    }
+                }
+                borderpane {
+                    left{
+                        AllSubtitles = checkbox("AllSubtitles")
+                    }
+                    center {
+                        cc = checkbox("subtitle"){
+                            this.setOnAction {
+                                try {
+                                    ccList.items = KYD().ccList(url.text).observable()
+                                }catch (ex:Exception){
+                                    alert(Alert.AlertType.WARNING,ex.localizedMessage)
+                                }
+                            }
+                        }
+                    }
+                    right{
+                        ccList = combobox {
+                            this.visibleWhen {
+                                cc.selectedProperty()
+                            }
+                            this.visibleRowCount = 3
+                        }
+                    }
+                }
                 details = checkbox("details")
             }
         }
@@ -42,40 +110,51 @@ class Appeana_YoutubeDownload:UIComponent() {
             button("Download") {
                 action {
                     try {
-                        File(YDQ().filepath(url.text, path.text)).mkdir()
+                        File(KYD().filepath(url.text, path.text)).mkdir()
                         if (videoWithAudio.isSelected) {
-                            YDQ().videoWithAudio(url.text, path.text)?.get()
-                            YDQ().thumbnails(url.text, path.text)
+                            KYD().videoWithAudio(url.text, path.text)?.get()
+                            KYD().thumbnails(url.text, path.text)
                         }
-                        if (videoOnly.isSelected) {
-                            YDQ().videoOnly(url.text, path.text)?.get()
-                        }
-                        if (audioOnly.isSelected) {
-                            YDQ().audioOnly(url.text, path.text)?.get()
-                        }
-                        if (subtitles.isSelected) {
-                            YDQ().allSubtitles(url.text, path.text)
+                        if (AllSubtitles.isSelected) {
+                            KYD().allSubtitles(url.text, path.text)
                         }
                         if (details.isSelected) {
-                            val ff = File("${YDQ().filepath(url.text, path.text)}/Details.txt")
-                            YDQ().details(url.text).forEach { it ->
+                            val ff = File("${KYD().filepath(url.text, path.text)}/Details.txt")
+                            KYD().details(url.text).forEach { it ->
                                 ff.appendText("$it\n")
                             }
                             ff.createNewFile()
+                        }
+                        if (cc.isSelected){
+                            try{
+                                KYD().cc(url.text,path.text,ccList.selectionModel.selectedIndex)
+                           }catch (ex:Exception){
+                                alert(Alert.AlertType.WARNING,"the cc items not selected!!")
+                            }
+                        }
+                        if (audioQuality.isSelected){
+                            try{
+                                KYD().audioQuality(url.text,path.text,audioListQuality.selectionModel.selectedItem)
+                            }catch (ex:Exception){
+                                alert(Alert.AlertType.WARNING,"the audio quality not selected!!")
+                            }
+                        }
+                        if (videoQuality.isSelected){
+                            try{
+                                KYD().videoQuality(url.text,path.text,videoListQuality.selectionModel.selectedItem)
+                            }catch (ex:Exception){
+                                alert(Alert.AlertType.WARNING,"the video quality not selected!!")
+                            }
                         }
                     } catch (ex: Exception) {
                         alert(Alert.AlertType.ERROR, ex.localizedMessage)
                     }
                 }
             }
-            button("close!").action {
+            button("cancel!").action {
                 exitProcess(0)
             }
         }
-        checkbox {
-
-        }
-
     }
 }
 
