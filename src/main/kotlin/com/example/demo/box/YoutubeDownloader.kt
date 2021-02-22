@@ -7,9 +7,11 @@ import com.github.kiulian.downloader.model.quality.AudioQuality
 import com.github.kiulian.downloader.model.quality.VideoQuality
 import dorkbox.notify.Notify
 import dorkbox.notify.Pos
+import javafx.collections.ObservableList
 import javafx.scene.control.Alert
 import javafx.scene.control.RadioButton
 import tornadofx.alert
+import tornadofx.observable
 import java.io.File
 import java.net.URL
 import java.util.*
@@ -63,13 +65,14 @@ class YoutubeDownloader () {
 
     fun videoListQuality(url:String?): ArrayList<VideoQuality> {
         val listQuality = arrayListOf<VideoQuality>()
+//        val size = arrayListOf<String>()
         downloader().getVideo(id(url)).videoFormats().forEach {
             listQuality.add(it.videoQuality())
         }
         return listQuality
     }
 
-    fun videoQuality(url: String?, path: String?,quality:VideoQuality?): Future<File>? {
+    fun videoQuality(url: String?, path: String?, quality:VideoQuality?): Future<File>? {
         val videoid = downloader().getVideo(id(url))
         return videoid.downloadAsync(videoid.findVideoWithQuality(quality)[0],
             File(filepath(url, path)),
@@ -154,10 +157,10 @@ class YoutubeDownloader () {
         }
     }
 
-    fun ccList(url: String?): ArrayList<RadioButton> {
-        val list = arrayListOf<RadioButton>()
+    fun ccList(url: String?): ArrayList<String> {
+        val list = arrayListOf<String>()
         downloader().getVideoSubtitles(id(url)).forEach {
-            list.add(RadioButton(it.language))
+            list.add(it.language)
         }
         return list
     }

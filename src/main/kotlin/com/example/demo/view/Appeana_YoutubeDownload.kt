@@ -2,6 +2,8 @@ package com.example.demo.view
 
 import com.github.kiulian.downloader.model.quality.AudioQuality
 import com.github.kiulian.downloader.model.quality.VideoQuality
+import javafx.beans.Observable
+import javafx.collections.ObservableList
 import javafx.scene.control.*
 import tornadofx.*
 import java.io.File
@@ -24,7 +26,7 @@ class Appeana_YoutubeDownload:UIComponent("KYD") {
     private var AllSubtitles = CheckBox()
     private var cc = CheckBox()
     private var details = CheckBox()
-    private var ccList = ComboBox<RadioButton>()
+    private var ccList = ComboBox<String>()
 
     override val root = form {
         setPrefSize(600.0, 200.0)
