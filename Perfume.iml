@@ -32,7 +32,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/kotlin" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="liberica-1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: no.tornado:tornadofx:1.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.1.0" level="project" />
@@ -49,6 +49,20 @@
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-reflect:1.2.10" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib:1.2.21" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-test:1.2.21" level="project" />
+    <orderEntry type="module-library">
+      <library name="opencv">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/opencv_build/opencv/build/bin/opencv-451.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <NATIVE>
+          <root url="file://$USER_HOME$/opencv_build/opencv/build/lib" />
+        </NATIVE>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/opencv_build/opencv/build/bin/opencv-451.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: com.dorkbox:Executor:2.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0" level="project" />
@@ -84,7 +98,6 @@
     <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
     <orderEntry type="library" name="Maven: com.github.axet:threads:0.0.13" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.6.2" level="project" />
-    <orderEntry type="library" name="Maven: nu.pattern:opencv:2.4.9-4" level="project" />
     <orderEntry type="library" name="Maven: net.objecthunter:exp4j:0.4.8" level="project" />
     <orderEntry type="library" name="Maven: no.tornado:tornadofx:1.7.17" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish:javax.json:1.1.2" level="project" />

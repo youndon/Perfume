@@ -14,16 +14,19 @@ import org.opencv.core.Core
 import org.opencv.core.Mat
 import org.opencv.core.MatOfByte
 import org.opencv.core.MatOfRect
-import org.opencv.highgui.Highgui.imencode
-import org.opencv.highgui.VideoCapture
+import org.opencv.imgcodecs.Imgcodecs.imencode
 import org.opencv.objdetect.CascadeClassifier
+import org.opencv.videoio.VideoCapture
 import tornadofx.App
 import tornadofx.launch
 import java.io.ByteArrayInputStream
 import java.net.URISyntaxException
 import java.nio.file.Paths
-import java.util.ArrayList
+import java.util.*
 
+fun main() {
+    launch<Camera>()
+}
 class Camera : App() {
     var faceDetector: CascadeClassifier? = null
     var videoCapture: VideoCapture? = null

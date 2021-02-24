@@ -42,7 +42,6 @@ class CalculatorView() : UIComponent() {
     override val root = vbox {
         setPrefSize(400.0, 500.0)
         primaryStage.isResizable = false
-        primaryStage.initStyle(StageStyle.TRANSPARENT)
         val input = textfield() {
             alignment = Pos.CENTER_RIGHT
             prefHeight = 70.0
@@ -70,7 +69,6 @@ class CalculatorView() : UIComponent() {
                 backgroundColor += Color.DARKSLATEGRAY
             }
         }
-
         //
         setOnKeyPressed {
             when (it.code) {
@@ -97,7 +95,6 @@ class CalculatorView() : UIComponent() {
                             style {
                                 font = Font.font("Ubuntu Light", 23.0)
                                 textFill = Color.BLACK
-//                                backgroundRadius += CssBox(10.px, 10.px, 10.px, 10.px)
                             }
                             action {
                                 if (it == "=") {
@@ -121,6 +118,5 @@ class CalculatorView() : UIComponent() {
                 }
             }
         }
-
     }
 }

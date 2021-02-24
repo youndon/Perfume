@@ -11,10 +11,8 @@
         <module name="tornadofx-empty-project" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="Perfume" target="8" />
-      <module name="tornadofx-empty-maven-project" target="1.5" />
-      <module name="tornadofx-empty-project" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="Perfume" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

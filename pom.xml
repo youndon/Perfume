@@ -60,11 +60,6 @@
 
         <!-- https://mvnrepository.com/artifact/nu.pattern/opencv -->
         <dependency>
-            <groupId>nu.pattern</groupId>
-            <artifactId>opencv</artifactId>
-            <version>2.4.9-4</version>
-        </dependency>
-        <dependency>
             <groupId>net.objecthunter</groupId>
             <artifactId>exp4j</artifactId>
             <version>0.4.8</version>
@@ -137,6 +132,7 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
+
                         <jvmTarget>1.8</jvmTarget>
                         </configuration>
                     </execution>
@@ -149,6 +145,7 @@
                     </execution>
                 </executions>
                 <configuration>
+
                     <jvmTarget>1.8</jvmTarget>
                 </configuration>
             </plugin>
@@ -156,8 +153,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
