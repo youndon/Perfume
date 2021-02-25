@@ -2,8 +2,6 @@ package com.example.demo.view
 
 import com.github.kiulian.downloader.model.quality.AudioQuality
 import com.github.kiulian.downloader.model.quality.VideoQuality
-import javafx.beans.Observable
-import javafx.collections.ObservableList
 import javafx.scene.control.*
 import tornadofx.*
 import java.io.File
@@ -20,9 +18,9 @@ class Appeana_YoutubeDownload:UIComponent("KYD") {
     private var path = TextField()
     private var videoWithAudio = CheckBox()
     private var audioQuality = CheckBox()
-    private var audioListQuality = ComboBox<AudioQuality>()
+    private var audioListQuality = ComboBox<Pair<AudioQuality,String>>()
     private var videoQuality = CheckBox()
-    private var videoListQuality = ComboBox<VideoQuality>()
+    private var videoListQuality = ComboBox<Pair<VideoQuality,String>>()
     private var AllSubtitles = CheckBox()
     private var cc = CheckBox()
     private var details = CheckBox()
@@ -44,7 +42,7 @@ class Appeana_YoutubeDownload:UIComponent("KYD") {
                         videoQuality = checkbox("videoQuality"){
                             setOnAction {
                                 try {
-                                    videoListQuality.items = KYD().videoListQuality(url.text).observable()
+                                    videoListQuality.items = KYD().videoListQuality(url.text).toList().observable()
                                 } catch (ex: Exception) {
                                     alert(Alert.AlertType.WARNING, ex.localizedMessage)
                                 }
@@ -65,7 +63,7 @@ class Appeana_YoutubeDownload:UIComponent("KYD") {
                         audioQuality = checkbox("audioQuality") {
                             setOnAction {
                                 try {
-                                    audioListQuality.items = KYD().audioListQuality(url.text).observable()
+                                    audioListQuality.items = KYD().audioListQuality(url.text).toList().observable()
                                 } catch (ex: Exception) {
                                     alert(Alert.AlertType.WARNING, ex.localizedMessage)
                                 }
@@ -136,14 +134,14 @@ class Appeana_YoutubeDownload:UIComponent("KYD") {
                         }
                         if (audioQuality.isSelected){
                             try{
-                                KYD().audioQuality(url.text,path.text,audioListQuality.selectionModel.selectedItem)
+                                KYD().audioQuality(url.text,path.text,audioListQuality.selectionModel.selectedItem.first)
                             }catch (ex:Exception){
                                 alert(Alert.AlertType.WARNING,"the audio quality not selected!!")
                             }
                         }
                         if (videoQuality.isSelected){
                             try{
-                                KYD().videoQuality(url.text,path.text,videoListQuality.selectionModel.selectedItem)
+                                KYD().videoQuality(url.text,path.text,videoListQuality.selectionModel.selectedItem.first)
                             }catch (ex:Exception){
                                 alert(Alert.AlertType.WARNING,"the video quality not selected!!")
                             }

@@ -1,6 +1,7 @@
 package com.example.demo.appeanaFx
 
 
+import javafx.scene.control.Alert
 import tornadofx.*
 import tornadofx.osgi.impl.*
 
@@ -17,7 +18,7 @@ private fun some(){
 //    TableViewResizeCallback { }
 //    TreeTableViewResizeCallback { }
 //    addStageIcon()
-//    alert()
+    alert(Alert.AlertType.NONE,"...")
     beforeShutdown{}
 //    bindStringProperty()
 //    booleanBinding()
@@ -37,7 +38,7 @@ private fun some(){
 //    doubleBinding()
     dumpStylesheets()
     error("")
-//    find<>()
+    find<Component>()
 //    floatBinding()
     getDefaultConverter<Any>()
     importStylesheet<Stylesheet>()

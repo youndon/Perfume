@@ -10,12 +10,12 @@ fun main() {
 }
 class BrowserApp: App(BrowserView::class)
 
-//class BrowserModel(address:String):ViewModel(){
-//    var url = bind { SimpleStringProperty(address) }
-//}
-class BrowserView :UIComponent(){
+class BrowserModel(address:String):ViewModel(){
+    var url = bind { SimpleStringProperty(address) }
+}
+class BrowserView :View(){
     private var webView = webview()
-//    var browserModel = BrowserModel("http://www.duckduckgo.com")
+    var browserModel = BrowserModel("http://www.duckduckgo.com")
     override val root = gridpane {
         row {
             hbox {
@@ -26,19 +26,19 @@ class BrowserView :UIComponent(){
                     webView.engine.executeScript("history.forward())")
                 }
                 textfield {
-//                    textProperty().bindBidirectional(browserModel.url)
+                    textProperty().bindBidirectional(browserModel.url)
                     action {
-//                        webView.engine.load(browserModel.url.value)
+                        webView.engine.load(browserModel.url.value)
                     }
                 }
                 button("search").action {
-//                    webView.engine.load(browserModel.url.value)
+                    webView.engine.load(browserModel.url.value)
                 }
             }
         }
         row {
             children.add(webView)
-//           webView.engine.load(browserModel.url.value)
+           webView.engine.load(browserModel.url.value)
             useMaxHeight=true
             useMaxWidth=true
 

@@ -7,11 +7,8 @@ import com.github.kiulian.downloader.model.quality.AudioQuality
 import com.github.kiulian.downloader.model.quality.VideoQuality
 import dorkbox.notify.Notify
 import dorkbox.notify.Pos
-import javafx.collections.ObservableList
 import javafx.scene.control.Alert
-import javafx.scene.control.RadioButton
 import tornadofx.alert
-import tornadofx.observable
 import java.io.File
 import java.net.URL
 import java.util.*
@@ -63,16 +60,15 @@ class YoutubeDownloader () {
             })
     }
 
-    fun videoListQuality(url:String?): ArrayList<VideoQuality> {
-        val listQuality = arrayListOf<VideoQuality>()
-//        val size = arrayListOf<String>()
+    fun videoListQuality(url:String?): Map<VideoQuality, String> {
+       val map = mutableMapOf<VideoQuality,String>()
         downloader().getVideo(id(url)).videoFormats().forEach {
-            listQuality.add(it.videoQuality())
+            map.plusAssign(it.videoQuality() to "${it.bitrate()}bit")
         }
-        return listQuality
+        return map
     }
 
-    fun videoQuality(url: String?, path: String?, quality:VideoQuality?): Future<File>? {
+    fun videoQuality(url: String?, path: String?, quality:VideoQuality): Future<File>? {
         val videoid = downloader().getVideo(id(url))
         return videoid.downloadAsync(videoid.findVideoWithQuality(quality)[0],
             File(filepath(url, path)),
@@ -89,15 +85,15 @@ class YoutubeDownloader () {
             })
     }
 
-    fun audioListQuality(url: String?): ArrayList<AudioQuality> {
-        val listQuality = arrayListOf<AudioQuality>()
+    fun audioListQuality(url: String?): MutableMap<AudioQuality, String> {
+        val map = mutableMapOf<AudioQuality,String>()
         downloader().getVideo(id(url)).audioFormats().forEach {
-            listQuality.add(it.audioQuality())
+            map.plusAssign(it.audioQuality() to "${it.bitrate()}bit")
         }
-        return listQuality
+        return map
     }
 
-    fun audioQuality(url: String?, path: String?,quality:AudioQuality?): Future<File>? {
+    fun audioQuality(url: String?, path: String?, quality: AudioQuality): Future<File>? {
         val videoid = downloader().getVideo(id(url))
         return videoid.downloadAsync(videoid.findAudioWithQuality(quality)[0],
             File(filepath(url, path)),

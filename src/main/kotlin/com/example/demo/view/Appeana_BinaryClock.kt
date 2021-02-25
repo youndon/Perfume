@@ -11,6 +11,7 @@ fun main() {
     launch<BinaryClockApp>()
 }
 class BinaryClockApp:App(Appeana_BinaryClock::class)
+typealias UBC = UIBinaryClock
 class Appeana_BinaryClock:UIComponent(){
     override val root = hbox {
         setPrefSize(230.0,170.0)
@@ -19,12 +20,12 @@ class Appeana_BinaryClock:UIComponent(){
                 val ss = Timeline(
                     KeyFrame(Duration.ZERO, {
                         when (ti) {
-                            0 -> {text = BC().hh().replaceFirst('◯',' ').replaceFirst('◯',' ')}
-                            1 -> {text = BC().h().replaceFirst('◯',' ')}
-                            2 -> {text = BC().mm().replaceFirst('◯',' ')}
-                            3 -> {text = BC().m()}
-                            4 -> {text = BC().ss().replaceFirst('◯',' ')}
-                            5 -> {text = BC().s()}
+                            0 -> {text = UBC().hh().replaceFirst('◯',' ').replaceFirst('◯',' ')}
+                            1 -> {text = UBC().h().replaceFirst('◯',' ')}
+                            2 -> {text = UBC().mm().replaceFirst('◯',' ')}
+                            3 -> {text = UBC().m()}
+                            4 -> {text = UBC().ss().replaceFirst('◯',' ')}
+                            5 -> {text = UBC().s()}
                         }
                     }),
                     KeyFrame(Duration.seconds(1.0))
@@ -37,9 +38,8 @@ class Appeana_BinaryClock:UIComponent(){
             }
         }
     }
-
 }
-class BC {
+class UIBinaryClock {
     private fun go(): LocalTime = LocalTime.now()
     private fun binary(a:Any) : String {
         return when (a) {
