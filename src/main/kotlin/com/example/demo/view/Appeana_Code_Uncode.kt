@@ -1,10 +1,9 @@
 package com.example.demo.view
 
 import appeanaLib.Coding
-import javafx.scene.control.Button
-import javafx.scene.control.RadioButton
+import appeanaLib.Uncoding
+import javafx.scene.control.TabPane
 import javafx.scene.control.TextArea
-import javafx.scene.text.Text
 import tornadofx.*
 
 fun main() {
@@ -12,47 +11,230 @@ fun main() {
 }
 class Code_UncodeApp:App(Appeana_Code_Uncode::class)
 class Appeana_Code_Uncode :UIComponent(){
-    private var binary = RadioButton()
-    private var hex = RadioButton()
-    private var octal = RadioButton()
-    private var convert = Button()
-    private var input = TextArea()
-    private var output = Text()
-    override val root = form {
+
+    override val root = tabpane {
         setPrefSize(700.0,600.0)
-        borderpane{
-            top{
-                hbox {
-                    spacing = 10.0
-                    convert = button("convert!") {
-                        action {
-                            when {
-                                binary.isSelected -> {
-                                    output.text = Coding().textToBinary(input.text).toString()
-                                }
-                                hex.isSelected -> {
-                                    output.text = Coding().textToHex(input.text).toString()
-                                }
-                                octal.isSelected -> {
-                                    output.text = Coding().textToOctal(input.text).toString()
+        tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
+        tab("text") {
+            val controller = listOf("binary","hex","octal","integer")
+            var input = TextArea()
+            var output = TextArea()
+            borderpane {
+                top {
+                    hbox {
+                       paddingAll = 10 ; spacing = 10.0
+                        togglegroup {
+                            controller.forEach {
+                                radiobutton(it) {
+                                    this.action {
+                                        when(it){
+                                            "binary"-> output.text = Coding().linesToBinary(input.text.lines())
+                                            "hex"-> output.text = Coding().linesToHex(input.text.lines())
+                                            "octal"-> output.text = Coding().linesToOctal(input.text.lines())
+                                            "integer"-> output.text = Coding().linesToInteger(input.text.lines())
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                    togglegroup {
-                        binary = radiobutton("binary")
-                        hex = radiobutton("hex")
-                        octal = radiobutton("octal")
+                }
+                left {
+                    input = textarea {
+                        setPrefSize(350.0, 600.0)
+                    }
+                }
+                right {
+                    flowpane {
+                        output = textarea {
+                            setPrefSize(350.0, 600.0)
+                            this.isEditable=false
+
+                        }
                     }
                 }
             }
-            left{
-                input = textarea {
-                    setPrefSize(350.0,600.0)
+        }
+        tab("binary") {
+            val controller = listOf("text","hex","octal","integer","decimal")
+            var input = TextArea()
+            var output = TextArea()
+            borderpane {
+                top {
+                    hbox {
+                        paddingAll = 10 ; spacing = 10.0
+                        togglegroup {
+                            controller.forEach {
+                                radiobutton(it) {
+                                    this.action {
+                                        when(it){
+                                            "text" -> output.text = Uncoding.binaryToText(input.text.lines())
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                left {
+                    input = textarea {
+                        setPrefSize(350.0, 600.0)
+                    }
+                }
+                right {
+                    flowpane {
+                        output = textarea {
+                            setPrefSize(350.0, 600.0)
+                            this.isEditable=false
+
+                        }
+                    }
                 }
             }
-            right{
-                output = text {
+        }
+        tab("hex") {
+            val controller = listOf("binary","text","octal","integer")
+            var input = TextArea()
+            var output = TextArea()
+            borderpane {
+                top {
+                    hbox {
+                        paddingAll = 10 ; spacing = 10.0
+                        togglegroup {
+                            controller.forEach {
+                                radiobutton(it) {
+                                    this.action {
+                                        when(it){
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                left {
+                    input = textarea {
+                        setPrefSize(350.0, 600.0)
+                    }
+                }
+                right {
+                    flowpane {
+                        output = textarea {
+                            setPrefSize(350.0, 600.0)
+                            this.isEditable=false
+
+                        }
+                    }
+                }
+            }
+        }
+
+        tab("octal") {
+            val controller = listOf("binary","hex","text","integer")
+            var input = TextArea()
+            var output = TextArea()
+            borderpane {
+                top {
+                    hbox {
+                        paddingAll = 10 ; spacing = 10.0
+                        togglegroup {
+                            controller.forEach {
+                                radiobutton(it) {
+                                    this.action {
+                                        when(it){
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                left {
+                    input = textarea {
+                        setPrefSize(350.0, 600.0)
+                    }
+                }
+                right {
+                    flowpane {
+                        output = textarea {
+                            setPrefSize(350.0, 600.0)
+                            this.isEditable=false
+
+                        }
+                    }
+                }
+            }
+        }
+        tab("integer") {
+            val controller = listOf("binary","hex","octal","text")
+            var input = TextArea()
+            var output = TextArea()
+            borderpane {
+                top {
+                    hbox {
+                        paddingAll = 10 ; spacing = 10.0
+                        togglegroup {
+                            controller.forEach {
+                                radiobutton(it) {
+                                    this.action {
+                                        when(it){
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                left {
+                    input = textarea {
+                        setPrefSize(350.0, 600.0)
+                    }
+                }
+                right {
+                    flowpane {
+                        output = textarea {
+                            setPrefSize(350.0, 600.0)
+                            this.isEditable=false
+
+                        }
+                    }
+                }
+            }
+        }
+
+        tab("decimal") {
+            val controller = listOf("binary","hex","octal","integer")
+            var input = TextArea()
+            var output = TextArea()
+            borderpane {
+                top {
+                    hbox {
+                        paddingAll = 10 ; spacing = 10.0
+                        togglegroup {
+                            controller.forEach {
+                                radiobutton(it) {
+                                    this.action {
+                                        when(it){
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                left {
+                    input = textarea {
+                        setPrefSize(350.0, 600.0)
+                    }
+                }
+                right {
+                    flowpane {
+                        output = textarea {
+                            setPrefSize(350.0, 600.0)
+                            this.isEditable=false
+
+                        }
+                    }
                 }
             }
         }

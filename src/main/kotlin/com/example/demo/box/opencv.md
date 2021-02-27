@@ -65,6 +65,7 @@ Hosting artifacts on GitHub is quite easy:
 2-Push the local repository to GitHub
 Installing a JAR to a local repository can be achieved like this (assuming you're inside the local repository folder):
 
+
 ```
 mvn install:install-file -Dfile=/path/to/JAR -DgroupId=$groupId -DartifactId=$artifactId -Dversion=$version -Dpackaging=jar -DlocalRepositoryPath=/path/to/local/repo
 ```
@@ -112,6 +113,7 @@ so it's sufficient to include the JAR in our build in order to extract the nativ
 I'm using the
 `maven-dependency-plugin`
 for this:
+```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-dependency-plugin</artifactId>
@@ -136,6 +138,7 @@ for this:
         </execution>
     </executions>
 </plugin>
+```
 
 The native library will be extracted from the JAR and copied to the
 `/target/lib`
@@ -165,6 +168,7 @@ fun main(args: Array<String>) {
 In order to run Kotlin code we also require the Kotlin standard library.
 One way to do so would be to manually add it to the classpath when executing a Kotlin program,
 a more convenient way is to package our program and the Kotlin standard library as a single standalone JAR.
+```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-assembly-plugin</artifactId>
@@ -189,6 +193,7 @@ a more convenient way is to package our program and the Kotlin standard library 
         </execution>
     </executions>
 </plugin>
+```
 
 #Putting It All Together
 With all parts in place we're able to build the project using

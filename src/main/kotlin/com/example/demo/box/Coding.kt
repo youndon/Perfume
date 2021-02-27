@@ -1,32 +1,57 @@
 package appeanaLib
 
 import com.example.demo.box.CodingList
+import java.util.*
 import kotlin.math.absoluteValue
 
 class Coding {
-    // convert the text to binary.
-    internal fun textToBinary(text: String): List<String> {
-        val ss = arrayListOf<String>()
-        text.forEach {
-           ss.add(Integer.toBinaryString(it.toInt()))
-        }
-        return ss
+    // convert the text to binary, each line separately
+    internal fun linesToBinary(text: List<String>): String {
+        val ss = StringBuffer()
+       text.forEach { lines ->  // all the lines.
+           val cc = arrayListOf<String>()
+           lines.forEach { line -> // for one single line.
+             cc.add(Integer.toBinaryString(line.toInt()))
+           }
+           ss.appendLine(cc.toList().joinToString(" "))
+       }
+        return ss.toString()
     }
-    // convert the text to hex.
-    internal fun textToHex(text: String): List<String> {
-        val ss = arrayListOf<String>()
-        text.forEach {
-            ss.add(Integer.toHexString(it.toInt()).toUpperCase())
-        }
-        return ss
-    }
-    // convert the text to octal.
-    internal fun textToOctal(text: String):List<String> {
-        val ss = arrayListOf<String>()
-        text.forEach {
-                ss.add(Integer.toOctalString(it.toInt()))
+    // convert the text to hex, each line separately
+    internal fun linesToHex(text: List<String>): String {
+        val ss = StringBuffer()
+        text.forEach { lines ->
+        val cc = arrayListOf<String>()
+            lines.forEach {
+                cc.add(Integer.toHexString(it.toInt()).toUpperCase())
             }
-        return ss
+            ss.appendLine(cc.toList().joinToString(" "))
+        }
+        return ss.toString()
+    }
+    // convert the text to octal, each line separately
+    internal fun linesToOctal(text: List<String>): String {
+        val ss = StringBuffer()
+        text.forEach { lines ->
+            val cc = arrayListOf<String>()
+            lines.forEach {
+                cc.add(Integer.toOctalString(it.toInt()))
+            }
+            ss.appendLine(cc.toList().joinToString(" "))
+        }
+        return ss.toString()
+    }
+    // convert the text to integer, each line separately.
+    fun linesToInteger(text:List<String>): String {
+        val ss = StringBuffer()
+        text.forEach { lines ->
+            val cc = arrayListOf<Int>()
+            lines.forEach { line ->
+                cc.add(line.toInt())
+            }
+            ss.appendLine(cc.toList().joinToString(" "))
+        }
+        return ss.toString()
     }
 
     // convert the integer to binary.

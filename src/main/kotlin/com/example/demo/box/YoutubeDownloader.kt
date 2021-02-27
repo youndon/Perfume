@@ -63,7 +63,7 @@ class YoutubeDownloader () {
     fun videoListQuality(url:String?): Map<VideoQuality, String> {
        val map = mutableMapOf<VideoQuality,String>()
         downloader().getVideo(id(url)).videoFormats().forEach {
-            map.plusAssign(it.videoQuality() to "${it.bitrate()}bit")
+            map.plusAssign(it.videoQuality() to "${fileSize(it.bitrate())}(${it.bitrate()})")
         }
         return map
     }
@@ -88,7 +88,7 @@ class YoutubeDownloader () {
     fun audioListQuality(url: String?): MutableMap<AudioQuality, String> {
         val map = mutableMapOf<AudioQuality,String>()
         downloader().getVideo(id(url)).audioFormats().forEach {
-            map.plusAssign(it.audioQuality() to "${it.bitrate()}bit")
+            map.plusAssign(it.audioQuality() to "${fileSize(it.bitrate())}")
         }
         return map
     }
@@ -182,6 +182,18 @@ class YoutubeDownloader () {
             .position(Pos.TOP_RIGHT)
             .text("Downloaded filename is complete!")
             .title("KYD")
+    }
+
+    private fun fileSize(bit:Int): String? {
+        val kb = bit / 1024
+        val mb = bit / (1024*1024)
+        val gb = bit / (1024*1024*1024)
+        when{
+            gb > 0 -> return "$gb GB"
+            mb > 0 -> return "$mb MB"
+            kb > 0 -> return "$kb KB"
+        }
+        return null
     }
 
 }

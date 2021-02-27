@@ -8,22 +8,19 @@ import kotlin.math.absoluteValue
 class Uncoding {
 
     companion object {
-
-
         // convert the binary to text.
-        internal fun binaryToText(bin: String) :String {
-            try {
-                bin.trimEnd().trimStart()
-                        .split(" ")
-                   .forEach {
-                       it.trimStart()
-                       val binary = Integer.parseInt(it, 2).toChar()
-                       print(binary)
-                   }
-            } catch (e: Exception) {
-                ops()
+        internal fun binaryToText(bin: List<String>) : String {
+            val ss = StringBuffer()
+            bin.forEach { lines ->
+                val cc = arrayListOf<String>()
+                lines.split(" ")
+                    .forEach { line ->
+                        line.trimStart()
+                        cc.add("${Integer.parseInt(line, 2).toChar()}")
+                    }
+                ss.appendLine(cc.toList().joinToString(""))
             }
-            return ""
+            return ss.toString()
         }
 
 

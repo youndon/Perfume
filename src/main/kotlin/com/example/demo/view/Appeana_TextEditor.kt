@@ -1,6 +1,5 @@
 package com.example.demo.view
 
-import javafx.scene.Parent
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
 import javafx.scene.text.Font
