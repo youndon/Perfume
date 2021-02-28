@@ -2,8 +2,10 @@ package com.example.demo.view
 
 import appeanaLib.Coding
 import appeanaLib.Uncoding
+import javafx.scene.control.Alert
 import javafx.scene.control.TabPane
 import javafx.scene.control.TextArea
+import net.objecthunter.exp4j.ExpressionBuilder
 import tornadofx.*
 
 fun main() {
@@ -12,6 +14,7 @@ fun main() {
 class Code_UncodeApp:App(Appeana_Code_Uncode::class)
 class Appeana_Code_Uncode :UIComponent(){
 
+    @ExperimentalUnsignedTypes
     override val root = tabpane {
         setPrefSize(700.0,600.0)
         tabClosingPolicy = TabPane.TabClosingPolicy.UNAVAILABLE
@@ -28,10 +31,10 @@ class Appeana_Code_Uncode :UIComponent(){
                                 radiobutton(it) {
                                     this.action {
                                         when(it){
-                                            "binary"-> output.text = Coding().linesToBinary(input.text.lines())
-                                            "hex"-> output.text = Coding().linesToHex(input.text.lines())
-                                            "octal"-> output.text = Coding().linesToOctal(input.text.lines())
-                                            "integer"-> output.text = Coding().linesToInteger(input.text.lines())
+                                            "binary"-> output.text = Coding.linesToBinary(input.text.lines())
+                                            "hex"-> output.text = Coding.linesToHex(input.text.lines())
+                                            "octal"-> output.text = Coding.linesToOctal(input.text.lines())
+                                            "integer"-> output.text = Coding.linesToInteger(input.text.lines())
                                         }
                                     }
                                 }
@@ -67,8 +70,14 @@ class Appeana_Code_Uncode :UIComponent(){
                             controller.forEach {
                                 radiobutton(it) {
                                     this.action {
-                                        when(it){
-                                            "text" -> output.text = Uncoding.binaryToText(input.text.lines())
+                                        try{
+                                            when(it) {
+                                                "text" -> output.text = Uncoding.Binary.binaryToText(input.text.lines())
+                                                "integer" -> output.text = Uncoding.Binary.binaryToInteger(input.text.lines())
+                                                "decimal" -> output.text = Uncoding.Binary.binaryToDouble(input.text.lines())
+                                            }
+                                        }catch (ex:Exception){
+                                            alert(Alert.AlertType.WARNING,ex.localizedMessage)
                                         }
                                     }
                                 }
@@ -79,6 +88,17 @@ class Appeana_Code_Uncode :UIComponent(){
                 left {
                     input = textarea {
                         setPrefSize(350.0, 600.0)
+                        /*
+                        try {
+                            textProperty().onChange {
+                                if (!text.matches("\\d*".toRegex())) {
+                                    text = text.replace("[^\\d ]".toRegex(), "")
+                                }
+                            }
+                        } catch (ex: Exception) {
+                            alert(Alert.AlertType.WARNING,ex.localizedMessage)
+                        }
+                         */
                     }
                 }
                 right {
@@ -238,6 +258,5 @@ class Appeana_Code_Uncode :UIComponent(){
                 }
             }
         }
-
     }
 }

@@ -1,15 +1,13 @@
 package appeanaLib
 
 import com.example.demo.box.CodingList
-import kotlin.math.absoluteValue
+import net.objecthunter.exp4j.ExpressionBuilder
 
 // ...
-@Suppress("NAME_SHADOWING")
-class Uncoding {
-
-    companion object {
+sealed class Uncoding {
+    object Binary {
         // convert the binary to text.
-        internal fun binaryToText(bin: List<String>) : String {
+        internal fun binaryToText(bin: List<String>): String {
             val ss = StringBuffer()
             bin.forEach { lines ->
                 val cc = arrayListOf<String>()
@@ -22,7 +20,36 @@ class Uncoding {
             }
             return ss.toString()
         }
+        // convert the binary to integer.
+        @ExperimentalUnsignedTypes
+        internal fun binaryToInteger(nm: List<String>): String {
+            val ss = StringBuffer()
+            nm.forEach { lines ->
+                ss.appendLine(
+                    Integer.parseInt(lines,2)
+                        .toString().toList().joinToString("")
+                )
+            }
+            return ss.toString()
 
+        }
+        // convert binary to double.
+        internal fun binaryToDouble(bin: List<String>): String {
+            val ss = StringBuffer()
+            bin.forEach { lines ->
+                val cc = arrayListOf<String>()
+                lines.split(" ").forEach {line ->
+                    val las0 = ExpressionBuilder(line).build().evaluate().toBigDecimal()
+                        .toString().takeLast(line.toBigDecimal().scale()).toList()
+                    val las1 = CodingList().decreasing().zip(las0).filter { it.second == '1' }.sumByDouble { it.first }
+                    val las2 = Integer.parseInt(line.substringBefore('.'), 2)
+                    cc.add("${las1+las2}")
+                }
+                ss.appendLine(cc.toList().joinToString(" "))
+            }
+            return ss.toString()
+        }
+    }
 
 
         // convert the hex to text.
@@ -60,8 +87,6 @@ class Uncoding {
 
 
 
-        // convert the binary to integer.
-        internal fun binaryToInteger(nm: Long) = (Integer.parseInt(nm.toString(), 2))
 
         // convert the integer to hex.
         internal fun integerToHex(nm: Int) = (Integer.toHexString(nm))
@@ -87,14 +112,7 @@ class Uncoding {
 
 
 
-        // convert binary to double.
-       internal fun binaryToDouble(bin: Double): Double {
-            val las0 = bin.toString().takeLast(bin.toBigDecimal().scale()).toList()
-            val las1 = CodingList().decreasing().zip(las0).filter { it.second == '1' }.sumByDouble { it.first }
-            val las2 = Integer.parseInt(bin.toInt().toString(),2)
-            return (las1 + las2)
-        }
+
 
        private fun ops() = println(("Ops! Something Wrong:("))
-    }
 }
