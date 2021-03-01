@@ -1,11 +1,10 @@
 package com.example.demo.view
 
 import appeanaLib.Coding
-import appeanaLib.Uncoding
+import appeanaLib.Decoding
 import javafx.scene.control.Alert
 import javafx.scene.control.TabPane
 import javafx.scene.control.TextArea
-import net.objecthunter.exp4j.ExpressionBuilder
 import tornadofx.*
 
 fun main() {
@@ -31,10 +30,10 @@ class Appeana_Code_Uncode :UIComponent(){
                                 radiobutton(it) {
                                     this.action {
                                         when(it){
-                                            "binary"-> output.text = Coding.linesToBinary(input.text.lines())
-                                            "hex"-> output.text = Coding.linesToHex(input.text.lines())
-                                            "octal"-> output.text = Coding.linesToOctal(input.text.lines())
-                                            "integer"-> output.text = Coding.linesToInteger(input.text.lines())
+                                            "integer"-> output.text = Coding.`linesToText&Binary&Octal&Hex`(input.text.lines()).first
+                                            "binary"-> output.text = Coding.`linesToText&Binary&Octal&Hex`(input.text.lines()).second.first
+                                            "hex"-> output.text = Coding.`linesToText&Binary&Octal&Hex`(input.text.lines()).second.second
+                                            "octal"-> output.text = Coding.`linesToText&Binary&Octal&Hex`(input.text.lines()).second.third
                                         }
                                     }
                                 }
@@ -72,9 +71,11 @@ class Appeana_Code_Uncode :UIComponent(){
                                     this.action {
                                         try{
                                             when(it) {
-                                                "text" -> output.text = Uncoding.Binary.binaryToText(input.text.lines())
-                                                "integer" -> output.text = Uncoding.Binary.binaryToInteger(input.text.lines())
-                                                "decimal" -> output.text = Uncoding.Binary.binaryToDouble(input.text.lines())
+                                                "text" -> output.text = Decoding.Binary.`binToText&Integer`(input.text.lines()).first
+                                                "integer" -> output.text = Decoding.Binary.`binToText&Integer`(input.text.lines()).second
+                                                "decimal" -> output.text = Decoding.Binary.binaryToDouble(input.text.lines())
+                                                "hex" -> output.text = Decoding.Binary.`binToHex&Octal`(input.text.lines()).first
+                                                "octal" -> output.text = Decoding.Binary.`binToHex&Octal`(input.text.lines()).second
                                             }
                                         }catch (ex:Exception){
                                             alert(Alert.AlertType.WARNING,ex.localizedMessage)
@@ -88,17 +89,6 @@ class Appeana_Code_Uncode :UIComponent(){
                 left {
                     input = textarea {
                         setPrefSize(350.0, 600.0)
-                        /*
-                        try {
-                            textProperty().onChange {
-                                if (!text.matches("\\d*".toRegex())) {
-                                    text = text.replace("[^\\d ]".toRegex(), "")
-                                }
-                            }
-                        } catch (ex: Exception) {
-                            alert(Alert.AlertType.WARNING,ex.localizedMessage)
-                        }
-                         */
                     }
                 }
                 right {
@@ -125,6 +115,10 @@ class Appeana_Code_Uncode :UIComponent(){
                                 radiobutton(it) {
                                     this.action {
                                         when(it){
+                                            "text" -> output.text = Decoding.Hex.`hexToText&Integer`(input.text.lines()).first
+                                            "integer" -> output.text = Decoding.Hex.`hexToText&Integer`(input.text.lines()).second
+                                            "binary" -> output.text = Decoding.Hex.`hexToHex&Octal`(input.text.lines()).first
+                                            "octal" -> output.text = Decoding.Hex.`hexToHex&Octal`(input.text.lines()).second
                                         }
                                     }
                                 }

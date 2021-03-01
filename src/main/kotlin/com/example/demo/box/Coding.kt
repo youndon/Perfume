@@ -6,56 +6,26 @@ import kotlin.math.absoluteValue
 
 class Coding {
     companion object {
-        // convert the text to binary, each line separately
-        internal fun linesToBinary(text: List<String>): String {
-            val ss = StringBuffer()
-            text.forEach { lines ->  // all the lines.
-                val cc = arrayListOf<String>()
-                lines.forEach { line -> // for one single line.
-                    cc.add(Integer.toBinaryString(line.toInt()))
-                }
-                ss.appendLine(cc.toList().joinToString(" "))
-            }
-            return ss.toString()
-        }
 
-        // convert the text to hex, each line separately
-        internal fun linesToHex(text: List<String>): String {
-            val ss = StringBuffer()
-            text.forEach { lines ->
-                val cc = arrayListOf<String>()
-                lines.forEach {
-                    cc.add(Integer.toHexString(it.toInt()).toUpperCase())
+        fun `linesToText&Binary&Octal&Hex`(txt: List<String>): Pair<String, Triple<String, String, String>> {
+            val ss = Pair(StringBuffer(),Triple(StringBuffer(),StringBuffer(),StringBuffer()))
+            txt.forEach { line ->
+                val cc = arrayListOf(mutableListOf(""),mutableListOf(""),mutableListOf(""),mutableListOf(""))
+                line.forEach { it ->
+                    cc[0].add("${it.toInt()}") // text
+                    cc[1].add(Integer.toBinaryString(it.toInt())) // binary
+                    cc[2].add(Integer.toOctalString(it.toInt())) // octal
+                    cc[3].add(Integer.toHexString(it.toInt()).toUpperCase()) // hex
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.first.appendLine(cc[0].toList().joinToString(""))
+                ss.second.first.appendLine(cc[1].toList().joinToString(" "))
+                ss.second.second.appendLine(cc[2].toList().joinToString(" "))
+                ss.second.third.appendLine(cc[3].toList().joinToString(" "))
             }
-            return ss.toString()
-        }
-
-        // convert the text to octal, each line separately
-        internal fun linesToOctal(text: List<String>): String {
-            val ss = StringBuffer()
-            text.forEach { lines ->
-                val cc = arrayListOf<String>()
-                lines.forEach {
-                    cc.add(Integer.toOctalString(it.toInt()))
-                }
-                ss.appendLine(cc.toList().joinToString(" "))
-            }
-            return ss.toString()
-        }
-
-        // convert the text to integer, each line separately.
-        fun linesToInteger(text: List<String>): String {
-            val ss = StringBuffer()
-            text.forEach { lines ->
-                val cc = arrayListOf<Int>()
-                lines.forEach { line ->
-                    cc.add(line.toInt())
-                }
-                ss.appendLine(cc.toList().joinToString(" "))
-            }
-            return ss.toString()
+            return Pair(ss.first.toString(),
+                              Triple(ss.second.first.toString(),
+                                     ss.second.second.toString(),
+                                           ss.second.third.toString()))
         }
 
         // convert the integer to binary.

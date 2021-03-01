@@ -1,8 +1,8 @@
-import appeanaLib.Uncoding
+import appeanaLib.Decoding
 
 fun main() {
 
-    println(Uncoding.Binary.binaryToDouble("100000.0000000000001".lines()))
+    println(Decoding.Binary.binaryToDouble("100000.0000000000001".lines()))
 }
 
 
