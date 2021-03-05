@@ -41,6 +41,11 @@
         </dependency>
 
         <dependency>
+            <groupId>org.knowhowlab.osgi</groupId>
+            <artifactId>sigar</artifactId>
+            <version>1.6.5_01</version>
+        </dependency>
+        <dependency>
             <groupId>com.dorkbox</groupId>
             <artifactId>Notify</artifactId>
             <version>3.7</version>
@@ -82,6 +87,11 @@
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.goxr3plus</groupId>
+            <artifactId>java-google-speech-api</artifactId>
+            <version>8.0.0</version>
         </dependency>
     </dependencies>
 
@@ -132,7 +142,6 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-
                         <jvmTarget>1.8</jvmTarget>
                         </configuration>
                     </execution>
@@ -145,7 +154,6 @@
                     </execution>
                 </executions>
                 <configuration>
-
                     <jvmTarget>1.8</jvmTarget>
                 </configuration>
             </plugin>
