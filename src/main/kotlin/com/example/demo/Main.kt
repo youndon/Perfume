@@ -1,5 +1,8 @@
+import com.darkprograms.speech.recognizer.Languages
+import com.darkprograms.speech.translator.GoogleTranslate
+
 fun main() {
 
-    print((1024*1024))
+    println(GoogleTranslate.translate("ar", "land"))
 
 }

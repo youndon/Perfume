@@ -15,7 +15,7 @@ import java.util.*
 import java.util.concurrent.Future
 import javax.imageio.ImageIO
 
-class YoutubeDownloader () {
+class YoutubeDownloader {
 
     private fun id(url: String?): String? {
         return url?.substringAfter('=')?.substringBefore('&')
@@ -185,15 +185,15 @@ class YoutubeDownloader () {
     }
 
     private fun fileSize(bit:Int): String? {
-        val kb = bit / 1024
-        val mb = bit / (1024*1024)
-        val gb = bit / (1024*1024*1024)
-        when{
-            gb > 0 -> return "$gb GB"
-            mb > 0 -> return "$mb MB"
-            kb > 0 -> return "$kb KB"
-        }
-        return null
+        val kb = bit / 8_000
+        val mb = bit / 8_000_000
+        val gb = bit / 8_000_000_000
+       return when{
+            gb >= 1 -> "$gb GB"
+            mb >= 1 -> "$mb MB"
+            kb >= 1 -> "$kb KB"
+           else -> null
+       }
     }
 
 }
