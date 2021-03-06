@@ -34,11 +34,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sigarlib" level="project" />
+    <orderEntry type="library" name="Maven: com.github.sarxos:webcam-capture:0.3.12" level="project" />
+    <orderEntry type="library" name="Maven: com.nativelibs4java:bridj:0.7.0" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.2" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:Executor:2.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-common:1.4.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: io.github.microutils:kotlin-logging-jvm:2.0.4" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.hierynomus:sshj:0.30.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.bouncycastle:bcprov-jdk15on:1.66" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.66" level="project" />
@@ -53,7 +56,9 @@
     <orderEntry type="library" name="Maven: com.dorkbox:SystemTray:3.17" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:ShellExecutor:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.23.0-GA" level="project" />
-    <orderEntry type="library" name="Maven: org.knowhowlab.osgi:sigar:1.6.5_01" level="project" />
+    <orderEntry type="library" name="Maven: com.tqdev.metrics:metrics-sigar:0.9.26" level="project" />
+    <orderEntry type="library" name="Maven: com.tqdev.metrics:metrics-core:0.9.26" level="project" />
+    <orderEntry type="library" name="Maven: org.hyperic:sigar:1.6.5.132-6" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:Notify:3.7" level="project" />
     <orderEntry type="library" name="Maven: com.github.sealedtx:java-youtube-downloader:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.62" level="project" />

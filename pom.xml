@@ -15,7 +15,11 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.github.sarxos</groupId>
+            <artifactId>webcam-capture</artifactId>
+            <version>0.3.12</version>
+        </dependency>
         <dependency>
             <groupId>com.dorkbox</groupId>
             <artifactId>Executor</artifactId>
@@ -41,9 +45,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.knowhowlab.osgi</groupId>
-            <artifactId>sigar</artifactId>
-            <version>1.6.5_01</version>
+            <groupId>com.tqdev.metrics</groupId>
+            <artifactId>metrics-sigar</artifactId>
+            <version>0.9.26</version>
         </dependency>
         <dependency>
             <groupId>com.dorkbox</groupId>
