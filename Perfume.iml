@@ -56,6 +56,7 @@
     <orderEntry type="library" name="Maven: com.dorkbox:SystemTray:3.17" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:ShellExecutor:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.23.0-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.knowhowlab.osgi:sigar:1.6.5_01" level="project" />
     <orderEntry type="library" name="Maven: com.tqdev.metrics:metrics-sigar:0.9.26" level="project" />
     <orderEntry type="library" name="Maven: com.tqdev.metrics:metrics-core:0.9.26" level="project" />
     <orderEntry type="library" name="Maven: org.hyperic:sigar:1.6.5.132-6" level="project" />
