@@ -15,7 +15,7 @@ import javafx.scene.text.Text
 import tornadofx.*
 
 fun main() {
-    launch<MainLand>()
+        launch<MainLand>()
 }
 class MainLand:App(ViewLand::class)
 
