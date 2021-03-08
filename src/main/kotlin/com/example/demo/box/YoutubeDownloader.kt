@@ -184,15 +184,15 @@ class YoutubeDownloader {
             .title("KYD")
     }
 
-    private fun fileSize(bit:Int): String? {
-        val kb = bit / 8_000
-        val mb = bit / 8_000_000
-        val gb = bit / 8_000_000_000
+    private fun fileSize(bit:Int): String {
+        val kibibit = bit / 1024
+        val mibibit = bit / 1048576
+        val gibibit = bit / 1073742000
        return when{
-            gb >= 1 -> "$gb GB"
-            mb >= 1 -> "$mb MB"
-            kb >= 1 -> "$kb KB"
-           else -> null
+           bit>=1024 -> "$kibibit Kb"
+           bit>=1048576 -> "$mibibit Mb"
+           bit>=1073742000 -> "$gibibit Gb"
+           else -> "$bit Bit"
        }
     }
 

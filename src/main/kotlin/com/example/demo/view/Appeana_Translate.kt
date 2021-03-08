@@ -44,10 +44,6 @@ class Appeana_Translate:UIComponent() {
                 }
             }
         }
-        addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED) {
-            thread {
 //                output.text = GoogleTranslate.translate(language.selectedItem, input.text)
-            }.start()
-        }
     }
 }
