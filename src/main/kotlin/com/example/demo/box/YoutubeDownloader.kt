@@ -88,7 +88,7 @@ class YoutubeDownloader {
     fun audioListQuality(url: String?): MutableMap<AudioQuality, String> {
         val map = mutableMapOf<AudioQuality,String>()
         downloader().getVideo(id(url)).audioFormats().forEach {
-            map.plusAssign(it.audioQuality() to "${fileSize(it.bitrate())}")
+            map.plusAssign(it.audioQuality() to fileSize(it.bitrate()))
         }
         return map
     }

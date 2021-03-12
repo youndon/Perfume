@@ -6,6 +6,7 @@ import javafx.animation.Timeline
 import javafx.util.Duration
 import tornadofx.*
 import java.time.LocalTime
+import kotlin.concurrent.thread
 
 fun main() {
     launch<BinaryClockApp>()

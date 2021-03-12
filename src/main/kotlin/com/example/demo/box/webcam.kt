@@ -63,7 +63,7 @@ open class WebCamAppLauncher : Application() {
         bottomCameraControlPane!!.vgap = 10.0
         bottomCameraControlPane!!.prefHeight = 40.0
         bottomCameraControlPane!!.isDisable = true
-        createCameraControls()
+            createCameraControls()
         root!!.bottom = bottomCameraControlPane
         primaryStage.scene = Scene(root)
         primaryStage.height = 700.0
