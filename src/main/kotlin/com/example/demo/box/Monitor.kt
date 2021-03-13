@@ -1,5 +1,8 @@
 package com.example.demo.box
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.hyperic.sigar.CpuInfo
 import org.hyperic.sigar.CpuPerc
 import org.hyperic.sigar.Sigar
@@ -18,7 +21,7 @@ sealed class Monitor {
 
     object MEM {
         fun total(): String = Sigar.formatSize(sigar.mem.total)
-        fun used(): String = Sigar.formatSize(sigar.mem.used)
+        fun used(): Long = sigar.mem.used
         fun actualUsed(): String = Sigar.formatSize(sigar.mem.actualUsed)
         fun usedPercent() = sigar.mem.usedPercent
         fun free(): Long = (sigar.mem.free)
@@ -33,6 +36,20 @@ sealed class Monitor {
         fun totalDownloads() = sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).rxBytes
         fun totalUploads() = sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).txBytes
 
+        fun traffic(): Pair<Long, Long> {
+            var beforeLastDown: Long;
+            var lastDown = 0L
+            var beforeLastUp: Long;
+            var lastUp = 0L
+            runBlocking {
+                launch {
+                    beforeLastDown = totalDownloads(); beforeLastUp = totalUploads()
+                    delay(1000)
+                    lastDown = totalDownloads() - beforeLastDown; lastUp = totalUploads() - beforeLastUp
+                }.start()
+            }
+            return Pair(lastDown,lastUp)
+        }
         fun info() {
             sigar.netInfo.toMap()
         }
@@ -81,5 +98,3 @@ sealed class Monitor {
         }
     }
 }
-
-class MonitorModel : ItemViewModel<Monitor>() {}
