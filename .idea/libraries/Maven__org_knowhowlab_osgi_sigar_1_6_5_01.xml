@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.knowhowlab.osgi:sigar:1.6.5_01">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/knowhowlab/osgi/sigar/1.6.5_01/sigar-1.6.5_01.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/knowhowlab/osgi/sigar/1.6.5_01/sigar-1.6.5_01-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/knowhowlab/osgi/sigar/1.6.5_01/sigar-1.6.5_01-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
