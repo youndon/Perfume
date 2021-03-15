@@ -98,14 +98,14 @@ class Appeana_AudioPlayer:UIComponent() {
                                         }
                                     }
                                     mediaplayer?.currentTimeProperty()!!.addListener(InvalidationListener {
-                                        currenttime.text = SimpleDateFormat("ss")
+                                        currenttime.text = SimpleDateFormat("net")
                                             .parse(mediaplayer?.currentTime!!.toSeconds().toString())
                                             .toString()
                                             .drop(11) // substring!!
                                             .dropLast(9)
                                             .trimStart { it == '0' }
                                             .trimStart { it == ':' }
-                                        totaltime.text = SimpleDateFormat("ss")
+                                        totaltime.text = SimpleDateFormat("net")
                                             .parse(mediaplayer?.totalDuration!!.toSeconds().toString())
                                             .toString()
                                             .drop(11)

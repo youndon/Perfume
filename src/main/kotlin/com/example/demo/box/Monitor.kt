@@ -7,6 +7,7 @@ import org.hyperic.sigar.CpuInfo
 import org.hyperic.sigar.CpuPerc
 import org.hyperic.sigar.Sigar
 import tornadofx.ItemViewModel
+import java.util.ArrayList
 import kotlin.concurrent.thread
 
 sealed class Monitor {
@@ -15,8 +16,8 @@ sealed class Monitor {
     }
     object SWAP {
         fun total(): String = Sigar.formatSize(sigar.swap.total)
-        fun used(): String = Sigar.formatSize(sigar.swap.used)
-        fun free(): String = Sigar.formatSize(sigar.swap.free)
+        fun used(): Long = (sigar.swap.used)
+        fun free(): Long = (sigar.swap.free)
     }
 
     object MEM {

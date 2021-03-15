@@ -14,7 +14,7 @@ sealed class Converter {
                 line.forEach {
                     cc.add(Integer.toBinaryString(it.toInt()))
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.appendln(cc.toList().joinToString(" "))
             }
             return ss.toString()
         }
@@ -26,7 +26,7 @@ sealed class Converter {
                 line.forEach {
                     cc.add(Integer.toHexString(it.toInt()).toUpperCase())
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.appendln(cc.toList().joinToString(" "))
             }
             return ss.toString()
         }
@@ -38,7 +38,7 @@ sealed class Converter {
                 line.forEach {
                     cc.add(Integer.toOctalString(it.toInt()))
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.appendln(cc.toList().joinToString(" "))
             }
             return ss.toString()
         }
@@ -50,7 +50,7 @@ sealed class Converter {
                 line.forEach {
                     cc.add("${it.toInt()}")
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.appendln(cc.toList().joinToString(" "))
             }
             return ss.toString()
         }
@@ -64,7 +64,7 @@ sealed class Converter {
                 line.split(" ").forEach {
                     cc.add("${Integer.parseInt(it, 2).toChar()}")
                 }
-                ss.appendLine(cc.toList().joinToString(""))
+                ss.appendln(cc.toList().joinToString(""))
             }
             return ss.toString()
         }
@@ -75,7 +75,7 @@ sealed class Converter {
                 line.split(" ").forEach {
                         cc.add("${Integer.parseInt(it, 2)}")
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.appendln(cc.toList().joinToString(" "))
             }
             return ss.toString()
         }
@@ -92,7 +92,7 @@ sealed class Converter {
                     val decimalpart = Integer.parseInt(line.substringBefore('.'), 2)
                     cc.add("${integerpart + decimalpart}")
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.appendln(cc.toList().joinToString(" "))
             }
             return ss.toString()
         }
@@ -111,7 +111,7 @@ sealed class Converter {
                         integer.add(ExpressionBuilder("$c").build().evaluate() * 2.0.pow(index))
                     }
                 }
-                ss.appendLine("${integer.sum()+fraction.sumByDouble { d -> d }}")
+                ss.appendln("${integer.sum()+fraction.sumByDouble { d -> d }}")
             }
             return ss.toString()
         }
@@ -131,7 +131,7 @@ sealed class Converter {
                 line.split(" ").forEach {
                     cc.add("${Integer.parseInt(it, 16).toChar()}")
                 }
-                ss.appendLine(cc.toList().joinToString(""))
+                ss.appendln(cc.toList().joinToString(""))
             }
             return ss.toString()
         }
@@ -157,7 +157,7 @@ sealed class Converter {
                 line.split(" ").forEach {
                     cc.add("${Integer.parseInt(it, 8).toChar()}")
                 }
-                ss.appendLine(cc.toList().joinToString(""))
+                ss.appendln(cc.toList().joinToString(""))
             }
             return ss.toString()
         }
@@ -183,7 +183,7 @@ sealed class Converter {
                 line.split(" ").forEach {
                     cc.add("${ExpressionBuilder(it).build().evaluate().toBigDecimal().toInt().toChar()}")
                 }
-                ss.appendLine(cc.toList().joinToString(""))
+                ss.appendln(cc.toList().joinToString(""))
             }
             return ss.toString()
         }
@@ -210,7 +210,7 @@ sealed class Converter {
                         ExpressionBuilder(it).build().evaluate()
                    ))
                 }
-                ss.appendLine(cc.toList().joinToString(" "))
+                ss.appendln(cc.toList().joinToString(" "))
             }
             return ss.toString()
         }
