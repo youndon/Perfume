@@ -3,30 +3,37 @@ package com.example.demo.box
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import net.objecthunter.exp4j.ExpressionBuilder
 import org.hyperic.sigar.CpuInfo
 import org.hyperic.sigar.CpuPerc
 import org.hyperic.sigar.Sigar
-import tornadofx.ItemViewModel
-import java.util.ArrayList
-import kotlin.concurrent.thread
 
 sealed class Monitor {
     companion object{
         val sigar = Sigar()
     }
     object SWAP {
-        fun total(): String = Sigar.formatSize(sigar.swap.total)
+        fun total(): Long = (sigar.swap.total)
         fun used(): Long = (sigar.swap.used)
         fun free(): Long = (sigar.swap.free)
+        fun freePerc() = (free().toDouble() * 100) / total()
+        fun usedPerc() = (used().toDouble() * 100) / total()
+        // format.
+        fun totalF() = Sigar.formatSize(total())
+        fun freeF() = Sigar.formatSize(free())
+        fun usedF() = Sigar.formatSize(used())
     }
 
     object MEM {
-        fun total(): String = Sigar.formatSize(sigar.mem.total)
-        fun used(): Long = sigar.mem.used
-        fun actualUsed(): String = Sigar.formatSize(sigar.mem.actualUsed)
+        fun total(): Long = (sigar.mem.total)
+        fun totalF(): String = Sigar.formatSize(sigar.mem.total)
+        fun used(): String? = Sigar.formatSize(sigar.mem.used)
+        fun actualUsed(): Long = (sigar.mem.actualUsed)
+        fun actualUsedPerc(): Double = (actualUsed() * 100).toDouble() / total()
         fun usedPercent() = sigar.mem.usedPercent
         fun free(): Long = (sigar.mem.free)
-        fun actualFree(): String = Sigar.formatSize(sigar.mem.actualFree)
+        fun actualFree(): Long = (sigar.mem.actualFree)
+        fun actualFreePerc(): Double = (actualFree() * 100).toDouble() / total()
         fun freePercent() = sigar.mem.freePercent
         fun ram(): String? {
             return Sigar.formatSize(sigar.mem.ram)
@@ -57,40 +64,13 @@ sealed class Monitor {
     }
 
     object CPU {
-        fun cpu1() = try {
-            sigar.cpuPercList[0].toString().slice(11..16)
-        } catch (ex: Exception) {
-            "No!"
-        }
-
-        fun cpu2() = try {
-            sigar.cpuPercList[1].toString().slice(11..16)
-        } catch (ex: Exception) {
-            "No!"
-        }
-
-        fun cpu3() = try {
-            sigar.cpuPercList[2].toString().slice(11..16)
-        } catch (ex: Exception) {
-            "No!"
-        }
-
-        fun cpu4() = try {
-            sigar.cpuPercList[3].toString().slice(11..16)
-        } catch (ex: Exception) {
-            "No!"
-        }
-
-        fun cpu5() = try {
-            sigar.cpuPercList[4].toString().slice(11..16)
-        } catch (ex: Exception) {
-            "No!"
-        }
-
-        fun cpu6() = try {
-            sigar.cpuPercList[5].toString().slice(11..16)
-        } catch (ex: Exception) {
-            "No!"
+        fun cpulis(index: Int): Double {
+            try {
+                val perc = sigar.cpuPercList[index].toString().slice(11..16).trimStart().trimEnd().trimEnd('%')
+                return ExpressionBuilder(perc).build().evaluate()
+            }catch (ex: Exception){
+            }
+            return 0.0
         }
         fun combined(): CpuPerc = sigar.cpuPerc
 
