@@ -1,6 +1,8 @@
 package com.example.demo.view
 
 import com.example.demo.box.Monitor
+import com.example.demo.box.YoutubeDownloader
+import com.github.kiulian.downloader.OnYoutubeDownloadListener
 import javafx.animation.Animation
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
@@ -8,134 +10,72 @@ import javafx.scene.chart.*
 import javafx.util.Duration
 import tornadofx.*
 import javafx.collections.FXCollections
+import javafx.scene.Parent
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.LineChart
+import javafx.scene.control.Alert
+import javafx.scene.text.Text
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.hyperic.sigar.Sigar
+import java.io.File
+import java.util.concurrent.Future
 
 fun main() = launch<MainLand>()
 class MainLand:App(ViewLand::class)
 
 class ViewLand:UIComponent() {
-    var traffic = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
-    var cpu = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
-    var mem = PieChart()
-    var swap = PieChart()
-    var lisDown = (0L..60L).toList() as ArrayList
-    var lisUp = (0L..60L).toList() as ArrayList
-    var down = arrayListOf(0L)
-    var up = arrayListOf(0L)
+    var txt = Text()
+    override val root =form {
+        setPrefSize(300.0, 300.0)
+        txt = text("...") {
 
-
-    override val root = tabpane {
-
-        tab("Network") {
-            traffic = linechart(
-                "Traffic | Total Down:${Sigar.formatSize(Monitor.NETWORK.totalDownloads())} | Total Up:${Sigar.formatSize(Monitor.NETWORK.totalUploads())}",
-                NumberAxis(), NumberAxis()
-            )
-            tab("RAM/SWAP") {
-                borderpane {
-                    right {
-                        mem = piechart("RAM | ${Monitor.MEM.totalF()}")
-                    }
-                    left {
-                        swap = piechart("SWAP | ${Monitor.SWAP.totalF()}")
-                    }
-                }
+        }
+        videoWithAudio("https://www.youtube.com/watch?v=TvWcU3aztmo","/home/yon/")
+    }
+        fun downloader(): com.github.kiulian.downloader.YoutubeDownloader {
+            // init downloader:
+            val downloader = com.github.kiulian.downloader.YoutubeDownloader()
+            downloader.run {
+                // downloader configurations:
+                setParserRequestProperty(
+                    "User-Agent",
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36",
+                )
+                setParserRetryOnFailure(1)
             }
-            tab("CPU") {
-                borderpane {
-                    center {
-                        cpu = linechart(
-                            "CPU | ${Monitor.sigar.cpuInfoList[0].model} ${Monitor.sigar.cpuInfoList[0].totalCores} core",
-                            NumberAxis(), NumberAxis()
-                        )
-                    }
-                }
-            }
+            return downloader
+        }
 
-            val cc = Timeline(
-                KeyFrame(Duration.ZERO, {
-                    // traffic
-                    traffic.data.clear()
-                    traffic.animated = false
-                    traffic.series("Downloads(${(lisDown.last())})") {
-                        lisDown.withIndex().forEach {
-                            data(it.index, it.value)
+         fun id(url: String?): String? {
+            return url?.substringAfter('=')?.substringBefore('&')
+        }
+         fun filename(url: String?): String {
+            return downloader().getVideo(id(url)).details().title().substringBefore('|')
+        }
+        fun filepath(url: String?, path: String?): String {
+            return "${path}/${filename(url)}"
+        }
+        fun videoWithAudio(url: String?, path: String?): Future<File>? {
+            val videoid = downloader().getVideo(id(url))
+            return videoid.downloadAsync(videoid.videoWithAudioFormats()[0],
+                File(filepath(url, path)),
+                object : OnYoutubeDownloadListener {
+                    override fun onDownloading(p0: Int) {
+                        runBlocking {
+                            launch {
+                                //
+                                txt.text = p0.toString()
+                            }.start()
                         }
+                        println("$p0%")
                     }
-                    traffic.series("Uploads(${(lisUp.last())})") {
-                        lisUp.withIndex().forEach {
-                            data(it.index, it.value)
-                        }
+                    override fun onFinished(p0: File?) {
                     }
-                    down.plusAssign(Monitor.NETWORK.totalDownloads())
-                    up.plusAssign(Monitor.NETWORK.totalUploads())
-
-                    lisDown.add(down.last() - down.first())
-                    lisUp.add(up.last() - up.first())
-                    down.removeAt(0)
-                    up.removeAt(0)
-                    lisDown.removeAt(0)
-                    lisUp.removeAt(0)
-
-
-                    // MEM
-                    mem.data.clear()
-                    mem.animated = false
-                    mem.data(
-                        "used(${"%.2f".format(Monitor.MEM.actualUsedPerc())})%",
-                        Monitor.MEM.actualUsed().toDouble()
-                    )
-                    mem.data(
-                        "free(${"%.2f".format(Monitor.MEM.actualFreePerc())})%",
-                        Monitor.MEM.actualFree().toDouble()
-                    )
-
-                    // SWAP
-                    swap.data.clear()
-                    swap.animated = false
-                    swap.data("used(${"%.2f".format(Monitor.SWAP.usedPerc())})%", Monitor.SWAP.usedPerc())
-                    swap.data("used(${"%.2f".format(Monitor.SWAP.freePerc())})%", Monitor.SWAP.freePerc())
-
-                    // CUP
-                    cpu.data.clear()
-                    cpu.animated = false
-                    cpu.run {
-                        (1..Monitor.CPU.coresN()).withIndex().forEach { core ->
-                            runBlocking {
-                                launch {
-                                    series("cpu${core.value}") {
-                                        lisCpu[core.index].withIndex().forEach {
-                                            data(it.index, it.value as Number?)
-                                        }
-                                    }
-                                    lisCpu[core.index].add(Monitor.CPU.dr(core.index)!!.toLong())
-                                    lisCpu[core.index].removeAt(0)
-                                    delay(70)
-                                }.start()
-                            }
-                        }
+                    override fun onError(p0: Throwable?) {
+                        alert(Alert.AlertType.ERROR, p0?.localizedMessage.toString())
                     }
-                }),
-                KeyFrame(Duration.seconds(1.0))
-            )
-            cc.cycleCount = Animation.INDEFINITE
-            cc.play()
+                })
         }
     }
-}
-
-var lisCpu = arrayListOf(
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-)

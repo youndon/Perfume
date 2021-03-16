@@ -8,6 +8,8 @@ import com.github.kiulian.downloader.model.quality.VideoQuality
 import dorkbox.notify.Notify
 import dorkbox.notify.Pos
 import javafx.scene.control.Alert
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import tornadofx.alert
 import java.io.File
 import java.net.URL
@@ -21,7 +23,7 @@ class YoutubeDownloader {
         return url?.substringAfter('=')?.substringBefore('&')
     }
 
-    private fun downloader(): YoutubeDownloader {
+     fun downloader(): YoutubeDownloader {
         // init downloader:
         val downloader = YoutubeDownloader()
         downloader.run {
@@ -49,6 +51,12 @@ class YoutubeDownloader {
             File(filepath(url, path)),
             object : OnYoutubeDownloadListener {
                 override fun onDownloading(p0: Int) {
+                    runBlocking {
+                        launch {
+                            //
+
+                        }.start()
+                    }
                     println("$p0%")
                 }
                 override fun onFinished(p0: File?) {
@@ -63,7 +71,7 @@ class YoutubeDownloader {
     fun videoListQuality(url:String?): Map<VideoQuality, String> {
        val map = mutableMapOf<VideoQuality,String>()
         downloader().getVideo(id(url)).videoFormats().forEach {
-            map.plusAssign(it.videoQuality() to "${fileSize(it.bitrate())}(${it.bitrate()})")
+            map.plusAssign(it.videoQuality() to "${it.bitrate()}")
         }
         return map
     }
@@ -88,7 +96,7 @@ class YoutubeDownloader {
     fun audioListQuality(url: String?): MutableMap<AudioQuality, String> {
         val map = mutableMapOf<AudioQuality,String>()
         downloader().getVideo(id(url)).audioFormats().forEach {
-            map.plusAssign(it.audioQuality() to fileSize(it.bitrate()))
+            map.plusAssign(it.audioQuality() to "${it.bitrate()}")
         }
         return map
     }
