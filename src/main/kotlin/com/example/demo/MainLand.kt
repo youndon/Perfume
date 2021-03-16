@@ -10,6 +10,7 @@ import tornadofx.*
 import javafx.collections.FXCollections
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.LineChart
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.hyperic.sigar.Sigar
@@ -19,7 +20,6 @@ class MainLand:App(ViewLand::class)
 
 class ViewLand:UIComponent() {
     var traffic = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
-    var cpuCombined = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
     var cpu = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
     var mem = PieChart()
     var swap = PieChart()
@@ -27,16 +27,13 @@ class ViewLand:UIComponent() {
     var lisUp = (0L..60L).toList() as ArrayList
     var down = arrayListOf(0L)
     var up = arrayListOf(0L)
-    var lisCpu = arrayListOf(
-        (0L..60L).toList() as ArrayList<Double>,
-        (0L..60L).toList() as ArrayList<Double>,
-        (0L..60L).toList() as ArrayList<Double>,
-        (0L..60L).toList() as ArrayList<Double>
-    )
+
+
     override val root = tabpane {
+
         tab("Network") {
             traffic = linechart(
-                "Traffic | Total Down:${(Monitor.NETWORK.totalDownloads())} | Total Up:${(Monitor.NETWORK.totalUploads())}",
+                "Traffic | Total Down:${Sigar.formatSize(Monitor.NETWORK.totalDownloads())} | Total Up:${Sigar.formatSize(Monitor.NETWORK.totalUploads())}",
                 NumberAxis(), NumberAxis()
             )
             tab("RAM/SWAP") {
@@ -53,7 +50,7 @@ class ViewLand:UIComponent() {
                 borderpane {
                     center {
                         cpu = linechart(
-                            "CPU | core",
+                            "CPU | ${Monitor.sigar.cpuInfoList[0].model} ${Monitor.sigar.cpuInfoList[0].totalCores} core",
                             NumberAxis(), NumberAxis()
                         )
                     }
@@ -108,14 +105,19 @@ class ViewLand:UIComponent() {
                     cpu.data.clear()
                     cpu.animated = false
                     cpu.run {
-                        (1..Monitor.CPU.cores()).withIndex().forEach { core ->
-                            series("cpu${core.value}(${Monitor.CPU.cpulis(core.index)}%)") {
-                                lisCpu[core.index].withIndex().forEach {
-                                    data(it.index, it.value)
-                                }
+                        (1..Monitor.CPU.coresN()).withIndex().forEach { core ->
+                            runBlocking {
+                                launch {
+                                    series("cpu${core.value}") {
+                                        lisCpu[core.index].withIndex().forEach {
+                                            data(it.index, it.value as Number?)
+                                        }
+                                    }
+                                    lisCpu[core.index].add(Monitor.CPU.dr(core.index)!!.toLong())
+                                    lisCpu[core.index].removeAt(0)
+                                    delay(70)
+                                }.start()
                             }
-                            lisCpu[core.index].add((Monitor.sigar.cpuPercList[core.index].user) * 100)
-                            lisCpu[core.index].removeAt(0)
                         }
                     }
                 }),
@@ -126,3 +128,14 @@ class ViewLand:UIComponent() {
         }
     }
 }
+
+var lisCpu = arrayListOf(
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
+    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+)

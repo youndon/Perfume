@@ -64,12 +64,83 @@ sealed class Monitor {
     }
 
     object CPU {
-        fun cores(): Int {
+        fun coresN(): Int {
             return sigar.cpuInfoList[0].totalCores
+        }
+        fun dr(index: Int): Double? {
+            try {
+                return (sigar.cpuPercList[index].user) * 100
+            } catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return null
+        }
+        fun `core 1`(): Double? {
+            try {
+                return sigar.cpuPercList[0].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return null
+        }
+        fun `core 2`(): Double? {
+            try {
+                return sigar.cpuPercList[1].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return null
+        }
+        fun `core 3`(): Double? {
+            try {
+                return sigar.cpuPercList[2].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return null
+        }
+        fun `core 4`(): Double? {
+            try {
+                return sigar.cpuPercList[3].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return null
+        }
+        fun `core 5`(): Double {
+            try {
+                return sigar.cpuPercList[4].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return 0.0
+        }
+        fun `core 6`(): Double {
+            try {
+                return sigar.cpuPercList[5].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return 0.0
+        }
+        fun `core 7`(): Double {
+            try {
+                return sigar.cpuPercList[6].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return 0.0
+        }
+        fun `core 8`(): Double {
+            try {
+                return sigar.cpuPercList[7].user*100
+            }catch (ex:Exception){
+                ex.localizedMessage
+            }
+            return 0.0
         }
 
         fun combined(): CpuPerc = sigar.cpuPerc
-
         fun info(): CpuInfo? {
             return sigar.cpuInfoList[0]
         }

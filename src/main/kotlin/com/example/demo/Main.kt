@@ -6,9 +6,21 @@ import org.hyperic.sigar.Sigar
 
 fun main() {
 
-    System.setProperty("java.library.path","/usr/lib64/")
-    (0..3).forEach {
-        println("${Monitor.CPU.cpulis(it)}")
+    System.setProperty("java.library.path", "/usr/lib64/")
+
+
+    runBlocking {
+        launch {
+            println(Monitor.CPU.`core 1`())
+            delay(70)
+            println(Monitor.CPU.`core 2`())
+            delay(70)
+            println(Monitor.CPU.`core 3`())
+            delay(70)
+            println(Monitor.CPU.`core 4`())
+            delay(70)
+        }.start()
 
     }
+
 }
