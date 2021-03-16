@@ -64,14 +64,10 @@ sealed class Monitor {
     }
 
     object CPU {
-        fun cpulis(index: Int): Double {
-            try {
-                val perc = sigar.cpuPercList[index].toString().slice(11..16).trimStart().trimEnd().trimEnd('%')
-                return ExpressionBuilder(perc).build().evaluate()
-            }catch (ex: Exception){
-            }
-            return 0.0
+        fun cores(): Int {
+            return sigar.cpuInfoList[0].totalCores
         }
+
         fun combined(): CpuPerc = sigar.cpuPerc
 
         fun info(): CpuInfo? {

@@ -10,6 +10,8 @@ import tornadofx.*
 import javafx.collections.FXCollections
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.LineChart
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.hyperic.sigar.Sigar
 
 fun main() = launch<MainLand>()
@@ -25,31 +27,36 @@ class ViewLand:UIComponent() {
     var lisUp = (0L..60L).toList() as ArrayList
     var down = arrayListOf(0L)
     var up = arrayListOf(0L)
-    var lisCpu =  arrayListOf((0L..60L).toList() as ArrayList<Double>,
-                              (0L..60L).toList() as ArrayList<Double>,
-                            (0L..60L).toList() as ArrayList<Double>,
-                            (0L..60L).toList() as ArrayList<Double> )
+    var lisCpu = arrayListOf(
+        (0L..60L).toList() as ArrayList<Double>,
+        (0L..60L).toList() as ArrayList<Double>,
+        (0L..60L).toList() as ArrayList<Double>,
+        (0L..60L).toList() as ArrayList<Double>
+    )
     override val root = tabpane {
         tab("Network") {
-            traffic = linechart("Traffic", NumberAxis(), NumberAxis())
+            traffic = linechart(
+                "Traffic | Total Down:${(Monitor.NETWORK.totalDownloads())} | Total Up:${(Monitor.NETWORK.totalUploads())}",
+                NumberAxis(), NumberAxis()
+            )
             tab("RAM/SWAP") {
                 borderpane {
                     right {
-                        mem = piechart("RAM")
+                        mem = piechart("RAM | ${Monitor.MEM.totalF()}")
                     }
                     left {
-                        swap = piechart("SWAP")
+                        swap = piechart("SWAP | ${Monitor.SWAP.totalF()}")
                     }
                 }
             }
             tab("CPU") {
                 borderpane {
                     center {
-                        cpu = linechart("CPU", NumberAxis(), NumberAxis())
+                        cpu = linechart(
+                            "CPU | core",
+                            NumberAxis(), NumberAxis()
+                        )
                     }
-//                    bottom {
-//                        cpuCombined = linechart("CPU_Combined", NumberAxis(), NumberAxis())
-//                    }
                 }
             }
 
@@ -58,12 +65,12 @@ class ViewLand:UIComponent() {
                     // traffic
                     traffic.data.clear()
                     traffic.animated = false
-                    traffic.series("downloads") {
+                    traffic.series("Downloads(${(lisDown.last())})") {
                         lisDown.withIndex().forEach {
                             data(it.index, it.value)
                         }
                     }
-                    traffic.series("uploads") {
+                    traffic.series("Uploads(${(lisUp.last())})") {
                         lisUp.withIndex().forEach {
                             data(it.index, it.value)
                         }
@@ -82,10 +89,12 @@ class ViewLand:UIComponent() {
                     // MEM
                     mem.data.clear()
                     mem.animated = false
-                    mem.data("used(${"%.2f".format(Monitor.MEM.actualUsedPerc())})%",
+                    mem.data(
+                        "used(${"%.2f".format(Monitor.MEM.actualUsedPerc())})%",
                         Monitor.MEM.actualUsed().toDouble()
                     )
-                    mem.data("free(${"%.2f".format(Monitor.MEM.actualFreePerc())})%",
+                    mem.data(
+                        "free(${"%.2f".format(Monitor.MEM.actualFreePerc())})%",
                         Monitor.MEM.actualFree().toDouble()
                     )
 
@@ -99,18 +108,16 @@ class ViewLand:UIComponent() {
                     cpu.data.clear()
                     cpu.animated = false
                     cpu.run {
-                        (0 until Sigar().cpuInfoList[0].totalCores).withIndex().forEach { core ->
+                        (1..Monitor.CPU.cores()).withIndex().forEach { core ->
                             series("cpu${core.value}(${Monitor.CPU.cpulis(core.index)}%)") {
                                 lisCpu[core.index].withIndex().forEach {
-                                    data(it.index,it.value)
+                                    data(it.index, it.value)
                                 }
                             }
-                            lisCpu[core.index].add(Monitor.CPU.cpulis(core.index))
+                            lisCpu[core.index].add((Monitor.sigar.cpuPercList[core.index].user) * 100)
                             lisCpu[core.index].removeAt(0)
                         }
                     }
-
-                    // CPU_Combined
                 }),
                 KeyFrame(Duration.seconds(1.0))
             )
