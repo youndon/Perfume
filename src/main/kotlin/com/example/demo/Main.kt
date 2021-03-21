@@ -1,12 +1,33 @@
 import dyorgio.runtime.run.`as`.root.RootExecutor
+import java.io.File
+import javax.activation.FileTypeMap
+import kotlin.concurrent.thread
 
 fun main() {
 //        HashCodeBuilder.reflectionHashCode("")
 //    System.setProperty("java.library.path", "/usr/lib64/")
 
-    RootExecutor("-Xmx64m").run {
-        print("...")
-    }
+//    val cmd = arrayOf("/bin/bash", "-c", "echo password | sudo -S ls")
+//    val pb = Runtime.getRuntime().exec(cmd)
+//    var line: String?
+//    val input = BufferedReader(InputStreamReader(pb.inputStream))
+//    while (input.readLine().also { line = it } != null) {
+//        println(line)
+//    }
+//    input.close()
 
+
+    try {
+thread {
+
+    RootExecutor("-Xmx64m").run {
+        println("...")
+    }
 }
+    }catch (ex:Exception){
+
+    }
+}
+
+
 
