@@ -7,23 +7,29 @@ import com.github.kiulian.downloader.model.quality.AudioQuality
 import com.github.kiulian.downloader.model.quality.VideoQuality
 import dorkbox.notify.Notify
 import dorkbox.notify.Pos
+import javafx.application.Platform
 import javafx.scene.control.Alert
+import javafx.scene.control.ProgressBar
+import javafx.scene.text.Text
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.hyperic.sigar.Sigar
 import tornadofx.alert
 import java.io.File
 import java.net.URL
 import java.util.*
 import java.util.concurrent.Future
 import javax.imageio.ImageIO
+import kotlin.concurrent.thread
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class YoutubeDownloader {
 
     private fun id(url: String?): String? {
         return url?.substringAfter('=')?.substringBefore('&')
     }
-
-     fun downloader(): YoutubeDownloader {
+    fun downloader(): YoutubeDownloader {
         // init downloader:
         val downloader = YoutubeDownloader()
         downloader.run {
@@ -37,94 +43,151 @@ class YoutubeDownloader {
         return downloader
     }
 
-    private fun filename(url: String?): String {
-        return downloader().getVideo(id(url)).details().title().substringBefore('|')
+
+    private fun filename(url: String?): String? {
+        try{
+//            val title = downloader().getVideo(id(url)).details().title()
+            return "..."
+        }catch (ex:Exception){
+            println(ex.localizedMessage)
+        }
+        return null
     }
 
-    fun filepath(url: String?, path: String?): String {
-        return "${path}/${filename(url)}"
+    fun filepath(url: String?, path: String?): String? {
+        try{
+
+            return "${path}/${filename(url)}"
+        }catch (ex:Exception){
+
+        }
+        return null
     }
 
-    fun videoWithAudio(url: String?, path: String?): Future<File>? {
+   fun videoWithAudio(url: String?, path: String?,progressBar: ProgressBar?,text: Text?): Future<File>? {
+        val down = downloader().getVideo(id(url)).downloadAsync(downloader().getVideo(id(url)).videoWithAudioFormats()[0],
+            File(filepath(url, path)),
+            object : OnYoutubeDownloadListener {
+                override fun onDownloading(p0: Int) {
+                    thread {
+                        Platform.runLater {
+                            progressBar?.progress = p0.toDouble()/100
+                        }
+                        text?.text = "progressing... $p0%"
+                        Thread.sleep(200)
+                    }
+                }
+                override fun onFinished(p0: File?) {
+                    text?.text = "Complete"
+                }
+                override fun onError(p0: Throwable?) {
+                    alert(Alert.AlertType.ERROR, p0?.localizedMessage.toString())
+                }
+            })
+       try{
+           return down
+       }catch (ex:Exception){
+           println(ex.localizedMessage)
+       }
+       return null
+    }
+
+    fun videoListQuality(url:String?): Map<VideoQuality, String>? {
+       val map = mutableMapOf<VideoQuality,String>()
+        downloader().getVideo(id(url)).videoFormats().forEach {
+            map.plusAssign(it.videoQuality() to Sigar.formatSize((it.bitrate()*8).toLong()))
+        }
+        try{
+            return map
+
+        }catch (ex:Exception){
+
+        }
+        return null
+    }
+
+    fun videoQuality(url: String?, path: String?, quality:VideoQuality,text: Text?,progressBar: ProgressBar?): Future<File>? {
         val videoid = downloader().getVideo(id(url))
-        return videoid.downloadAsync(videoid.videoWithAudioFormats()[0],
+        try{
+        return videoid.downloadAsync(videoid.findVideoWithQuality(quality)[0],
             File(filepath(url, path)),
             object : OnYoutubeDownloadListener {
                 override fun onDownloading(p0: Int) {
                     runBlocking {
                         launch {
-                            //
-
+                            text?.text = "$p0%"
+                            progressBar?.progress = p0.toDouble()/100
                         }.start()
                     }
-                    println("$p0%")
                 }
                 override fun onFinished(p0: File?) {
-                    notification()?.showInformation()
+                    text?.text = "Complete"
                 }
                 override fun onError(p0: Throwable?) {
                     alert(Alert.AlertType.ERROR, p0?.localizedMessage.toString())
                 }
             })
-    }
+        }catch (ex:Exception){
 
-    fun videoListQuality(url:String?): Map<VideoQuality, String> {
-       val map = mutableMapOf<VideoQuality,String>()
-        downloader().getVideo(id(url)).videoFormats().forEach {
-            map.plusAssign(it.videoQuality() to "${it.bitrate()}")
         }
-        return map
+        return null
     }
 
-    fun videoQuality(url: String?, path: String?, quality:VideoQuality): Future<File>? {
-        val videoid = downloader().getVideo(id(url))
-        return videoid.downloadAsync(videoid.findVideoWithQuality(quality)[0],
-            File(filepath(url, path)),
-            object : OnYoutubeDownloadListener {
-                override fun onDownloading(p0: Int) {
-                    println("$p0%")
-                }
-                override fun onFinished(p0: File?) {
-                    notification()?.showInformation()
-                }
-                override fun onError(p0: Throwable?) {
-                    alert(Alert.AlertType.ERROR, p0?.localizedMessage.toString())
-                }
-            })
-    }
-
-    fun audioListQuality(url: String?): MutableMap<AudioQuality, String> {
+    fun audioListQuality(url: String?): MutableMap<AudioQuality, String>? {
         val map = mutableMapOf<AudioQuality,String>()
         downloader().getVideo(id(url)).audioFormats().forEach {
-            map.plusAssign(it.audioQuality() to "${it.bitrate()}")
+            map.plusAssign(it.audioQuality() to Sigar.formatSize((it.bitrate()*8).toLong()))
         }
-        return map
+        try{
+            return map
+
+        }catch (ex:Exception){
+
+        }
+        return null
     }
 
-    fun audioQuality(url: String?, path: String?, quality: AudioQuality): Future<File>? {
+    fun audioQuality(url: String?, path: String?, quality: AudioQuality,text: Text?,progressBar: ProgressBar?): Future<File>? {
         val videoid = downloader().getVideo(id(url))
-        return videoid.downloadAsync(videoid.findAudioWithQuality(quality)[0],
-            File(filepath(url, path)),
-            object : OnYoutubeDownloadListener {
-                override fun onDownloading(p0: Int) {
-                    println("$p0%")
-                }
-                override fun onFinished(p0: File?) {
-                    notification()?.showInformation()
-                }
-                override fun onError(p0: Throwable?) {
-                    alert(Alert.AlertType.ERROR, p0?.message.toString())
-                }
-            })
-    }
+        try {
+            return videoid.downloadAsync(videoid.findAudioWithQuality(quality)[0],
+                File(filepath(url, path)),
+                object : OnYoutubeDownloadListener {
+                    override fun onDownloading(p0: Int) {
+                        runBlocking {
+                            launch {
+                                text?.text = "$p0%"
+                                progressBar?.progress = p0.toDouble() / 100
+                            }.start()
+                        }
+                    }
 
-    fun thumbnails(url: String?, path: String?): Boolean {
+                    override fun onFinished(p0: File?) {
+                        text?.text = "Complete"
+                    }
+
+                    override fun onError(p0: Throwable?) {
+                        alert(Alert.AlertType.ERROR, p0?.message.toString())
+                    }
+                })
+        } catch (ex: Exception) {
+
+        }
+        return null
+    }
+    fun thumbnails(url: String?, path: String?): Boolean? {
         val img = ImageIO.read(URL("${downloader().getVideo(id(url)).details().thumbnails()[0]}.jpg"))
         val file = File("${filepath(url, path)}/${filename(url)}.jpg")
-        return ImageIO.write(img, "jpg", file)
+        try{
+            return ImageIO.write(img, "jpg", file)
+
+        }catch (ex:Exception){
+
+        }
+        return null
     }
 
-    fun details(url: String?): ArrayList<String> {
+    fun details(url: String?): ArrayList<String>? {
         val list = arrayListOf<String>()
         downloader().getVideo(id(url)).details().run {
             list.add("title: " + title())
@@ -143,45 +206,67 @@ class YoutubeDownloader {
                 list.add("thumbnails: $it")
             })
         }
-        return list
+        try{
+
+            return list
+        }catch (ex:Exception){
+
+        }
+        return null
     }
 
     fun allSubtitles(url: String?, path: String?) {
         val file = "${filepath(url, path)}/Subtitles"
-        return downloader().getVideoSubtitles(id(url)).forEach { subInfo ->
-            subInfo.subtitles
-                .formatTo(Extension.WEBVTT)
-                .download().also {
-                    File(file).mkdir()
-                    File(file + "/${subInfo.language}.vtt").run {
-                        this.createNewFile()
-                        this.appendText(it)
+        try{
+            return downloader().getVideoSubtitles(id(url)).forEach { subInfo ->
+                subInfo.subtitles
+                    .formatTo(Extension.WEBVTT)
+                    .download().also {
+                        File(file).mkdir()
+                        File(file + "/${subInfo.language}.vtt").run {
+                            this.createNewFile()
+                            this.appendText(it)
+                        }
                     }
-                }
+            }
+        }catch (ex:Exception){
+
         }
+
     }
 
-    fun ccList(url: String?): ArrayList<String> {
+    fun ccList(url: String?): ArrayList<String>? {
         val list = arrayListOf<String>()
         downloader().getVideoSubtitles(id(url)).forEach {
             list.add(it.language)
         }
-        return list
+        try{
+            return list
+
+        }catch (ex:Exception){
+
+        }
+        return null
     }
 
     fun cc(url: String?, path: String?,index:Int?) {
         val file = filepath(url, path)
-        downloader().getVideoSubtitles(id(url))[index!!].run {
-            this.subtitles
-                .formatTo(Extension.WEBVTT)
-                .download().also {
-                    File(file).mkdir()
-                    File("$file/${this.language}.vtt").run {
-                        this.createNewFile()
-                        this.appendText(it)
+        try{
+            downloader().getVideoSubtitles(id(url))[index!!].run {
+                this.subtitles
+                    .formatTo(Extension.WEBVTT)
+                    .download().also {
+                        File(file).mkdir()
+                        File("$file/${this.language}.vtt").run {
+                            this.createNewFile()
+                            this.appendText(it)
+                        }
                     }
-                }
+            }
+        }catch (ex:Exception){
+
         }
+
     }
 
     private fun notification(): Notify? {

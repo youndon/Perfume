@@ -16,9 +16,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.knowm.xchart</groupId>
-            <artifactId>xchart</artifactId>
-            <version>3.8.0</version>
+            <groupId>com.github.dyorgio.runtime</groupId>
+            <artifactId>run-as-root</artifactId>
+            <version>1.2.3</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>

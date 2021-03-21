@@ -51,7 +51,7 @@ class CalculatorView() : UIComponent() {
                 backgroundColor += Color.DARKSLATEGRAY
             }
 
-            // to filter type of input(Numbers & MathematicsSymbols).
+            // to filter type of input(Numbers & MathematicsSymbols) only.
             textProperty().onChange {
                 if (!text.matches("\\d*".toRegex())) {
                     text = text.replace("[^\\d+*/\\-().^%e]".toRegex(), "")
@@ -69,7 +69,7 @@ class CalculatorView() : UIComponent() {
                 backgroundColor += Color.DARKSLATEGRAY
             }
         }
-        //
+        // To show the result when enter key preesed.
         setOnKeyPressed {
             when (it.code) {
                 KeyCode.ENTER -> try {
