@@ -16,16 +16,13 @@ fun main() {
 //    }
 //    input.close()
 
-
+    System.setProperty("java.io.tmpdir", "/home/yon/temp")
     try {
-thread {
-
     RootExecutor("-Xmx64m").run {
         println("...")
-    }
 }
     }catch (ex:Exception){
-
+        println(ex.localizedMessage)
     }
 }
 
