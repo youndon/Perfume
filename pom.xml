@@ -16,6 +16,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>net.samuelcampos</groupId>
+            <artifactId>usbdrivedetector</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.dyorgio.runtime</groupId>
             <artifactId>run-as-root</artifactId>
             <version>1.2.3</version>

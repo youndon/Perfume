@@ -1,16 +1,21 @@
 package com.example.demo.box
 
+import javafx.scene.control.ProgressBar
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import net.objecthunter.exp4j.ExpressionBuilder
-import org.hyperic.sigar.CpuInfo
-import org.hyperic.sigar.CpuPerc
-import org.hyperic.sigar.Sigar
+import org.hyperic.jni.ArchName
+import org.hyperic.sigar.*
+import tornadofx.observable
+import tornadofx.useMaxWidth
+import java.awt.Toolkit
+import java.net.InetAddress
 
 sealed class Monitor {
+
     companion object{
         val sigar = Sigar()
+        val userPath = System.getProperty("user.path")
     }
     object SWAP {
         fun total(): Long = (sigar.swap.total)
@@ -42,7 +47,9 @@ sealed class Monitor {
 
     object NETWORK {
         fun totalDownloads() = sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).rxBytes
+        fun totalDownloadsF() = Sigar.formatSize(sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).rxBytes)
         fun totalUploads() = sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).txBytes
+        fun totalUploadsF() = Sigar.formatSize(sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).txBytes)
 
         fun traffic(): Pair<Long, Long> {
             var beforeLastDown: Long;
@@ -75,74 +82,92 @@ sealed class Monitor {
             }
             return null
         }
-        fun `core 1`(): Double? {
-            try {
-                return sigar.cpuPercList[0].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return null
-        }
-        fun `core 2`(): Double? {
-            try {
-                return sigar.cpuPercList[1].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return null
-        }
-        fun `core 3`(): Double? {
-            try {
-                return sigar.cpuPercList[2].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return null
-        }
-        fun `core 4`(): Double? {
-            try {
-                return sigar.cpuPercList[3].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return null
-        }
-        fun `core 5`(): Double {
-            try {
-                return sigar.cpuPercList[4].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return 0.0
-        }
-        fun `core 6`(): Double {
-            try {
-                return sigar.cpuPercList[5].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return 0.0
-        }
-        fun `core 7`(): Double {
-            try {
-                return sigar.cpuPercList[6].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return 0.0
-        }
-        fun `core 8`(): Double {
-            try {
-                return sigar.cpuPercList[7].user*100
-            }catch (ex:Exception){
-                ex.localizedMessage
-            }
-            return 0.0
-        }
-
         fun combined(): CpuPerc = sigar.cpuPerc
         fun info(): CpuInfo? {
             return sigar.cpuInfoList[0]
         }
+    }
+    data class AA(val dev: String?,val dir:String?,val type:String?,val total:String?,val used:String?,val free:String?,val files:Long?,val perc:String?,val progressBar: ProgressBar?)
+    object FILE {
+        val fileSys = arrayListOf<AA>().observable()
+        init {
+            sigar.fileSystemList.forEach { it ->
+                try {
+                    val cc = sigar.getFileSystemUsage(it.dirName)
+                    fileSys.add(
+                        AA(
+                            it.devName,
+                            it.dirName,
+                            it.sysTypeName,
+                            Sigar.formatSize(cc.total * 1024),
+                            Sigar.formatSize(cc.used * 1024),
+                            Sigar.formatSize(cc.free * 1024),
+                            cc.files,
+                            "${cc.usePercent * 100}%",
+                            ProgressBar(cc.usePercent)
+                        )
+                    )
+                } catch (er: Exception) {
+                }
+            }
+        }
+    }
+    object OS_INFO{
+        // User
+        val hostName = InetAddress.getLocalHost().hostName
+        val userName = System.getenv("USER")
+        // OS name
+        val os = OperatingSystem.getInstance().name
+        // Description
+        val description = OperatingSystem.getInstance().vendor
+        // Version
+        val version = OperatingSystem.getInstance().vendorVersion
+        // Kernel
+        val kernel = OperatingSystem.getInstance().version
+        // Arch -> 64bit
+        val archName = ArchName.getName()
+        // DE -> gnome
+        val de = System.getenv("XDG_MENU_PREFIX").toUpperCase()
+        // UpTime
+        fun upTime() {
+
+        }
+        // Language
+        val lang = System.getenv("LANGUAGE")
+        // WindowingSystem -> x11
+        val ws = System.getenv("XDG_SESSION_TYPE")
+        // Home
+        val home = System.getenv("HOME")
+        // Host
+        //CPU
+        fun cpu(): String {
+            val cc = Typography.times
+            val ve = sigar.cpuInfoList[0].vendor
+            val mod = sigar.cpuInfoList[0].model
+            val mhz = sigar.cpuInfoList[0].mhz
+            val cor = sigar.cpuInfoList[0].totalCores
+            return "$ve $mod $mhz $cc ($cor)"
+        }
+        //GPU
+        // Resolution
+        fun resolution(): String {
+            val ss = Toolkit.getDefaultToolkit()
+            val cc = Typography.times
+            return "${ss.screenSize.width}$cc${ss.screenSize.height}"
+        }
+        //RAM
+        // Disk Capacity
+
+        // DNS
+        val dns = sigar.netInfo.defaultGateway
+
+        // NetMask
+        val netmask = sigar.netInterfaceConfig.netmask
+
+        // Hardware Address
+        val hwaddr = sigar.netInterfaceConfig.hwaddr
+
+        // IPv4
+        val address = sigar.netInterfaceConfig.address
     }
 }
