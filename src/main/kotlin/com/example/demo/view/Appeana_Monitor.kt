@@ -24,7 +24,7 @@ fun main() {
 }
 class MonitorApp:App(Appeana_Monitor::class)
 
-class Appeana_Monitor:UIComponent() {
+class Appeana_Monitor:UIComponent("System Monitor") {
     var traffic = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
     var cpu = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
     var mem = PieChart()
