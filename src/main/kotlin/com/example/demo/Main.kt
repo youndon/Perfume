@@ -1,3 +1,4 @@
+import com.example.demo.box.Monitor
 import dyorgio.runtime.run.`as`.root.RootExecutor
 import net.samuelcampos.usbdrivedetector.USBDeviceDetectorManager
 import net.samuelcampos.usbdrivedetector.USBStorageDevice
@@ -17,7 +18,7 @@ fun main() {
     // system, bus, generic, network, display, bridge,multimedia, storage, disk, volume,power, input ,communication,processor ,memory
 
     System.setProperty("java.library.path","/usr/lib64")
-    println(Sigar().getFileInfo("/"))
+    println("uptime: ${Monitor.OS_INFO.upTime()}")
 
 
 }

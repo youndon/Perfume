@@ -9,6 +9,7 @@ import javafx.collections.FXCollections
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.PieChart
+import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.util.Duration
 import kotlinx.coroutines.delay
@@ -36,6 +37,7 @@ class Appeana_Monitor:UIComponent() {
 
     override val root = tabpane {
         tab("NETWORK") {
+            this.isClosable=false
             // drawer
             traffic = linechart(
                 "Traffic | Total Down:${(Monitor.NETWORK.totalDownloadsF())} | Total Up:${
@@ -45,6 +47,7 @@ class Appeana_Monitor:UIComponent() {
         }
 
         tab("MEM") {
+            this.isClosable=false
             borderpane {
                 right {
                     mem = piechart("RAM | ${Monitor.MEM.totalF()}")
@@ -55,6 +58,7 @@ class Appeana_Monitor:UIComponent() {
             }
         }
         tab("CPU") {
+            this.isClosable=false
             borderpane {
                 center {
                     cpu = linechart(
@@ -66,6 +70,7 @@ class Appeana_Monitor:UIComponent() {
             }
         }
         tab("FILE") {
+            this.isClosable=false
             tableview(Monitor.FILE.fileSys) {
                 readonlyColumn("Device", Monitor.AA::dev)
                 readonlyColumn("Directory", Monitor.AA::dir)
@@ -76,9 +81,12 @@ class Appeana_Monitor:UIComponent() {
                 readonlyColumn("Files", Monitor.AA::files)
                 readonlyColumn("Percent", Monitor.AA::perc)
                 readonlyColumn("Progress", Monitor.AA::progressBar)
+            }.style{
+                font = Font("Ubuntu-Light",13.0)
             }
         }
         tab("OS_INFO") {
+            this.isClosable=false
             scrollpane {
                 form {
                     // OS name
@@ -100,25 +108,16 @@ class Appeana_Monitor:UIComponent() {
                                 "Address: ${Monitor.OS_INFO.address}\n" +
                                 "CPU:${Monitor.OS_INFO.cpu()}\n" +
                                 "Resolution: ${Monitor.OS_INFO.resolution()}\n" +
-                                "uptime"
+                                "Uptime: ${Monitor.OS_INFO.upTime()}"
                     }.style {
-                        font = Font("Ubuntu-Light", 20.0)
+                        font = Font("Ubuntu-Light", 18.0)
                     }
                     button("Advanced").action {
-                        System.setProperty("java.io.tmpdir", "/home/yon/")
-                        RootExecutor("-Xmx64m").call {
-                            val pb = Runtime.getRuntime().exec(arrayOf("/bin/bash", "-c", "sudo lshw"))
-                            var line: String?
-                            val ss = StringBuffer()
-                            val input = BufferedReader(InputStreamReader(pb.inputStream))
-                            while (input.readLine().also { line = it } != null) {
-                                ss.appendln(line)
-                            }
-                            input.close()
-                            return@call ss
-                        }.lines().forEach {
-                            text(it)
-                        }
+                        Monitor.OS_INFO.command("sudo lshw").lines().forEach {
+                          text(it).style{
+                              font = Font("Ubuntu-Light",14.0)
+                          }
+                      }
                     }
                 }
             }
