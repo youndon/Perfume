@@ -1,7 +1,6 @@
 package com.example.demo.view
 
 import com.example.demo.box.Monitor
-import dyorgio.runtime.run.`as`.root.RootExecutor
 import javafx.animation.Animation
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
@@ -9,15 +8,12 @@ import javafx.collections.FXCollections
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.PieChart
-import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.util.Duration
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import tornadofx.*
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 fun main() {
     launch<MonitorApp>()
@@ -36,6 +32,26 @@ class Appeana_Monitor:UIComponent("System Monitor") {
     var cpuperc = List(Monitor.CPU.coresN()) { text() }
 
     override val root = tabpane {
+        tab("PROCESSOR"){
+            this.isClosable=false
+            tableview(Monitor.PROCESSOR.processor) {
+                readonlyColumn("Name",Monitor.PR::name)
+                readonlyColumn("User",Monitor.PR::user)
+                readonlyColumn("Group",Monitor.PR::group)
+                readonlyColumn("State",Monitor.PR::state)
+                readonlyColumn("Processor",Monitor.PR::processor)
+                readonlyColumn("Size",Monitor.PR::size)
+                readonlyColumn("Resident",Monitor.PR::resident)
+                readonlyColumn("Share",Monitor.PR::share)
+                readonlyColumn("CPU%",Monitor.PR::cpu)
+                readonlyColumn("Time",Monitor.PR::time)
+                readonlyColumn("Nice",Monitor.PR::nice)
+                readonlyColumn("Command Line",Monitor.PR::commandLine)
+                readonlyColumn("Path",Monitor.PR::path)
+            }.style {
+                font = Font("Ubuntu-Light",13.0)
+            }
+        }
         tab("NETWORK") {
             this.isClosable=false
             // drawer
@@ -45,7 +61,6 @@ class Appeana_Monitor:UIComponent("System Monitor") {
                 }", NumberAxis(), NumberAxis()
             )
         }
-
         tab("MEM") {
             this.isClosable=false
             borderpane {
@@ -72,15 +87,15 @@ class Appeana_Monitor:UIComponent("System Monitor") {
         tab("FILE") {
             this.isClosable=false
             tableview(Monitor.FILE.fileSys) {
-                readonlyColumn("Device", Monitor.AA::dev)
-                readonlyColumn("Directory", Monitor.AA::dir)
-                readonlyColumn("Type", Monitor.AA::type)
-                readonlyColumn("Total", Monitor.AA::total)
-                readonlyColumn("Used", Monitor.AA::used)
-                readonlyColumn("Free", Monitor.AA::free)
-                readonlyColumn("Files", Monitor.AA::files)
-                readonlyColumn("Percent", Monitor.AA::perc)
-                readonlyColumn("Progress", Monitor.AA::progressBar)
+                readonlyColumn("Device", Monitor.FT::dev)
+                readonlyColumn("Directory", Monitor.FT::dir)
+                readonlyColumn("Type", Monitor.FT::type)
+                readonlyColumn("Total", Monitor.FT::total)
+                readonlyColumn("Used", Monitor.FT::used)
+                readonlyColumn("Free", Monitor.FT::free)
+                readonlyColumn("Files", Monitor.FT::files)
+                readonlyColumn("Percent", Monitor.FT::perc)
+                readonlyColumn("Progress", Monitor.FT::progressBar)
             }.style{
                 font = Font("Ubuntu-Light",13.0)
             }

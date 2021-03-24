@@ -8,12 +8,11 @@ import kotlinx.coroutines.runBlocking
 import org.hyperic.jni.ArchName
 import org.hyperic.sigar.*
 import tornadofx.observable
-import tornadofx.text
-import tornadofx.useMaxWidth
 import java.awt.Toolkit
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.InetAddress
+import java.nio.file.Paths
 
 sealed class Monitor {
 
@@ -98,7 +97,7 @@ sealed class Monitor {
         }
     }
 
-    data class AA(
+    data class FT(
         val dev: String?,
         val dir: String?,
         val type: String?,
@@ -111,13 +110,13 @@ sealed class Monitor {
     )
 
     object FILE {
-        val fileSys = arrayListOf<AA>().observable()
+        val fileSys = arrayListOf<FT>().observable()
         init {
             sigar.fileSystemList.forEach { it ->
                 try {
                     val cc = sigar.getFileSystemUsage(it.dirName)
                     fileSys.add(
-                        AA(
+                        FT(
                             it.devName,
                             it.dirName,
                             it.sysTypeName,
@@ -135,6 +134,49 @@ sealed class Monitor {
         }
     }
 
+    data class PR(
+        val name:String?,
+        val user:String?,
+        val group:String?,
+        val state:String?,
+        val processor:Int?,
+        val size:String?,
+        val resident:String?,
+        val share:String?,
+        val cpu:Double?,
+        val time:Long?,
+        val nice:Int?,
+        val commandLine :MutableList<Any?>?,
+        val path:MutableMap<Any?,Any?>?
+    )
+    object PROCESSOR {
+        val processor = arrayListOf<PR>().observable()
+        init {
+            sigar.procList.forEach {
+                try {
+                    processor.add(
+                        PR(
+                            sigar.getProcState(it).name,
+                            sigar.getProcCredName(it).user,
+                            sigar.getProcCredName(it).group,
+                            sigar.getProcState(it).state.toString(),
+                            sigar.getProcState(it).processor,
+                            Sigar.formatSize(sigar.getProcMem(it).size),
+                            Sigar.formatSize(sigar.getProcMem(it).resident),
+                            Sigar.formatSize(sigar.getProcMem(it).share),
+                            sigar.getProcCpu(it).percent,
+                            sigar.getProcTime(it).startTime,
+                            sigar.getProcState(it).nice,
+                            sigar.getProcModules(it),
+                            sigar.getProcEnv(it)
+                        )
+                    )
+                } catch (ex: Exception) {
+
+                }
+            }
+        }
+    }
     object OS_INFO {
         // User
         val hostName = InetAddress.getLocalHost().hostName
