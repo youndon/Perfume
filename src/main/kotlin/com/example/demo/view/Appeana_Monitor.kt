@@ -1,6 +1,8 @@
 package com.example.demo.view
 
 import com.example.demo.box.Monitor
+import dyorgio.runtime.run.`as`.root.RootExecutor
+import dyorgio.runtime.run.`as`.root.RootExecutor.RUNNING_AS_ROOT
 import javafx.animation.Animation
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
@@ -8,6 +10,7 @@ import javafx.collections.FXCollections
 import javafx.scene.chart.LineChart
 import javafx.scene.chart.NumberAxis
 import javafx.scene.chart.PieChart
+import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.util.Duration
 import kotlinx.coroutines.delay
@@ -21,15 +24,15 @@ fun main() {
 class MonitorApp:App(Appeana_Monitor::class)
 
 class Appeana_Monitor:UIComponent("System Monitor") {
-    var traffic = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
-    var cpu = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
-    var mem = PieChart()
-    var swap = PieChart()
-    var lisDown = (0L..60L).toList() as ArrayList
-    var lisUp = (0L..60L).toList() as ArrayList
-    var down = arrayListOf(0L)
-    var up = arrayListOf(0L)
-    var cpuperc = List(Monitor.CPU.coresN()) { text() }
+   private var traffic = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
+   private var cpu = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
+   private var mem = PieChart()
+   private var swap = PieChart()
+   private var lisDown = (0L..60L).toList() as ArrayList
+   private var lisUp = (0L..60L).toList() as ArrayList
+   private var down = arrayListOf(0L)
+   private var up = arrayListOf(0L)
+   private var cpuperc = List(Monitor.CPU.coresN()) { text() }
 
     override val root = tabpane {
         tab("PROCESSOR"){
@@ -44,7 +47,7 @@ class Appeana_Monitor:UIComponent("System Monitor") {
                 readonlyColumn("Resident",Monitor.PR::resident)
                 readonlyColumn("Share",Monitor.PR::share)
                 readonlyColumn("CPU%",Monitor.PR::cpu)
-                readonlyColumn("Time",Monitor.PR::time)
+//                readonlyColumn("Time",Monitor.PR::time)
                 readonlyColumn("Nice",Monitor.PR::nice)
                 readonlyColumn("Command Line",Monitor.PR::commandLine)
                 readonlyColumn("Path",Monitor.PR::path)
@@ -101,7 +104,7 @@ class Appeana_Monitor:UIComponent("System Monitor") {
             }
         }
         tab("OS_INFO") {
-            this.isClosable=false
+            this.isClosable = false
             scrollpane {
                 form {
                     // OS name
@@ -122,17 +125,21 @@ class Appeana_Monitor:UIComponent("System Monitor") {
                                 "Hardware Address: ${Monitor.OS_INFO.hwaddr}\n" +
                                 "Address: ${Monitor.OS_INFO.address}\n" +
                                 "CPU:${Monitor.OS_INFO.cpu()}\n" +
-                                "Resolution: ${Monitor.OS_INFO.resolution()}\n" +
-                                "Uptime: ${Monitor.OS_INFO.upTime()}"
+                                "Resolution: ${Monitor.OS_INFO.resolution()}\n"
                     }.style {
-                        font = Font("Ubuntu-Light", 18.0)
+                        font = Font("Ubuntu-Light", 17.0)
                     }
                     button("Advanced").action {
-                        Monitor.OS_INFO.command("sudo lshw").lines().forEach {
-                          text(it).style{
-                              font = Font("Ubuntu-Light",14.0)
-                          }
-                      }
+                        form {
+                            Monitor.OS_INFO.command("sudo lshw").lines().forEach {
+                                text(it).style {
+                                    font = Font("Ubuntu-Light", 14.0)
+                                    fill = Color.WHITE
+                                }
+                            }
+                        }.style{
+                            backgroundColor+=Color.BLACK
+                        }
                     }
                 }
             }

@@ -12,7 +12,7 @@ import java.awt.Toolkit
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.InetAddress
-import java.nio.file.Paths
+import java.text.SimpleDateFormat
 
 sealed class Monitor {
 
@@ -90,7 +90,6 @@ sealed class Monitor {
             }
             return null
         }
-
         fun combined(): CpuPerc = sigar.cpuPerc
         fun info(): CpuInfo? {
             return sigar.cpuInfoList[0]
@@ -111,6 +110,7 @@ sealed class Monitor {
 
     object FILE {
         val fileSys = arrayListOf<FT>().observable()
+
         init {
             sigar.fileSystemList.forEach { it ->
                 try {
@@ -135,20 +135,21 @@ sealed class Monitor {
     }
 
     data class PR(
-        val name:String?,
-        val user:String?,
-        val group:String?,
-        val state:String?,
-        val processor:Int?,
-        val size:String?,
-        val resident:String?,
-        val share:String?,
-        val cpu:Double?,
-        val time:Long?,
-        val nice:Int?,
-        val commandLine :MutableList<Any?>?,
-        val path:MutableMap<Any?,Any?>?
+        val name: String?,
+        val user: String?,
+        val group: String?,
+        val state: String?,
+        val processor: Int?,
+        val size: String?,
+        val resident: String?,
+        val share: String?,
+        val cpu: Double?,
+//        val time: Long?,
+        val nice: Int?,
+        val commandLine: Any?,
+        val path: Any?
     )
+
     object PROCESSOR {
         val processor = arrayListOf<PR>().observable()
         init {
@@ -165,9 +166,9 @@ sealed class Monitor {
                             Sigar.formatSize(sigar.getProcMem(it).resident),
                             Sigar.formatSize(sigar.getProcMem(it).share),
                             sigar.getProcCpu(it).percent,
-                            sigar.getProcTime(it).startTime,
+//                            sigar.getProcTime(it).startTime,
                             sigar.getProcState(it).nice,
-                            sigar.getProcModules(it),
+                            sigar.getProcModules(it)[0],
                             sigar.getProcEnv(it)
                         )
                     )
@@ -177,40 +178,32 @@ sealed class Monitor {
             }
         }
     }
+
     object OS_INFO {
         // User
         val hostName = InetAddress.getLocalHost().hostName
         val userName = System.getenv("USER")
-
         // OS name
         val os = OperatingSystem.getInstance().name
-
         // Description
         val description = OperatingSystem.getInstance().vendor
-
         // Version
         val version = OperatingSystem.getInstance().vendorVersion
-
         // Kernel
         val kernel = OperatingSystem.getInstance().version
-
         // Arch -> 64bit
         val archName = ArchName.getName()
-
         // DE -> gnome
         val de = System.getenv("XDG_MENU_PREFIX").toUpperCase()
-
         // UpTime
-        fun upTime(): StringBuffer {
-            return this.command("uptime")
-        }
+//        fun upTime(): StringBuffer {
+//            return this.command("uptime")
+//        }
 
         // Language
         val lang = System.getenv("LANGUAGE")
-
         // WindowingSystem -> x11
         val ws = System.getenv("XDG_SESSION_TYPE")
-
         // Home
         val home = System.getenv("HOME")
 
@@ -233,18 +226,15 @@ sealed class Monitor {
 
         // DNS
         val dns = sigar.netInfo.defaultGateway
-
         // NetMask
         val netmask = sigar.netInterfaceConfig.netmask
-
         // Hardware Address
         val hwaddr = sigar.netInterfaceConfig.hwaddr
-
         // IPv4
         val address = sigar.netInterfaceConfig.address
 
         fun command(command: String): StringBuffer {
-            System.setProperty("java.io.tmpdir", "/home/yon/")
+            System.setProperty("java.io.tmpdir", userPath)
             return RootExecutor("-Xmx64m").call {
                 val pb = Runtime.getRuntime().exec(arrayOf(shell, "-c", command))
                 val ss = StringBuffer()
