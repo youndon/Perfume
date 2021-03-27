@@ -1,19 +1,8 @@
-package com.example.demo.view
+package com.example.demo.Browser
 
-import javafx.beans.property.SimpleStringProperty
-import javafx.scene.Parent
-import javafx.scene.web.WebView
 import tornadofx.*
 
-fun main() {
-    launch<BrowserApp>()
-}
-class BrowserApp: App(BrowserView::class)
-
-class BrowserModel(address:String):ViewModel(){
-    var url = bind { SimpleStringProperty(address) }
-}
-class BrowserView :View(){
+class BrowserView : View(){
     private var webView = webview()
     var browserModel = BrowserModel("http://www.duckduckgo.com")
     override val root = gridpane {
@@ -38,7 +27,7 @@ class BrowserView :View(){
         }
         row {
             children.add(webView)
-           webView.engine.load(browserModel.url.value)
+            webView.engine.load(browserModel.url.value)
             useMaxHeight=true
             useMaxWidth=true
 

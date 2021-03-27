@@ -1,8 +1,6 @@
-package com.example.demo.view
+package com.example.demo.SysMonitor
 
-import com.example.demo.box.Monitor
-import dyorgio.runtime.run.`as`.root.RootExecutor
-import dyorgio.runtime.run.`as`.root.RootExecutor.RUNNING_AS_ROOT
+import com.example.demo.SysMonitor.Monitor.Companion.lisCpu
 import javafx.animation.Animation
 import javafx.animation.KeyFrame
 import javafx.animation.Timeline
@@ -18,39 +16,34 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import tornadofx.*
 
-fun main() {
-    launch<MonitorApp>()
-}
-class MonitorApp:App(Appeana_Monitor::class)
-
-class Appeana_Monitor:UIComponent("System Monitor") {
-   private var traffic = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
-   private var cpu = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
-   private var mem = PieChart()
-   private var swap = PieChart()
-   private var lisDown = (0L..60L).toList() as ArrayList
-   private var lisUp = (0L..60L).toList() as ArrayList
-   private var down = arrayListOf(0L)
-   private var up = arrayListOf(0L)
-   private var cpuperc = List(Monitor.CPU.coresN()) { text() }
+class SysView: UIComponent("System Monitor") {
+    private var traffic = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
+    private var cpu = LineChart(NumberAxis(), NumberAxis(), FXCollections.observableArrayList())
+    private var mem = PieChart()
+    private var swap = PieChart()
+    private var lisDown = (0L..60L).toList() as ArrayList
+    private var lisUp = (0L..60L).toList() as ArrayList
+    private var down = arrayListOf(0L)
+    private var up = arrayListOf(0L)
+    private var cpuperc = List(Monitor.CPU.coresN()) { text() }
 
     override val root = tabpane {
         tab("PROCESSOR"){
             this.isClosable=false
             tableview(Monitor.PROCESSOR.processor) {
-                readonlyColumn("Name",Monitor.PR::name)
-                readonlyColumn("User",Monitor.PR::user)
-                readonlyColumn("Group",Monitor.PR::group)
-                readonlyColumn("State",Monitor.PR::state)
-                readonlyColumn("Processor",Monitor.PR::processor)
-                readonlyColumn("Size",Monitor.PR::size)
-                readonlyColumn("Resident",Monitor.PR::resident)
-                readonlyColumn("Share",Monitor.PR::share)
-                readonlyColumn("CPU%",Monitor.PR::cpu)
+                readonlyColumn("Name", Monitor.PR::name)
+                readonlyColumn("User", Monitor.PR::user)
+                readonlyColumn("Group", Monitor.PR::group)
+                readonlyColumn("State", Monitor.PR::state)
+                readonlyColumn("Processor", Monitor.PR::processor)
+                readonlyColumn("Size", Monitor.PR::size)
+                readonlyColumn("Resident", Monitor.PR::resident)
+                readonlyColumn("Share", Monitor.PR::share)
+                readonlyColumn("CPU%", Monitor.PR::cpu)
 //                readonlyColumn("Time",Monitor.PR::time)
-                readonlyColumn("Nice",Monitor.PR::nice)
-                readonlyColumn("Command Line",Monitor.PR::commandLine)
-                readonlyColumn("Path",Monitor.PR::path)
+                readonlyColumn("Nice", Monitor.PR::nice)
+                readonlyColumn("Command Line", Monitor.PR::commandLine)
+                readonlyColumn("Path", Monitor.PR::path)
             }.style {
                 font = Font("Ubuntu-Light",13.0)
             }
@@ -131,14 +124,14 @@ class Appeana_Monitor:UIComponent("System Monitor") {
                     }
                     button("Advanced").action {
                         form {
-                            Monitor.OS_INFO.command("sudo lshw").lines().forEach {
+                            Monitor.OS_INFO.command("lshw").lines().forEach {
                                 text(it).style {
                                     font = Font("Ubuntu-Light", 14.0)
                                     fill = Color.WHITE
                                 }
                             }
                         }.style{
-                            backgroundColor+=Color.BLACK
+                            backgroundColor+= Color.BLACK
                         }
                     }
                 }
@@ -225,15 +218,4 @@ class Appeana_Monitor:UIComponent("System Monitor") {
         cc.play()
     }
 }
-
-var lisCpu = arrayListOf(
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-    arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
-)
 

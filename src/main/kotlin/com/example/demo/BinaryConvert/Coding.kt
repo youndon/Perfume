@@ -1,9 +1,6 @@
 package appeanaLib
 
-import com.example.demo.box.CodingList
-import jdk.internal.org.objectweb.asm.Type.INT
-import tornadofx.ItemViewModel
-import java.util.*
+import com.example.demo.BinaryConvert.CodingList
 import kotlin.math.absoluteValue
 class Coding {
     companion object {

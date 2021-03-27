@@ -1,15 +1,11 @@
-package com.example.demo.view
+package com.example.demo.BinaryConvert
 
-import com.example.demo.box.Converter
 import javafx.scene.control.Alert
 import javafx.scene.control.TabPane
 import javafx.scene.control.TextArea
 import tornadofx.*
-fun main() {
-    launch<Code_UncodeApp>()
-}
-class Code_UncodeApp:App(Appeana_Code_Uncode::class)
-class Appeana_Code_Uncode :UIComponent(){
+
+class ConvertView : UIComponent(){
 
     @ExperimentalStdlibApi
     @ExperimentalUnsignedTypes
@@ -23,7 +19,7 @@ class Appeana_Code_Uncode :UIComponent(){
             borderpane {
                 top {
                     hbox {
-                       paddingAll = 10 ; spacing = 10.0
+                        paddingAll = 10 ; spacing = 10.0
                         togglegroup {
                             controller.forEach {
                                 radiobutton(it) {
@@ -71,10 +67,10 @@ class Appeana_Code_Uncode :UIComponent(){
                                         try{
                                             when(it) {
                                                 "text" -> output.text = Converter.Bin(input.text.lines()).txt()
-                                                "integer" -> output.text =Converter.Bin(input.text.lines()).integer()
-                                                "hex" -> output.text =Converter.Bin(input.text.lines()).hex()
-                                                "octal" -> output.text =Converter.Bin(input.text.lines()).octal()
-                                                "decimal" -> output.text =Converter.Bin(input.text.lines()).decimal()
+                                                "integer" -> output.text = Converter.Bin(input.text.lines()).integer()
+                                                "hex" -> output.text = Converter.Bin(input.text.lines()).hex()
+                                                "octal" -> output.text = Converter.Bin(input.text.lines()).octal()
+                                                "decimal" -> output.text = Converter.Bin(input.text.lines()).decimal()
                                             }
                                         }catch (ex:Exception){
                                             alert(Alert.AlertType.WARNING,ex.localizedMessage)

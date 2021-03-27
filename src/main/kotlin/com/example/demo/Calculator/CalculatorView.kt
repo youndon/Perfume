@@ -1,35 +1,12 @@
-package com.example.demo.view
+package com.example.demo.Calculator
 
-import javafx.application.Application
-import javafx.beans.value.ChangeListener
 import javafx.geometry.Pos
-import javafx.scene.Parent
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import net.objecthunter.exp4j.ExpressionBuilder
 import tornadofx.*
-import kotlin.math.absoluteValue
-import javafx.beans.value.ObservableValue
-import javafx.geometry.Insets
-import javafx.scene.Scene
-import javafx.scene.layout.*
 
-import javafx.scene.layout.TilePane
-import javafx.scene.text.TextAlignment
-
-import javafx.stage.Stage
-import javafx.stage.StageStyle
-import java.awt.Label
-import java.awt.TextField
-import java.awt.event.ActionEvent
-import java.beans.EventHandler
-import java.nio.channels.SelectableChannel
-
-fun main() {
-    launch<Appeana_Calculator>()
-}
-class Appeana_Calculator:App(CalculatorView::class)
 class CalculatorView() : UIComponent() {
     // the buttons:
     val list = listOf(

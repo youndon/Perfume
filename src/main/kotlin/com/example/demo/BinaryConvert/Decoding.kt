@@ -1,8 +1,5 @@
 package appeanaLib
 
-import com.example.demo.box.CodingList
-import net.objecthunter.exp4j.ExpressionBuilder
-
 // ...
 sealed class Decoding {
     object Binary : Decoding() {

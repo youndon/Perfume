@@ -59,6 +59,7 @@
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna-platform:4.3.0" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:TweenEngine:8.3" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:ObjectPool:2.11" level="project" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.12" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:SystemTray:3.17" level="project" />
     <orderEntry type="library" name="Maven: com.dorkbox:ShellExecutor:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.23.0-GA" level="project" />

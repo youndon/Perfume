@@ -1,4 +1,4 @@
-package com.example.demo.view
+package com.example.demo.Translator
 
 import com.darkprograms.speech.translator.GoogleTranslate
 import javafx.scene.control.ComboBox
@@ -8,11 +8,7 @@ import javafx.scene.input.KeyEvent
 import javafx.scene.text.Font
 import tornadofx.*
 
-fun main() {
-    launch<TranslateApp>()
-}
-class TranslateApp:App(Appeana_Translate::class)
-class Appeana_Translate:UIComponent() {
+class TranslatorView: UIComponent() {
     private var input = TextArea()
     private var output = TextArea()
     private var language = ComboBox<Pair<String?,String?>>()
@@ -44,7 +40,7 @@ class Appeana_Translate:UIComponent() {
         borderpane {
             left {
                 button("Done").action {
-                    output.text = GoogleTranslate.translate(language.selectedItem?.component2(), input.text)
+                    output.text = GoogleTranslate.translate(language.selectedItem?.second, input.text)
                 }
             }
             right {
@@ -54,12 +50,14 @@ class Appeana_Translate:UIComponent() {
             }
         }
     }
+    companion object{
+        private fun lang(): List<Pair<String?, String?>> {
+            val language = listOf("Arabic", "eu", "ca", "cs", "nl", "English", "fi", "fr", "gl", "de", "hu", "is", "it", "id", "ja", "ko",
+                "la", "zh", "ms", "no", "pl", "xx-piglatin", "pt", "ro", "ru", "sr", "sk", "es", "sv", "tr", "zu")
+            val keyword = listOf("ar", "eu", "ca", "cs", "nl", "en", "fi", "fr", "gl", "de", "hu", "is", "it", "id", "ja", "ko",
+                "la", "zh", "ms", "no", "pl", "xx-piglatin", "pt", "ro", "ru", "sr", "sk", "es", "sv", "tr", "zu")
+            return language.zip(keyword)
+        }
+    }
 }
 
-private fun lang(): List<Pair<String?, String?>> {
-    val keyword = listOf("العربية", "eu", "ca", "cs", "nl", "en", "fi", "fr", "gl", "de", "hu", "is", "it", "id", "ja", "ko",
-        "la", "zh", "ms", "no", "pl", "xx-piglatin", "pt", "ro", "ru", "sr", "sk", "es", "sv", "tr", "zu")
-    val language = listOf("ar", "eu", "ca", "cs", "nl", "en", "fi", "fr", "gl", "de", "hu", "is", "it", "id", "ja", "ko",
-                        "la", "zh", "ms", "no", "pl", "xx-piglatin", "pt", "ro", "ru", "sr", "sk", "es", "sv", "tr", "zu")
-    return keyword.zip(language)
-}
