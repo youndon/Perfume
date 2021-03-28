@@ -1,50 +1,71 @@
 package com.example.demo.view
 
-import javafx.beans.property.SimpleStringProperty
+import AppeanaFx.t.TableViewEditModel
+import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.paint.Color
+import kotlinx.datetime.LocalDate
 import tornadofx.*
+import javax.swing.table.TableModel
 
 fun main()= launch<CRUD>()
 class CRUD: App(CRUDView::class)
 
 class CRUDView:UIComponent("CRUD") {
-    private var textField: TextField by singleAssign()
-    private var userTable: TableView<CRUDControl.User> by singleAssign()
-    private val list = arrayListOf<CRUDControl.User>().observable()
+    private var nameField: TextField by singleAssign()
+    private var userTable: TableView<User> by singleAssign()
+    private val list = arrayListOf<User>().observable()
+    private val model = UserModel(User())
     override val root = borderpane {
         setPrefSize(500.0, 500.0)
         right {
-            tableview(list) {
-                userTable = this
-                column("Name", CRUDControl.User::name)
+            form{
+                tableview(list) {
+                    userTable = this
+                    readonlyColumn("Name", User::name)
+                }
             }
         }
         left {
             form {
                 fieldset("EditUser") {
                     field {
-                        textflow {text("Name");text("*"){ fill= Color.RED} }
+                        textflow { text("Name");text("*") { fill = Color.RED } }
                         textfield {
-                            textField = this
+                            nameField = this
                         }
                     }
+//                    field{
+//                        textflow {text("Date");text("*"){ fill= Color.RED} }
+//                        datepicker{
+//                            datePicker=this
+//                        }
+//                    }
+//                    field {
+//                        textflow {text("Email");text("*"){ fill= Color.RED} }
+//                        textfield {
+//                            emailField=this
+//                        }
+//                    }
+//                }
                 }
+
+
                 buttonbar {
                     button("add") {
                         action {
                             addUser()
                         }
                     }.enableWhen {
-                        textField.textProperty().isNotBlank()
+                        nameField.textProperty().isNotBlank()
                     }
                     button("reset") {
                         action {
                             reset()
                         }
                     }.enableWhen {
-                        textField.textProperty().isNotBlank()
+                        nameField.textProperty().isNotBlank()
                     }
                     button("delete") {
                         action {
@@ -52,7 +73,8 @@ class CRUDView:UIComponent("CRUD") {
                         }
                     }
                     button("save") {
-
+                        action {
+                        }
                     }
                     button("edit") {
 
@@ -64,7 +86,7 @@ class CRUDView:UIComponent("CRUD") {
     }
 
     private fun addUser() {
-        list.add(CRUDControl.User(textField.text))
+        list.add(User(nameField.text))
         reset()
     }
 
@@ -73,13 +95,14 @@ class CRUDView:UIComponent("CRUD") {
     }
 
     private fun reset() {
-        textField.clear()
+        nameField.clear()
+    }
+    private fun save() {
     }
 }
 
-    sealed class CRUDControl {
-        class User(name: String? = null) {
-            private val nameProperty = SimpleStringProperty(this, "name", name)
-            var name: String by nameProperty
+ data class User(val name: String? = null)
+
+ class UserModel(user: User):ItemViewModel<User>(user) {
+            val name = bind(User::name)
         }
-    }
