@@ -29,7 +29,6 @@ class Person(name: String? = null, title: String? = null) {
 Consider a Master/Detail view where you have a `TableView` displaying a list of people, and a `Form` where the currently selected person's information can be edited. 
 Before we get into the `ViewModel`, we will create a version of this `View` without using the `ViewModel`.
 
-
 ![](pic/11.1.png)
 
 The code below is our first attempt to build this, and it has some problems that we will address.
@@ -211,6 +210,7 @@ class PersonModel(person: Person) : ItemViewModel<Person>(person) {
     val title = bind(Person::titleProperty)
 }
 ```
+
 This looks a lot better, but what exactly is going on here? We have introduced a subclass of `ViewModel` called `PersonModel`.
 The model holds a `Person` object and has properties for the name and title fields.
 We will discuss the model further after we have looked at the rest of the client code.
@@ -234,8 +234,8 @@ When we create the `TextFields`, we bind the model properties directly to it sin
 
 field("Name") {
     textfield(model.name)
-```
 }
+```
 Even when the selection changes, the model properties persist but the values for the properties are updated.
 We totally avoid the manual binding from our previous attempt.
 

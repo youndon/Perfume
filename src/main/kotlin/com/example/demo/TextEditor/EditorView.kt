@@ -13,7 +13,7 @@ class EditorView : UIComponent() {
     var fc = FileChooser()
     override val root = gridpane {
         cc.font = Font.font("Manjari Thin", 30.0)
-        fc.initialDirectory = File("/home/")
+        fc.initialDirectory = File(System.getProperty("user.path"))
         fc.initialFileName = "untitled.txt"
         fc.title = "..."
         fc.extensionFilters

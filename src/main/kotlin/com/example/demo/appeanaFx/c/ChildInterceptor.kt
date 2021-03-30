@@ -9,8 +9,8 @@ class ChildInterceptor {
     lateinit var childInterceptor: ChildInterceptor
     lateinit var node : Node
     init {
-        childInterceptor.invoke(EventTarget { event:EventDispatchChain -> event },
-            node,
-            1)
+        childInterceptor.invoke(
+            { event:EventDispatchChain -> event },
+            node,1)
     }
 }

@@ -11,16 +11,12 @@ class Properties {
     init {
         properties.run {
             this.addListener ( InvalidationListener{
-
             })
             this.addListener(MapChangeListener {
-
             })
             this.removeListener( InvalidationListener {
-
             })
             this.removeListener(MapChangeListener {
-
             })
         }
     }

@@ -3,7 +3,7 @@ package AppeanaFx.d
 import tornadofx.DataGridCellFragment
 
 abstract class DataGridCellFragment<T> {
-    lateinit var dataGridCellFragment: DataGridCellFragment<*>
+    lateinit var dataGridCellFragment: DataGridCellFragment<Int>
     init {
         dataGridCellFragment.run {
             this.cell
@@ -11,7 +11,7 @@ abstract class DataGridCellFragment<T> {
             this.editing
             this.editingProperty
             this.cancelEdit()
-//            this.commitEdit()
+            this.commitEdit(0)
             this.onEdit {  }
             this.startEdit()
         }

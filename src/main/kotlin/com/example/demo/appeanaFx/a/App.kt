@@ -1,7 +1,9 @@
 package com.example.demo.appeanaFx.a
 
+import javafx.scene.image.Image
 import tornadofx.*
 import tornadofx.App
+import java.awt.image.BufferedImage
 import java.io.InputStream
 
 private class App {
@@ -19,7 +21,7 @@ private class App {
             this.k(this.javaClass) // todo
             this.onBeforeShow(uiComponent) // todo
             this.shouldShowPrimaryStage()
-//            this.trayicon() // todo
+            this.trayicon(BufferedImage(0,0,0),""){} // todo
         }
     }
 }
