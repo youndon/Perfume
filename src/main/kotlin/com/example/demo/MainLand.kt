@@ -4,7 +4,10 @@ import User
 import UserModel
 import com.github.kiulian.downloader.OnYoutubeDownloadListener
 import dyorgio.runtime.run.`as`.root.RootExecutor
+import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleStringProperty
+import javafx.collections.FXCollections
+import javafx.scene.control.ButtonBar
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.layout.BorderPane
@@ -20,12 +23,13 @@ import java.io.InputStreamReader
 import java.net.URL
 import java.nio.file.Paths
 import java.util.concurrent.Future
+import javax.json.JsonObject
 import javax.swing.text.StyledEditorKit
 
 fun main() {
     launch<MainLand>()
 }
-class MainLand:App(Workspace::class)
+class MainLand:App(PersonEditor::class)
 
 class PersonEditor : UIComponent() {
     override val root = vbox {
