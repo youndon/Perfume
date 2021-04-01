@@ -95,5 +95,17 @@
     <orderEntry type="library" name="Maven: com.github.goxr3plus:java-google-speech-api:8.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.axet:java-flac-encoder:0.3.8" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20150729" level="project" />
+    <orderEntry type="library" name="Maven: org.nield:rxkotlin-jdbc:0.4.1" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex.rxjava2:rxjava:2.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.controlsfx:controlsfx:8.40.11" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex:rxkotlin:2.0.0-RC1" level="project" />
+    <orderEntry type="library" name="Maven: com.github.thomasnield:rxkotlinfx:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex.rxjava2:rxjavafx:2.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.34.0" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex.rxjava3:rxkotlin:3.0.1" level="project" />
+    <orderEntry type="library" name="Maven: io.reactivex.rxjava3:rxjava:3.0.6" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.23" level="project" />
+    <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java:3.11.4" level="project" />
   </component>
 </module>

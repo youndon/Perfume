@@ -1,3 +1,5 @@
+import com.github.thomasnield.rxkotlinfx.actionEvents
+import io.reactivex.subjects.BehaviorSubject
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.scene.control.DatePicker
@@ -32,6 +34,7 @@ class CrudView:UIComponent(){
                 }
                 button("save") {
                     enableWhen { model.dirty }
+                    actionEvents().map { Unit }.subscribe(Control().saveAssignments)
                 }
                 button("delete").action {
                     users.remove(userTable.selectedItem)
@@ -72,4 +75,7 @@ class UserModel(user:User?):ItemViewModel<User>(user){
     val lastname = bind(User::lastnameProperty)
     val date = bind(User::dateProperty)
     val email = bind(User::emailProperty)
+}
+class Control:Controller(){
+    val saveAssignments = BehaviorSubject.create<Unit>()
 }
