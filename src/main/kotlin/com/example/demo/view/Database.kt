@@ -7,7 +7,7 @@ class Database {
     private val connection:Connection
     init {
         Class.forName("com.mysql.cj.jdbc.Driver")
-        connection = DriverManager.getConnection("jdbc:msql://localhost:3306/users","root","copione")
+        connection = DriverManager.getConnection("jdbc:msql://localhost:3306/landbase","land","copione25163")
     }
 
     fun createNewUser(user:User):Int{
