@@ -26,7 +26,7 @@
     <show-object-properties value="false" />
     <loaded-nodes>
       <connection connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d">
-        <schema name="main" object-types="view, index, constraint, dataset trigger, column, table" />
+        <schema name="main" object-types="index, column, table, view, constraint, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
@@ -38,6 +38,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
+      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/SingUp" />
+      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/UserTable1" />
       <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/UserTable" />
     </open-files>
   </component>
@@ -45,13 +47,18 @@
     <connection id="5485559e-67ca-4fff-800f-19c9e7c7c42d" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.UserTable1" active-filter-id="c0ef12f2-3ad6-42e4-a68c-d74138421ea5">
-      <filter id="c0ef12f2-3ad6-42e4-a68c-d74138421ea5" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
-        <condition column="email" operator="=" value="" active="true" />
+    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.sqlite_sequence" active-filter-id="" />
+    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.UserTable1" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.SingUp" active-filter-id="0a50c4c3-9dc3-4c25-8752-1f3c00115ea7">
+      <filter id="0a50c4c3-9dc3-4c25-8752-1f3c00115ea7" name="Filter" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="name" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
-    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.UserTable" active-filter-id="98189891-0c8c-4b96-a04a-d23196c2068d">
-      <filter id="98189891-0c8c-4b96-a04a-d23196c2068d" name="Filter" temporary="false" custom-name="false" type="basic" join-type="AND" />
+    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.UserTable" active-filter-id="">
+      <filter id="98189891-0c8c-4b96-a04a-d23196c2068d" name=" &amp; " temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="firstname" operator="=" value="" active="true" />
+        <condition column="lastname" operator="=" value="" active="true" />
+      </filter>
     </filter-actions>
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
@@ -175,7 +182,7 @@
       <general>
         <display-mode value="TABBED" />
         <navigation-history-size value="100" />
-        <show-object-details value="false" />
+        <show-object-details value="true" />
       </general>
       <filters>
         <object-type-filter>
@@ -222,10 +229,10 @@
       <lookup-filters>
         <lookup-objects>
           <object-type name="SCHEMA" enabled="true" />
-          <object-type name="USER" enabled="false" />
-          <object-type name="ROLE" enabled="false" />
-          <object-type name="PRIVILEGE" enabled="false" />
-          <object-type name="CHARSET" enabled="false" />
+          <object-type name="USER" enabled="true" />
+          <object-type name="ROLE" enabled="true" />
+          <object-type name="PRIVILEGE" enabled="true" />
+          <object-type name="CHARSET" enabled="true" />
           <object-type name="TABLE" enabled="true" />
           <object-type name="VIEW" enabled="true" />
           <object-type name="MATERIALIZED VIEW" enabled="true" />
@@ -233,7 +240,7 @@
           <object-type name="CONSTRAINT" enabled="true" />
           <object-type name="DATASET TRIGGER" enabled="true" />
           <object-type name="DATABASE TRIGGER" enabled="true" />
-          <object-type name="SYNONYM" enabled="false" />
+          <object-type name="SYNONYM" enabled="true" />
           <object-type name="SEQUENCE" enabled="true" />
           <object-type name="PROCEDURE" enabled="true" />
           <object-type name="FUNCTION" enabled="true" />

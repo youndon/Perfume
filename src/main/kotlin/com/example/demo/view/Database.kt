@@ -5,13 +5,16 @@ import java.sql.DriverManager
 
 class Database {
     private val connection:Connection
-    init {
-        Class.forName("com.mysql.cj.jdbc.Driver")
-        connection = DriverManager.getConnection("jdbc:msql://localhost:3306/landbase","land","copione25163")
-    }
-
+//    init {
+//        Class.forName("com.mysql.cj.jdbc.Driver")
+//        connection = DriverManager.getConnection("jdbc:msql://localhost:3306/landbase","land","copione25163")
+//    }
+init {
+    Class.forName("org.sqlite.JDBC")
+    connection = DriverManager.getConnection("jdbc:sqlite:Perfume.db")
+}
     fun createNewUser(user:User):Int{
-        val preparedStatement = connection.prepareStatement("INSERT INTO user(name,username,password) VALUES (?,?,?)")
+        val preparedStatement = connection.prepareStatement("INSERT INTO SingUp(name,username,password) VALUES (?,?,?)")
         preparedStatement.setString(1,user.name)
         preparedStatement.setString(2,user.username)
         preparedStatement.setString(3,user.password)
@@ -20,7 +23,7 @@ class Database {
         return rowCont
     }
     fun selectName(username: String):String {
-        val preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE username = ?")
+        val preparedStatement = connection.prepareStatement("SELECT * FROM SingUp WHERE username = ?")
         preparedStatement.setString(1,username)
         val resultSet = preparedStatement.executeQuery()
         resultSet.next()
@@ -29,7 +32,7 @@ class Database {
         return name
     }
     fun checkAccontExist(username: String, password: String): Boolean {
-        val preparedStatement = connection.prepareStatement("SELECT id FROM user WHERE username = ? AND password = ?")
+        val preparedStatement = connection.prepareStatement("SELECT id FROM SingUp WHERE username = ? AND password = ?")
         preparedStatement.setString(1,username)
         preparedStatement.setString(2,password)
         val resultSet = preparedStatement.executeQuery()

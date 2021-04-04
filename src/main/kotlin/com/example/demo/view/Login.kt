@@ -44,11 +44,13 @@ class Login:View() {
         bottom {
             vbox {
                 button("Login") {
-                    runAsync {
-                        controller.loginUser(username.value,password.value)
-                    }.ui {
-                        myusername = username.value
-                        replaceWith(HomePage::class)
+                    action {
+                        runAsync {
+                            controller.loginUser(username.value,password.value)
+                        }.ui {
+                            myusername = username.value
+                            replaceWith(HomePage::class)
+                        }
                     }
                 }
                 button("SingUp") {
@@ -74,21 +76,18 @@ class SingUp:View(){
                     field {
                         textfield(name) {
                             promptText ="firstname"
-                            requestFocus()
                         }
 
                     }
                     field {
                         textfield(username) {
                             promptText ="password"
-                            requestFocus()
                         }
 
                     }
                     field {
-                        textfield(password) {
+                        passwordfield(password) {
                             promptText="confirm password"
-                            requestFocus()
                         }
 
                     }

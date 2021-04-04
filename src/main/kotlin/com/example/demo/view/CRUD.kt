@@ -11,11 +11,10 @@ fun main() {
     launch<CRUD>()
 }
 class CRUD : App(CrudView::class)
-
+val users = SortedFilteredList(UserConnection().readUsers().observable())
 class CrudView:UIComponent() {
     var userTable: TableView<User> by singleAssign()
     var datePicker: DatePicker by singleAssign()
-    val users = Control().users
     val model = UserModel(User())
     val controller:Control by inject()
     override val root = borderpane {
@@ -23,9 +22,9 @@ class CrudView:UIComponent() {
             form {
                 fieldset("user edit") {
                     field("firstname*") { textfield(model.firstname).required() }
-                    field("lastname*") { textfield(model.lastname).required() }
+                    field("lastname*") { textfield(model.lastname) }
                     field("date*") { datepicker { datePicker = this } }
-                    field("email*") { textfield(model.email).required() }
+                    field("email*") { textfield(model.email) }
                 }
                 button("commit").action {
                     model.commit()
@@ -80,12 +79,20 @@ class UserModel(user:User?):ItemViewModel<User>(user){
     val email = bind(User::emailProperty)
 }
 class Control:Controller() {
-    val users = SortedFilteredList(UserConnection().readUsers().observable())
     fun add(firstname: String?, lastname: String?) {
         val user = User(firstname, lastname)
         val doa = UserConnection()
         doa.adduser(user)
-        users.plusAssign(user)
+        users.add(user)
+    }
+
+    fun putcommit(olduser:User,newfirstname:String,newlastname:String){
+        val newuser = User(newfirstname,newlastname)
+        UserConnection().commitUser(olduser.firstname,newuser)
+        with(users){
+            remove(olduser)
+            add(newuser)
+        }
     }
 }
 class UserConnection{
@@ -110,6 +117,24 @@ class UserConnection{
         resultSet.close()
         connection.close()
         return userList
+    }
+    fun commitUser(firstname: String,user: User): User {
+        val connection = DataBase().connection
+        var param = ""
+        val lastparam = ", lastname = ?"
+        var optionalPramIndex = 2
+        if (user.lastame.isNotEmpty()) param = lastparam
+        val ps = connection.prepareStatement("UPDATE UserTable SET firstname = ? $param WHERE lastname = ?")
+        ps.setString(1, user.firstname)
+        if (param.isNotEmpty()){
+            ps.setString(optionalPramIndex,user.lastame)
+            optionalPramIndex = optionalPramIndex.inc()
+        }
+        ps.setString(optionalPramIndex,firstname)
+        ps.executeUpdate()
+        ps.close()
+        connection.close()
+        return user
     }
 
 }
