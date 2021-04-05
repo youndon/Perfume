@@ -120,7 +120,7 @@ class Control:Controller() {
     }
 }
 
-data class User(val id:Int?=null,val name:String? =null,val username:String?=null,val password: String?=null)
+ data class User(val id:Int?=null,val name:String? =null,val username:String?=null,val password: String?=null)
 
 private class Database {
     private val connection: Connection
