@@ -63,7 +63,7 @@
 //            val y = rect.y
 //            val w = rect.width
 //            val h = rect.height
-//            rectList.add(Rectangle2D(x.toDouble(), y.toDouble(), w.toDouble(), h.toDouble()))
+//            rectList.addUser(Rectangle2D(x.toDouble(), y.toDouble(), w.toDouble(), h.toDouble()))
 //        }
 //        return rectList
 //    }

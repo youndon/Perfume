@@ -1,5 +1,6 @@
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
+import javafx.geometry.Orientation
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
 import tornadofx.*
@@ -13,39 +14,41 @@ fun main() {
 class CRUD : App(CrudView::class)
 val users = SortedFilteredList(UserConnection().readUsers().observable())
 class CrudView:UIComponent() {
+//    private val fontAwesome = GlyphFontRegistry.font("FontAwesome")
+//    private val saveGlyph = fontAwesome.create(FontAwesome.Glyph.SAVE)
     var userTable: TableView<User> by singleAssign()
     var datePicker: DatePicker by singleAssign()
     val model = UserModel(User())
     val controller:Control by inject()
     override val root = borderpane {
         right {
-            form {
-                fieldset("user edit") {
-                    field("firstname*") { textfield(model.firstname).required() }
-                    field("lastname*") { textfield(model.lastname) }
-                    field("date*") { datepicker { datePicker = this } }
-                    field("email*") { textfield(model.email) }
-                }
-                button("commit").action {
-                    model.commit()
-                }
-                button("reset").action {
-                    model.rollback()
-                }
-                button("save") {
-                    enableWhen { model.dirty }
-                    action{
-                        runAsync {
-                            controller.add(model.firstname.value,model.lastname.value)
-                            userTable.refresh()
+            splitpane(Orientation.HORIZONTAL){
+                form {
+                    fieldset("user edit") {
+                        field("firstname*") { textfield(model.firstname).required() }
+                        field("lastname*") { textfield(model.lastname) }
+                        field("date*") { datepicker { datePicker = this } }
+                        field("email*") { textfield(model.email) }
+                    }
+                    button("commit").action {
+                        model.commit()
+                    }
+                    button("reset").action {
+                        model.rollback()
+                    }
+                    button("addUser") {
+//                    enableWhen { model.dirty }
+                        action{
+                            runAsync {
+                                controller.addUser(model.firstname.value,model.lastname.value)
+                            }
                         }
                     }
-                }
-                button("delete").action {
-                    users.remove(userTable.selectedItem)
+                    button("delete").action {
+                        users.remove(userTable.selectedItem)
+                    }
                 }
             }
-
         }
         left {
             tableview(users) {
@@ -79,23 +82,24 @@ class UserModel(user:User?):ItemViewModel<User>(user){
     val email = bind(User::emailProperty)
 }
 class Control:Controller() {
-    fun add(firstname: String?, lastname: String?) {
+    fun addUser(firstname: String?, lastname: String?) {
         val user = User(firstname, lastname)
         val doa = UserConnection()
         doa.adduser(user)
         users.add(user)
     }
 
-    fun putcommit(olduser:User,newfirstname:String,newlastname:String){
-        val newuser = User(newfirstname,newlastname)
-        UserConnection().commitUser(olduser.firstname,newuser)
-        with(users){
-            remove(olduser)
-            add(newuser)
-        }
-    }
+//    fun putcommit(olduser:User,newfirstname:String,newlastname:String){
+//        val newuser = User(newfirstname,newlastname)
+//        UserConnection().commitUser(olduser.firstname,newuser)
+//        with(users){
+//            remove(olduser)
+//            add(newuser)
+//        }
+//    }
+
 }
-class UserConnection{
+private class UserConnection{
     fun adduser(user: User) {
         val connection =  DataBase().connection
         val ps = connection.prepareStatement("INSERT INTO UserTable(firstname,lastname) VALUES (?, ?)")
@@ -118,32 +122,33 @@ class UserConnection{
         connection.close()
         return userList
     }
-    fun commitUser(firstname: String,user: User): User {
-        val connection = DataBase().connection
-        var param = ""
-        val lastparam = ", lastname = ?"
-        var optionalPramIndex = 2
-        if (user.lastame.isNotEmpty()) param = lastparam
-        val ps = connection.prepareStatement("UPDATE UserTable SET firstname = ? $param WHERE lastname = ?")
-        ps.setString(1, user.firstname)
-        if (param.isNotEmpty()){
-            ps.setString(optionalPramIndex,user.lastame)
-            optionalPramIndex = optionalPramIndex.inc()
-        }
-        ps.setString(optionalPramIndex,firstname)
-        ps.executeUpdate()
-        ps.close()
-        connection.close()
-        return user
-    }
+//    fun commitUser(firstname: String,user: User): User {
+//        val connection = DataBase().connection
+//        var param = ""
+//        val lastparam = ", lastname = ?"
+//        var optionalPramIndex = 2
+//        if (user.lastame.isNotEmpty()) param = lastparam
+//        val ps = connection.prepareStatement("UPDATE UserTable SET firstname = ? $param WHERE lastname = ?")
+//        ps.setString(1, user.firstname)
+//        if (param.isNotEmpty()){
+//            ps.setString(optionalPramIndex,user.lastame)
+//            optionalPramIndex = optionalPramIndex.inc()
+//        }
+//        ps.setString(optionalPramIndex,firstname)
+//        ps.executeUpdate()
+//        ps.close()
+//        connection.close()
+//        return user
+//    }
 
 }
 
-class DataBase{
+private class DataBase{
     val connection: Connection
     init {
         Class.forName("org.sqlite.JDBC")
         connection = DriverManager.getConnection("jdbc:sqlite:Perfume.db")
+
     }
 
 }

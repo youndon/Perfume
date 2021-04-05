@@ -93,7 +93,7 @@ class TextEditor_Controller : Initializable {
         }
     }
 
-    //TODO add confirmation window if text editor has text and wasn't saved
+    //TODO addUser confirmation window if text editor has text and wasn't saved
     @FXML
     fun newFile() {
         textArea!!.clear()

@@ -26,7 +26,7 @@
     <show-object-properties value="false" />
     <loaded-nodes>
       <connection connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d">
-        <schema name="main" object-types="index, column, table, view, constraint, dataset trigger" />
+        <schema name="main" object-types="view, column, table, index, constraint, dataset trigger" />
       </connection>
     </loaded-nodes>
   </component>
@@ -38,9 +38,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/SingUp" />
-      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/UserTable1" />
       <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/UserTable" />
+      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/SingUp" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
@@ -49,7 +48,7 @@
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.sqlite_sequence" active-filter-id="" />
     <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.UserTable1" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.SingUp" active-filter-id="0a50c4c3-9dc3-4c25-8752-1f3c00115ea7">
+    <filter-actions connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" dataset="main.SingUp" active-filter-id="">
       <filter id="0a50c4c3-9dc3-4c25-8752-1f3c00115ea7" name="Filter" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="name" operator="=" value="" active="true" />
       </filter>
@@ -112,7 +111,7 @@
           <deprecated-pwd value="" />
         </database>
         <properties>
-          <auto-commit value="true" />
+          <auto-commit value="false" />
         </properties>
         <ssh-settings>
           <active value="false" />

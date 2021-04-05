@@ -66,11 +66,11 @@ class SnakeGame : App() {
                 }
             }
 
-            // add start snake part
+            // addUser start snake part
             snake.add(Corner(width / 2, height / 2))
             snake.add(Corner(width / 2, height / 2))
             snake.add(Corner(width / 2, height / 2))
-//            scene.stylesheets.add(javaClass.getResource("application.css").toExternalForm())
+//            scene.stylesheets.addUser(javaClass.getResource("application.css").toExternalForm())
             stage.scene = scene
             stage.title = "Snake Game"
             stage.show()

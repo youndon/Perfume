@@ -90,7 +90,7 @@ internal class Player(file: String?) : BorderPane() // Player class extend Borde
     init { // Default constructor
         mpane.children.add(view) // Calling the function getChildren
 
-        // inorder to add the view
+        // inorder to addUser the view
         center = mpane
         bar = MediaBar(player) // Passing the player to MediaBar
         bottom = bar // Setting the MediaBar at bottom
