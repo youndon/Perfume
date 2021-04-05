@@ -12,13 +12,6 @@ fun main() = launch<LoginApp>()
 var myusername = ""
 
 class LoginApp:App(Login::class)
-class HomePage:View(){
-    override val root = borderpane{
-        center {
-            label("Welcome ${Database().selectName(myusername)}") {  }
-        }
-    }
-}
 
 class Login:View() {
     val username = SimpleStringProperty()
@@ -103,7 +96,7 @@ class SingUp:View(){
                         controller.newUser(user)
                     }.ui{
                         myusername = username.value
-                        replaceWith(HomePage::class)
+//                        replaceWith(HomePage::class)
                     }
                 }
             }

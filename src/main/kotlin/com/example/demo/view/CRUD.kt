@@ -1,5 +1,11 @@
+import Icons.Companion.removeGlyph
+import Icons.Companion.saveGlyph
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
+import org.controlsfx.glyphfont.FontAwesome
+import org.controlsfx.glyphfont.Glyph
+import org.controlsfx.glyphfont.GlyphFont
+import org.controlsfx.glyphfont.GlyphFontRegistry
 import tornadofx.*
 import java.sql.Connection
 import java.sql.DriverManager
@@ -12,8 +18,6 @@ fun main() {
 class CRUD : App(CrudView::class)
 var users = SortedFilteredList(DataBase().readUsers().observable())
 class CrudView:UIComponent() {
-    //    private val fontAwesome = GlyphFontRegistry.font("FontAwesome")
-//    private val saveGlyph = fontAwesome.create(FontAwesome.Glyph.SAVE)
     var userTable: TableView<User> by singleAssign()
     var datePicker: DatePicker by singleAssign()
     val model = UserModel(User())
@@ -27,7 +31,7 @@ class CrudView:UIComponent() {
                     field("date*") { datepicker { datePicker = this } }
                     field("email*") { textfield(model.bindemail) }
                 }
-                button("update") {
+                button("update",saveGlyph) {
                     enableWhen { model.dirty }
                     action {
                         DataBase().update(model.bindid.value,model.bindfirstname.value,model.bindlastname.value)
@@ -43,7 +47,7 @@ class CrudView:UIComponent() {
                         }
                     }
                 }
-                button("delete").action {
+                button("delete",removeGlyph).action {
                     users.remove(userTable.selectedItem)
                     DataBase().delete(model.bindid.value)
                 }
@@ -124,5 +128,13 @@ private class DataBase{
         ps.executeUpdate()
         ps.close()
         connection.close()
+    }
+}
+
+class Icons{
+    companion object{
+         private val fontAwesome: GlyphFont = GlyphFontRegistry.font("FontAwesome")
+         val saveGlyph: Glyph = fontAwesome.create(FontAwesome.Glyph.SAVE)
+         val removeGlyph: Glyph = fontAwesome.create(FontAwesome.Glyph.REMOVE)
     }
 }

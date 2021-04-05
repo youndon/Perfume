@@ -38,6 +38,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
+      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/SingUp" />
       <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/UserTable" />
     </open-files>
   </component>
