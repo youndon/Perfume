@@ -31,7 +31,6 @@ class CrudView:UIComponent() {
                         field("email*") { textfield(model.email) }
                     }
                     button("commit").action {
-                        model.commit()
                     }
                     button("reset").action {
                         model.rollback()
@@ -122,6 +121,7 @@ private class UserConnection{
         connection.close()
         return userList
     }
+
 //    fun commitUser(firstname: String,user: User): User {
 //        val connection = DataBase().connection
 //        var param = ""

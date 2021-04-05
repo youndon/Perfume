@@ -26,7 +26,7 @@
     <show-object-properties value="false" />
     <loaded-nodes>
       <connection connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d">
-        <schema name="main" object-types="view, column, table, index, constraint, dataset trigger" />
+        <schema name="main" object-types="table, view, constraint, column, dataset trigger, index" />
       </connection>
     </loaded-nodes>
   </component>
@@ -38,8 +38,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/UserTable" />
       <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/SingUp" />
+      <object connection-id="5485559e-67ca-4fff-800f-19c9e7c7c42d" object-ref="schemas/main/tables/UserTable" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
