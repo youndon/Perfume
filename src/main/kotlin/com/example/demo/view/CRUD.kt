@@ -1,5 +1,7 @@
 import Icons.Companion.removeGlyph
 import Icons.Companion.saveGlyph
+import com.github.thomasnield.rxkotlinfx.onChangedObservable
+import com.github.thomasnield.rxkotlinfx.updates
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
 import org.controlsfx.glyphfont.FontAwesome
@@ -34,7 +36,7 @@ class CrudView:UIComponent() {
                 button("update",saveGlyph) {
                     enableWhen { model.dirty }
                     action {
-                        DataBase().update(model.bindid.value,model.bindfirstname.value,model.bindlastname.value)
+                        DataBase().update(model.bindid.value, model.bindfirstname.value, model.bindlastname.value)
                     }
                 }
                 button("reset").action {

@@ -1,6 +1,5 @@
 package com.example.demo.view
 
-import CRUD
 import CrudView
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
