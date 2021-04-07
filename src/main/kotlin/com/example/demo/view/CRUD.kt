@@ -2,8 +2,14 @@ import Icons.Companion.removeGlyph
 import Icons.Companion.saveGlyph
 import com.github.thomasnield.rxkotlinfx.onChangedObservable
 import com.github.thomasnield.rxkotlinfx.updates
+import org.nield.dirtyfx.beans.DirtyObjectProperty
+import org.nield.dirtyfx.beans.DirtyStringProperty
+import org.nield.dirtyfx.extensions.addTo
+import org.nield.dirtyfx.tracking.CompositeDirtyProperty
+import javafx.beans.property.*
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
+import javafx.scene.paint.Color
 import org.controlsfx.glyphfont.FontAwesome
 import org.controlsfx.glyphfont.Glyph
 import org.controlsfx.glyphfont.GlyphFont
@@ -18,7 +24,7 @@ fun main() {
     launch<CRUD>()
 }
 class CRUD : App(CrudView::class)
-var users = SortedFilteredList(DataBase().readUsers().observable())
+var users = (DataBase().readUsers().observable())
 class CrudView:UIComponent() {
     var userTable: TableView<User> by singleAssign()
     var datePicker: DatePicker by singleAssign()
@@ -36,6 +42,7 @@ class CrudView:UIComponent() {
                 button("update",saveGlyph) {
                     enableWhen { model.dirty }
                     action {
+                        model.commit()
                         DataBase().update(model.bindid.value, model.bindfirstname.value, model.bindlastname.value)
                     }
                 }
@@ -59,29 +66,42 @@ class CrudView:UIComponent() {
             tableview(users) {
                 userTable = this
                 column("Id",User::id)
-                column("First Name", User::firstname)
-                column("Last Name", User::lastname)
+                column("First Name", User::firstnameProperty) {
+                    cellDecorator {
+                        rowItem.firstnameProperty.isDirtyProperty().addListener { o, oldValue, newValue ->
+                            textFill = if (newValue) Color.RED else Color.BLACK
+                        }
+                    }
+                }
+                column("Last Name", User::lastnameProperty)
                 column("Date", User::date)
                 column("Email", User::email)
                 smartResize()
                 model.rebindOnChange(this) {
-                    item = it ?: User()
+                    item = it // ?: User()
                 }
             }
         }
     }
 }
- data class User(var id:Int?=null,var firstname:String?=null,var lastname:String?=null,var date: LocalDate?=null,var email:String?=null)
+  class User(var id:Int?=null, firstname:String, lastname:String?=null,var date: LocalDate?=null,var email:String?=null){
+      val firstnameProperty = DirtyStringProperty(firstname)
+      var firstname by firstnameProperty
+      val lastnameProperty = SimpleStringProperty(lastname)
+      var lastname by lastnameProperty
+
+
+ }
 
 class UserModel(user:User?):ItemViewModel<User>(user){
     val bindid = bind(User::id)
-    val bindfirstname = bind(User::firstname)
-    val bindlastname = bind(User::lastname)
+    val bindfirstname = bind(User::firstnameProperty)
+    val bindlastname = bind(User::lastnameProperty)
     val binddate = bind(User::date)
     val bindemail = bind(User::email)
 }
 class Control:Controller() {
-    fun addUser(firstname: String?, lastname: String?) {
+    fun addUser(firstname: String, lastname: String?) {
         val user = User(firstname = firstname,lastname = lastname)
         val doa = DataBase()
         doa.insert(user)
