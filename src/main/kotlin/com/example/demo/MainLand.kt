@@ -1,6 +1,7 @@
 package com.example.demo.view
 
 import javafx.beans.property.SimpleObjectProperty
+import javafx.collections.FXCollections
 import javafx.geometry.Orientation
 import javafx.scene.paint.Color
 import org.nield.dirtyfx.beans.DirtyObjectProperty
@@ -23,12 +24,12 @@ class MainView : UIComponent() {
 
 class MyView: View() {
 
-    val customers = arrayListOf(
+    val customers = FXCollections.observableArrayList(
         Person("Samantha","Stuart",LocalDate.of(1981,12,4)),
         Person("Tom","Marks",LocalDate.of(2001,1,23)),
         Person("Stuart","Gills",LocalDate.of(1989,5,23)),
         Person("Nicole","Williams",LocalDate.of(1998,8,11))
-    ).observable()
+    )
 
     val selectedCustomer = SimpleObjectProperty<Person>()
 

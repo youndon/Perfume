@@ -1,12 +1,15 @@
 import Icons.Companion.removeGlyph
 import Icons.Companion.saveGlyph
 import com.github.thomasnield.rxkotlinfx.onChangedObservable
+import com.github.thomasnield.rxkotlinfx.rowIndexSelections
 import com.github.thomasnield.rxkotlinfx.updates
 import org.nield.dirtyfx.beans.DirtyObjectProperty
 import org.nield.dirtyfx.beans.DirtyStringProperty
 import org.nield.dirtyfx.extensions.addTo
 import org.nield.dirtyfx.tracking.CompositeDirtyProperty
 import javafx.beans.property.*
+import javafx.event.Event
+import javafx.event.EventType
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
 import javafx.scene.paint.Color
@@ -18,6 +21,7 @@ import tornadofx.*
 import java.sql.Connection
 import java.sql.DriverManager
 import java.time.LocalDate
+import javax.swing.event.ChangeEvent
 
 
 fun main() {
@@ -34,7 +38,7 @@ class CrudView:UIComponent() {
         right {
             form {
                 fieldset("user edit") {
-                    field("firstname*") { textfield(model.bindfirstname).required() }
+                    field("firstname*") { textfield(model.bindfirstname) }
                     field("lastname*") { textfield(model.bindlastname) }
                     field("date*") { datepicker { datePicker = this } }
                     field("email*") { textfield(model.bindemail) }
@@ -66,13 +70,7 @@ class CrudView:UIComponent() {
             tableview(users) {
                 userTable = this
                 column("Id",User::id)
-                column("First Name", User::firstnameProperty) {
-                    cellDecorator {
-                        rowItem.firstnameProperty.isDirtyProperty().addListener { o, oldValue, newValue ->
-                            textFill = if (newValue) Color.RED else Color.BLACK
-                        }
-                    }
-                }
+                column("First Name", User::firstnameProperty)
                 column("Last Name", User::lastnameProperty)
                 column("Date", User::date)
                 column("Email", User::email)
@@ -84,8 +82,8 @@ class CrudView:UIComponent() {
         }
     }
 }
-  class User(var id:Int?=null, firstname:String, lastname:String?=null,var date: LocalDate?=null,var email:String?=null){
-      val firstnameProperty = DirtyStringProperty(firstname)
+  class User(var id:Int?=null, firstname:String?=null, lastname:String?=null,var date: LocalDate?=null,var email:String?=null){
+      val firstnameProperty = SimpleStringProperty(firstname)
       var firstname by firstnameProperty
       val lastnameProperty = SimpleStringProperty(lastname)
       var lastname by lastnameProperty
@@ -101,7 +99,7 @@ class UserModel(user:User?):ItemViewModel<User>(user){
     val bindemail = bind(User::email)
 }
 class Control:Controller() {
-    fun addUser(firstname: String, lastname: String?) {
+    fun addUser(firstname: String?, lastname: String?) {
         val user = User(firstname = firstname,lastname = lastname)
         val doa = DataBase()
         doa.insert(user)
