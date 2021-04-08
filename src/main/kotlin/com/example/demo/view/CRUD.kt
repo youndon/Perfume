@@ -1,18 +1,9 @@
 import Icons.Companion.removeGlyph
 import Icons.Companion.saveGlyph
-import com.github.thomasnield.rxkotlinfx.onChangedObservable
-import com.github.thomasnield.rxkotlinfx.rowIndexSelections
-import com.github.thomasnield.rxkotlinfx.updates
-import org.nield.dirtyfx.beans.DirtyObjectProperty
-import org.nield.dirtyfx.beans.DirtyStringProperty
-import org.nield.dirtyfx.extensions.addTo
-import org.nield.dirtyfx.tracking.CompositeDirtyProperty
-import javafx.beans.property.*
-import javafx.event.Event
-import javafx.event.EventType
+import com.example.demo.view.Database
+import javafx.beans.property.SimpleStringProperty
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
-import javafx.scene.paint.Color
 import org.controlsfx.glyphfont.FontAwesome
 import org.controlsfx.glyphfont.Glyph
 import org.controlsfx.glyphfont.GlyphFont
@@ -21,14 +12,12 @@ import tornadofx.*
 import java.sql.Connection
 import java.sql.DriverManager
 import java.time.LocalDate
-import javax.swing.event.ChangeEvent
-
 
 fun main() {
     launch<CRUD>()
 }
 class CRUD : App(CrudView::class)
-var users = (DataBase().readUsers().observable())
+var users = SortedFilteredList(UserDataBase().readUsers().observable())
 class CrudView:UIComponent() {
     var userTable: TableView<User> by singleAssign()
     var datePicker: DatePicker by singleAssign()
@@ -47,7 +36,7 @@ class CrudView:UIComponent() {
                     enableWhen { model.dirty }
                     action {
                         model.commit()
-                        DataBase().update(model.bindid.value, model.bindfirstname.value, model.bindlastname.value)
+                        UserDataBase().update(model.bindid.value, model.bindfirstname.value, model.bindlastname.value)
                     }
                 }
                 button("reset").action {
@@ -62,9 +51,10 @@ class CrudView:UIComponent() {
                 }
                 button("delete",removeGlyph).action {
                     users.remove(userTable.selectedItem)
-                    DataBase().delete(model.bindid.value)
+                    UserDataBase().delete(model.bindid.value)
                 }
             }
+
         }
         left {
             tableview(users) {
@@ -84,9 +74,9 @@ class CrudView:UIComponent() {
 }
   class User(var id:Int?=null, firstname:String?=null, lastname:String?=null,var date: LocalDate?=null,var email:String?=null){
       val firstnameProperty = SimpleStringProperty(firstname)
-      var firstname by firstnameProperty
+      var firstname: String by firstnameProperty
       val lastnameProperty = SimpleStringProperty(lastname)
-      var lastname by lastnameProperty
+      var lastname: String by lastnameProperty
 
 
  }
@@ -101,13 +91,13 @@ class UserModel(user:User?):ItemViewModel<User>(user){
 class Control:Controller() {
     fun addUser(firstname: String?, lastname: String?) {
         val user = User(firstname = firstname,lastname = lastname)
-        val doa = DataBase()
+        val doa = UserDataBase()
         doa.insert(user)
         users.add(user)
     }
 }
 
-private class DataBase{
+private class UserDataBase{
     val connection: Connection
     init {
         Class.forName("org.sqlite.JDBC")
@@ -122,7 +112,7 @@ private class DataBase{
         connection.close()
     }
     fun readUsers(): ArrayList<User> {
-        val resultSet = connection.createStatement().executeQuery("SELECT * FROM UserTable")
+        val resultSet = connection.createStatement().executeQuery("SELECT * FROM ")
         val userList = ArrayList<User>()
         while (resultSet.next()){
             val firstname = resultSet.getString("firstname")

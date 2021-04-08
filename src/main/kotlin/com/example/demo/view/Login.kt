@@ -114,7 +114,7 @@ class Control:Controller() {
 
  data class User(val id:Int?=null,val name:String? =null,val username:String?=null,val password: String?=null)
 
-private class Database {
+ class Database {
     private val connection: Connection
     //    init {
 //        Class.forName("com.mysql.cj.jdbc.Driver")
@@ -133,15 +133,7 @@ private class Database {
         preparedStatement.close()
         return rowCont
     }
-    fun selectName(username: String):String {
-        val preparedStatement = connection.prepareStatement("SELECT * FROM SingUp WHERE username = ?")
-        preparedStatement.setString(1,username)
-        val resultSet = preparedStatement.executeQuery()
-        resultSet.next()
-        val name = resultSet.getString("name") ?: ""
-        preparedStatement.close()
-        return name
-    }
+
     fun checkAccountExist(username: String, password: String): Boolean {
         val preparedStatement = connection.prepareStatement("SELECT id FROM SingUp WHERE username = ? AND password = ?")
         preparedStatement.setString(1,username)
@@ -152,4 +144,17 @@ private class Database {
         preparedStatement.close()
         return id > 0
     }
+    fun createUserNameTable(username: String) {
+        val preparedStatement = connection.prepareStatement("CREATE TABLE name= ${selectUserName(username)}")
+
+    }
+     fun selectUserName(username: String):String {
+         val preparedStatement = connection.prepareStatement("SELECT * FROM SingUp WHERE username = ?")
+         preparedStatement.setString(1,username)
+         val resultSet = preparedStatement.executeQuery()
+         resultSet.next()
+         val name = resultSet.getString("name") ?: ""
+         preparedStatement.close()
+         return name
+     }
 }
