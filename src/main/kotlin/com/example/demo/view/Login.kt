@@ -19,7 +19,7 @@ class Login:View() {
      override val root = borderpane{
         center{
             form{
-                fieldset {
+                fieldset("Login") {
                     field {
                         textfield(username) {
                             promptText ="username"
@@ -58,27 +58,36 @@ class Login:View() {
 }
 
 class SingUp:View(){
-    val name = SimpleStringProperty()
+    val firstname = SimpleStringProperty()
+    val lastname = SimpleStringProperty()
     val username = SimpleStringProperty()
     private val password = SimpleStringProperty()
     private val controller:Control by inject()
     override val root =borderpane{
         center {
             form{
-                fieldset {
+                fieldset("SingUp") {
                     field {
-                        textfield(name) {
-                            promptText ="firstname"
+                        textfield(firstname) {
+                            promptText ="First Name"
+                        }
+                        textfield(lastname) {
+                            promptText ="Last Name"
                         }
                     }
                     field {
                         textfield(username) {
-                            promptText ="password"
+                            promptText ="UserName"
                         }
                     }
                     field {
                         passwordfield(password) {
-                            promptText="confirm password"
+                            promptText="Password"
+                        }
+                    }
+                    field {
+                        passwordfield(password) {
+                            promptText = "confirm password"
                         }
                     }
                 }
@@ -87,17 +96,21 @@ class SingUp:View(){
         bottom {
             button("SingUp") {
                 action{
-                    val user = User(name = name.value,
+                    val user = User(name = firstname.value,
                         username = username.value,
                         password = password.value
                     )
                     runAsync {
                         controller.newUser(user)
                     }.ui{
+                        controller.newTable(username.value)
                         myusername = username.value
-//                        replaceWith(HomePage::class)
+                        replaceWith(CrudView::class)
                     }
                 }
+            }
+            button("Login").action {
+                replaceWith(Login::class)
             }
         }
     }
@@ -109,6 +122,9 @@ class Control:Controller() {
     }
     fun newUser(user: User) {
         Database().createNewUser(user)
+    }
+    fun newTable(username:String) {
+        Database().createUserNameTable(username)
     }
 }
 
@@ -123,6 +139,16 @@ class Control:Controller() {
     init {
         Class.forName("org.sqlite.JDBC")
         connection = DriverManager.getConnection("jdbc:sqlite:Perfume.db")
+            val sql = connection.prepareStatement(
+                "CREATE TABLE SingUp " +
+                        "(id INTEGER," +
+                        "firstname TEXT, " +
+                        "lastname TEXT," +
+                        "password TEXT," +
+                        "PRIMARY KEY(id) ); "
+            )
+            sql.executeUpdate()
+            sql.close()
     }
     fun createNewUser(user:User):Int{
         val preparedStatement = connection.prepareStatement("INSERT INTO SingUp(name,username,password) VALUES (?,?,?)")
@@ -145,8 +171,19 @@ class Control:Controller() {
         return id > 0
     }
     fun createUserNameTable(username: String) {
-        val preparedStatement = connection.prepareStatement("CREATE TABLE name= ${selectUserName(username)}")
-
+        val sql = connection.prepareStatement(
+            "CREATE TABLE $username " +
+                    "(id INTEGER," +
+                    "firstname TEXT, " +
+                    "lastname TEXT," +
+                    "date TEXT, " +
+                    "category TEXT," +
+                    "note TEXT," +
+                    "PRIMARY KEY(id) ); "
+        )
+        sql.executeUpdate()
+        sql.close()
+        connection.close()
     }
      fun selectUserName(username: String):String {
          val preparedStatement = connection.prepareStatement("SELECT * FROM SingUp WHERE username = ?")
