@@ -85,32 +85,35 @@ class SingUp:View(){
                             promptText="Password"
                         }
                     }
-                    field {
-                        passwordfield(password) {
-                            promptText = "confirm password"
-                        }
-                    }
+//                    field {
+//                        passwordfield(password) {
+//                            promptText = "confirm password"
+//                        }
+//                    }
                 }
             }
         }
         bottom {
-            button("SingUp") {
-                action{
-                    val user = User(name = firstname.value,
-                        username = username.value,
-                        password = password.value
-                    )
-                    runAsync {
-                        controller.newUser(user)
-                    }.ui{
-                        controller.newTable(username.value)
-                        myusername = username.value
-                        replaceWith(CrudView::class)
+            vbox {
+                button("SingUp") {
+                    action {
+                        val user = User(
+                            name = firstname.value,
+                            username = username.value,
+                            password = password.value
+                        )
+                        runAsync {
+                            controller.newUser(user)
+                        }.ui {
+                            controller.newTable(username.value)
+                            myusername = username.value
+                            replaceWith(CrudView::class)
+                        }
                     }
                 }
-            }
-            button("Login").action {
-                replaceWith(Login::class)
+                button("Login").action {
+                    replaceWith(Login::class)
+                }
             }
         }
     }
@@ -139,6 +142,8 @@ class Control:Controller() {
     init {
         Class.forName("org.sqlite.JDBC")
         connection = DriverManager.getConnection("jdbc:sqlite:Perfume.db")
+
+        try{
             val sql = connection.prepareStatement(
                 "CREATE TABLE SingUp " +
                         "(id INTEGER," +
@@ -149,6 +154,9 @@ class Control:Controller() {
             )
             sql.executeUpdate()
             sql.close()
+        }catch (ex:Exception){
+            println(ex.localizedMessage)
+        }
     }
     fun createNewUser(user:User):Int{
         val preparedStatement = connection.prepareStatement("INSERT INTO SingUp(name,username,password) VALUES (?,?,?)")
@@ -176,7 +184,7 @@ class Control:Controller() {
                     "(id INTEGER," +
                     "firstname TEXT, " +
                     "lastname TEXT," +
-                    "date TEXT, " +
+                    "date BOLD, " +
                     "category TEXT," +
                     "note TEXT," +
                     "PRIMARY KEY(id) ); "
