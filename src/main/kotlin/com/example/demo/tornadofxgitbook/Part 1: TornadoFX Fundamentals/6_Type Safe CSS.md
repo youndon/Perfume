@@ -72,12 +72,12 @@ Declare a new `cssclass()`-delegated property called `tackyButton`, and define f
 
 import javafx.scene.paint.Color
 import tornadofx.*
-​
+
 class MyStyle: Stylesheet() {
-​
+
     companion object {
         val tackyButton by cssclass()
-​
+
         private val topColor = Color.RED
         private val rightColor = Color.DARKGREEN
         private val leftColor = Color.ORANGE
