@@ -3,7 +3,6 @@ package com.example.demo.CRUD
 import com.example.demo.Login.myusername
 import javafx.beans.property.Property
 import java.sql.Connection
-import java.sql.Date
 import java.sql.DriverManager
 import java.time.LocalDate
 
@@ -17,7 +16,7 @@ class CRUD_DataBase{
         val ps = connection.prepareStatement("INSERT INTO $myusername(firstname,lastname,date,category,note) VALUES (?, ?, ?, ?, ?)")
         ps.setString(1,user.firstname)
         ps.setString(2,user.lastname)
-        ps.setDate(3, user.date)
+        ps.setString(3,user.localdate)
         ps.setString(4,user.category)
         ps.setString(5,user.note)
         ps.executeUpdate()
@@ -31,7 +30,7 @@ class CRUD_DataBase{
             val id = resultSet.getInt("id")
             val firstname = resultSet.getString("firstname")
             val lastname = resultSet.getString("lastname")
-            val date = resultSet.getDate("date")
+            val date = resultSet.getString("date")
             val category = resultSet.getString("category")
             val note = resultSet.getString("note")
             userList.plusAssign(CRUD_User(id ,firstname,lastname,date,category,note))
@@ -44,13 +43,13 @@ class CRUD_DataBase{
     fun update(
         index:Int, modifyfirstname:String?=null,
         modifylastname:String?=null,
-        modifydate: Date? =null,
+        modifydate: String? =null,
         modifycategory:String?=null,
         modifynote:String?=null) {
         val ps = connection.prepareStatement("UPDATE $myusername SET firstname = ? , lastname = ? , date = ? , category = ? , note = ? WHERE id = $index ")
         ps.setString(1, modifyfirstname)
         ps.setString(2, modifylastname)
-        ps.setDate(3, modifydate)
+        ps.setString(3, modifydate)
         ps.setString(4, modifycategory)
         ps.setString(5, modifynote)
         ps.executeUpdate()

@@ -5,20 +5,29 @@ import com.example.demo.CRUD.Glyphs.saveGlyph
 import com.example.demo.CRUD.Glyphs.signOutGlyph
 import com.example.demo.Login.SignIn_View
 import com.example.demo.Login.myusername
-import javafx.scene.control.DatePicker
-import javafx.scene.control.TableView
-import javafx.scene.control.TextField
+import com.github.thomasnield.rxkotlinfx.itemSelections
+import javafx.beans.property.Property
+import javafx.beans.property.SimpleStringProperty
+import javafx.scene.control.*
 import javafx.scene.paint.Color
 import kotlinx.datetime.toKotlinLocalDate
 import tornadofx.*
+import java.time.LocalDate
 
 class CRUD_View: UIComponent() {
     var userTable: TableView<CRUD_User> by singleAssign()
     var datePicker: DatePicker by singleAssign()
     val model = CRUD_Model(CRUD_User())
     val controller: CRUD_Control by inject()
-    private var firstnameField: TextField by singleAssign()
-    private var lastnameField: TextField by singleAssign()
+    var firstnameField: TextField by singleAssign()
+    var lastnameField: TextField by singleAssign()
+    val categorylist = arrayListOf("I.T","Programmer","Data since","web Dev","mobile Dev","desktop Dev").observable()
+    var dayslistview:ComboBox<Int> by singleAssign()
+    var monthslistview:ComboBox<Int> by singleAssign()
+    var yearslistview:ComboBox<Int> by singleAssign()
+    val dayslist = (1..31).toList().observable()
+    val monthslist = (1..12).toList().observable()
+    val yearslist = (1970..LocalDate.now().year).toList().observable()
     override val root = borderpane {
         right {
             form {
@@ -43,17 +52,28 @@ class CRUD_View: UIComponent() {
                             }
                         }
                     }
-                    field("date"){
-                        datePicker = datepicker(model.binddate.getValue().value?.toLocalDate().toProperty()){
-                            model.binddate.onChange {
-                                if (model.binddate.isDirty) style { textFill = Color.RED } else style {
+                    field("date") {
+                        hbox {
+                            combobox<Int>{
+                                items = dayslist
+                            }
+                            label("/")
+                            combobox<Int>{
+                                items = monthslist}
+                            label("/")
+                            combobox<Int>{
+                                items = yearslist}
+                            model.bindlocaldate.onChange {
+                                if (model.bindlocaldate.isDirty) style { textFill = Color.RED } else style {
                                     textFill = Color.BLACK
                                 }
                             }
                         }
                     }
                     field("category") {
-                        textfield(model.bindcategory) {
+                        combobox<String> {
+                            items = categorylist
+                            model.bindcategory.value = this.selectedItem
                             model.bindcategory.onChange {
                                 if (model.bindcategory.isDirty) style { textFill = Color.RED } else style {
                                     textFill = Color.BLACK
@@ -80,7 +100,7 @@ class CRUD_View: UIComponent() {
                                 model.bindid.value,
                                 model.bindfirstname.value,
                                 model.bindlastname.value,
-                                model.binddate.getValue().get(),
+                                model.bindlocaldate.value,
                                 model.bindcategory.value,
                                 model.bindnote.value
                             )
@@ -95,10 +115,12 @@ class CRUD_View: UIComponent() {
                 button("addUser") {
                     action {
                         runAsync {
+                            model.bindlocaldate= SimpleStringProperty("${dayslistview.selectedItem}/" +
+                                    "${monthslistview.selectedItem}/${yearslistview.selectedItem}")
                             controller.addUser(
                                 model.bindfirstname.value,
                                 model.bindlastname.value,
-                                model.binddate.getValue().get(),
+                                model.bindlocaldate.value,
                                 model.bindcategory.value,
                                 model.bindnote.value
                             )
@@ -121,7 +143,7 @@ class CRUD_View: UIComponent() {
                 column("Id", CRUD_User::id)
                 column("First Name", CRUD_User::firstnameProperty)
                 column("Last Name", CRUD_User::lastnameProperty)
-                column("Date", CRUD_User::dateProperty)
+                column("Date", CRUD_User::localdateProperty)
                 column("Category", CRUD_User::categoryProperty)
                 column("Note", CRUD_User::noteProperty)
                 smartResize()
