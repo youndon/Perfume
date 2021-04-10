@@ -5,7 +5,6 @@ import com.example.demo.CRUD.Glyphs.signInGlyph
 import tornadofx.*
 
 class SignIn_View:View() {
-
     private val controller: SignIn_Control by inject()
     override val root = borderpane {
         center {
@@ -35,7 +34,7 @@ class SignIn_View:View() {
                         runAsync {
                             controller.loginUser(controller.signinusername.value, controller.signinpassword.value)
                         }.ui {
-                            controller.myusername = controller.signinusername.value
+                            myusername = controller.signinusername.value
                             controller.signinusernameField.clear();controller.signinpasswordField.clear()
                             replaceWith(CRUD_View::class)
                         }

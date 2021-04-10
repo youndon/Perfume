@@ -3,12 +3,13 @@ package com.example.demo.CRUD
 import com.example.demo.CRUD.Glyphs.removeGlyph
 import com.example.demo.CRUD.Glyphs.saveGlyph
 import com.example.demo.CRUD.Glyphs.signOutGlyph
-import com.example.demo.Login.SignIn_Control
 import com.example.demo.Login.SignIn_View
+import com.example.demo.Login.myusername
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
 import javafx.scene.control.TextField
 import javafx.scene.paint.Color
+import kotlinx.datetime.toKotlinLocalDate
 import tornadofx.*
 
 class CRUD_View: UIComponent() {
@@ -21,7 +22,7 @@ class CRUD_View: UIComponent() {
     override val root = borderpane {
         right {
             form {
-                fieldset(SignIn_Control().myusername) {
+                fieldset(myusername) {
                     field("firstname*") {
                         textfield(model.bindfirstname) {
                             firstnameField = this
@@ -37,6 +38,15 @@ class CRUD_View: UIComponent() {
                             lastnameField = this
                             model.bindlastname.onChange {
                                 if (model.bindlastname.isDirty) style { textFill = Color.RED } else style {
+                                    textFill = Color.BLACK
+                                }
+                            }
+                        }
+                    }
+                    field("date"){
+                        datePicker = datepicker(model.binddate.getValue().value?.toLocalDate().toProperty()){
+                            model.binddate.onChange {
+                                if (model.binddate.isDirty) style { textFill = Color.RED } else style {
                                     textFill = Color.BLACK
                                 }
                             }
@@ -64,12 +74,13 @@ class CRUD_View: UIComponent() {
                 button("update", saveGlyph) {
                     enableWhen { model.dirty }
                     action {
-                        tornadofx.runAsync {
+                        runAsync {
                             model.commit()
                             CRUD_DataBase().update(
                                 model.bindid.value,
                                 model.bindfirstname.value,
                                 model.bindlastname.value,
+                                model.binddate.getValue().get(),
                                 model.bindcategory.value,
                                 model.bindnote.value
                             )
@@ -87,6 +98,7 @@ class CRUD_View: UIComponent() {
                             controller.addUser(
                                 model.bindfirstname.value,
                                 model.bindlastname.value,
+                                model.binddate.getValue().get(),
                                 model.bindcategory.value,
                                 model.bindnote.value
                             )
@@ -109,6 +121,7 @@ class CRUD_View: UIComponent() {
                 column("Id", CRUD_User::id)
                 column("First Name", CRUD_User::firstnameProperty)
                 column("Last Name", CRUD_User::lastnameProperty)
+                column("Date", CRUD_User::dateProperty)
                 column("Category", CRUD_User::categoryProperty)
                 column("Note", CRUD_User::noteProperty)
                 smartResize()

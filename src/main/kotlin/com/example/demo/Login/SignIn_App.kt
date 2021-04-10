@@ -8,6 +8,6 @@ class SignIn_App: App(SignIn_View::class){
         super.start(stage)
         stage.width=300.0
         stage.height=400.0
-        stage.isResizable=false
+//        stage.isResizable=false
     }
 }

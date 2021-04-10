@@ -19,7 +19,6 @@ class SignIn_Control: Controller() {
         SignIn_DataBase().createUserNameTable(username)
     }
 
-    var myusername = ""
     val signinusername = SimpleStringProperty()
     val signinpassword = SimpleStringProperty()
     var signinusernameField: TextField by singleAssign()

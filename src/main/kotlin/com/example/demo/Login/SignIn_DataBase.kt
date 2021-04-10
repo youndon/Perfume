@@ -56,6 +56,7 @@ class SignIn_DataBase {
                         "(id INTEGER," +
                         "firstname TEXT, " +
                         "lastname TEXT," +
+                        "date BOLD," +
                         "category TEXT," +
                         "note TEXT," +
                         "PRIMARY KEY(id) ); "

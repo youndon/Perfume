@@ -3,13 +3,11 @@ package com.example.demo.Login
 import com.example.demo.CRUD.CRUD_View
 import javafx.geometry.Pos
 import javafx.scene.paint.Color
-import javafx.scene.text.Font
 import tornadofx.*
 
 class SignUp_View:View() {
     private val control: SignIn_Control by inject()
     override val root = borderpane {
-        primaryStage.isResizable = false
         center {
             form {
                 fieldset("SingUp") {
@@ -66,7 +64,7 @@ class SignUp_View:View() {
                             control.newUser(user)
                         }.ui {
                             control.newTable(control.signupusername.value)
-                            control.myusername = control.signupusername.value
+                            myusername = control.signupusername.value
                             replaceWith(CRUD_View::class)
                         }
                     }

@@ -21,8 +21,7 @@ class DirtyView:View() {
     private val listpeople =
         FXCollections.observableArrayList(
             People("firstname", "lastname", LocalDate.now()), People(
-                "firstname1", "lastname1",
-                LocalDate.now()
+                "firstname1", "lastname1",LocalDate.now()
             )
         )
     private var datePicker: DatePicker by singleAssign()

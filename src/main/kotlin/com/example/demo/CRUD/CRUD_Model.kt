@@ -9,4 +9,5 @@ class CRUD_Model(user:CRUD_User?): ItemViewModel<CRUD_User>(user){
     val bindlastname = bind(CRUD_User::lastnameProperty)
     val bindcategory = bind(CRUD_User::categoryProperty)
     val bindnote = bind(CRUD_User::noteProperty)
+    val binddate = bind(CRUD_User::dateProperty)
 }
