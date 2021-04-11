@@ -22,6 +22,7 @@ class CRUD_View: UIComponent() {
     var firstnameField: TextField by singleAssign()
     var lastnameField: TextField by singleAssign()
     val categorylist = arrayListOf("I.T","Programmer","Data since","web Dev","mobile Dev","desktop Dev").observable()
+    var categorylistview:ComboBox<String> by singleAssign()
     var dayslistview:ComboBox<Int> by singleAssign()
     var monthslistview:ComboBox<Int> by singleAssign()
     var yearslistview:ComboBox<Int> by singleAssign()
@@ -54,7 +55,7 @@ class CRUD_View: UIComponent() {
                     }
                     field("date") {
                         hbox {
-                            combobox<Int>{
+                            combobox(model.bindday){
                                 items = dayslist
                             }
                             label("/")
@@ -71,9 +72,8 @@ class CRUD_View: UIComponent() {
                         }
                     }
                     field("category") {
-                        combobox<String> {
+                        categorylistview =combobox(model.bindcategory) {
                             items = categorylist
-                            model.bindcategory.value = this.selectedItem
                             model.bindcategory.onChange {
                                 if (model.bindcategory.isDirty) style { textFill = Color.RED } else style {
                                     textFill = Color.BLACK
@@ -96,6 +96,8 @@ class CRUD_View: UIComponent() {
                     action {
                         runAsync {
                             model.commit()
+                            firstnameField.style { textFill = Color.BLACK }
+                        }.ui {
                             CRUD_DataBase().update(
                                 model.bindid.value,
                                 model.bindfirstname.value,
@@ -104,8 +106,6 @@ class CRUD_View: UIComponent() {
                                 model.bindcategory.value,
                                 model.bindnote.value
                             )
-                        }.ui {
-                            firstnameField.style { textFill = Color.BLACK }
                         }
                     }
                 }
@@ -115,8 +115,8 @@ class CRUD_View: UIComponent() {
                 button("addUser") {
                     action {
                         runAsync {
-                            model.bindlocaldate= SimpleStringProperty("${dayslistview.selectedItem}/" +
-                                    "${monthslistview.selectedItem}/${yearslistview.selectedItem}")
+                            model.bindcategory.value = "${categorylistview.selectedItem}"
+                        }.ui {
                             controller.addUser(
                                 model.bindfirstname.value,
                                 model.bindlastname.value,
@@ -124,7 +124,6 @@ class CRUD_View: UIComponent() {
                                 model.bindcategory.value,
                                 model.bindnote.value
                             )
-                        }.ui {
                         }
                     }
                 }

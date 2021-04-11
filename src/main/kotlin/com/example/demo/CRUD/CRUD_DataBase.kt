@@ -16,7 +16,7 @@ class CRUD_DataBase{
         val ps = connection.prepareStatement("INSERT INTO $myusername(firstname,lastname,date,category,note) VALUES (?, ?, ?, ?, ?)")
         ps.setString(1,user.firstname)
         ps.setString(2,user.lastname)
-        ps.setString(3,user.localdate)
+        ps.setObject(3,user.localdate)
         ps.setString(4,user.category)
         ps.setString(5,user.note)
         ps.executeUpdate()
