@@ -10,7 +10,7 @@ fun main() {
 }
 class MainLand:App(MainView::class)
 
-class MainView : UIComponent() {
+class MainView : UIComponent("...") {
     override val root = vbox {
     }
 }
