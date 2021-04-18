@@ -1,4 +1,3 @@
-package com.example.demo.view
 
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent

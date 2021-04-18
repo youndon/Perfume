@@ -3,26 +3,17 @@ package com.example.demo.view
 import com.example.demo.CRUD.CRUD_DataBase
 import com.example.demo.CRUD.CRUD_Model
 import com.example.demo.CRUD.CRUD_User
-import com.sun.glass.ui.Application
-import javafx.application.Platform
-import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
-import javafx.collections.FXCollections
 import javafx.scene.control.DatePicker
 import javafx.scene.control.TableView
 import javafx.scene.paint.Color
-import tornadofx.App
 import tornadofx.*
-import java.sql.DriverManager
 import java.time.LocalDate
+
 val model = CRUD_Model(CRUD_User())
 
 fun main() {
-//    launch<Dirty>()
-
-        println(
-            LocalDate.now().year
-        )
+    launch<Dirty>()
 }
 class Dirty:App(DirtyView::class)
 

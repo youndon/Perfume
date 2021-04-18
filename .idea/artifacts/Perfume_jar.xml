@@ -64,14 +64,6 @@
       <element id="library" level="project" name="Maven: com.github.sealedtx:java-youtube-downloader:2.5.0" />
       <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.4" />
       <element id="library" level="project" name="Maven: com.github.dyorgio.runtime:run-as-root:1.2.3" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx-swt.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx.base.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx.controls.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx.fxml.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx.graphics.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx.media.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx.swing.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="/usr/lib/jvm/openjfx-15.0.1_linux-x64_bin-sdk/javafx-sdk-15.0.1/lib/javafx.web.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

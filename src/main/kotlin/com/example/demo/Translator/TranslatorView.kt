@@ -7,6 +7,7 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.text.Font
 import tornadofx.*
+import java.awt.TextArea
 
 class TranslatorView: UIComponent() {
     private var input = TextArea()
@@ -61,3 +62,6 @@ class TranslatorView: UIComponent() {
     }
 }
 
+
+
+//Cannot access 'javafx.event.EventTarget' which is a supertype of 'com.example.demo.Translator.TranslatorView'. Check your module classpath for missing or conflicting dependencies
