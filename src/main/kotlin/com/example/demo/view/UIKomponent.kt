@@ -7,7 +7,10 @@ import javafx.event.EventHandler
 import javafx.event.EventType
 import javafx.geometry.Orientation
 import javafx.geometry.Point2D
-import javafx.scene.*
+import javafx.scene.AccessibleAction
+import javafx.scene.AccessibleAttribute
+import javafx.scene.Node
+import javafx.scene.Parent
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
 import javafx.scene.control.TreeItem
@@ -19,10 +22,8 @@ import javafx.util.Duration
 import tornadofx.*
 import tornadofx.osgi.ViewProvider
 import tornadofx.osgi.addViewsWhen
-import tornadofx.osgi.impl.*
-import javax.swing.text.html.StyleSheet
 
-private class UI(override val root: Parent) :UIComponent() { init {
+class UIKomponent(override val root: Parent) :UIComponent() { init {
     with(root){
         // a.
         accessibleHelp
@@ -44,7 +45,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
         applyCss()
         app.run {
             this.configBasePath
-            this.createPrimaryScene(this@UI)
+            this.createPrimaryScene(this@UIKomponent)
 //                this.fire()
 //                this.inject()
 //                this.k()
@@ -96,7 +97,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
         buttonbar()
 //            barchart() // todo
         bindChildren(observableList("")) { this }
-        bindComponents(observableList("")){ this@UI }
+        bindComponents(observableList("")){ this@UIKomponent }
         beforeShutdown {  }
 //            bindStringProperty() // todo
         booleanBinding(this,stylesheets) {true}
@@ -240,7 +241,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
         fxid<Node>()
 //            fxBundle // todo
 //            fxBundleContext // todo
-        forwardWorkspaceActions(this@UI)
+        forwardWorkspaceActions(this@UIKomponent)
 //            floatBinding() // todo
         fragment<Fragment>()
         fiveDigits.run {
@@ -429,14 +430,14 @@ private class UI(override val root: Parent) :UIComponent() { init {
         onCreate()
         onDelete()
         owningTab
-        onGoto(this@UI)
+        onGoto(this@UIKomponent)
         onNavigateBack()
         onNavigateForward()
         onRefresh()
         onSave()
         onTabSelected()
         openInternalBuilderWindow(".."){parent}
-        openInternalWindow(this@UI)
+        openInternalWindow(this@UIKomponent)
         openModal()
         openWindow()
         observable<String>("")
@@ -532,7 +533,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
 //            resizeCall() // todo
 //            removeDecorator() // todo
         rectangle()
-        replaceWith(this@UI)
+        replaceWith(this@UIKomponent)
         replaceChildren()
         runLater{}
         runAsync{}
@@ -733,7 +734,7 @@ private class UI(override val root: Parent) :UIComponent() { init {
         scope.run {
             deregister()
             hasActiveWorkspace
-            invoke(this@UI::class)
+            invoke(this@UIKomponent::class)
             workspace(workspace)
         }
         savable

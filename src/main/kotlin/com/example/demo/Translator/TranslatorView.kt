@@ -7,7 +7,6 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import javafx.scene.text.Font
 import tornadofx.*
-import java.awt.TextArea
 
 class TranslatorView: UIComponent() {
     private var input = TextArea()
