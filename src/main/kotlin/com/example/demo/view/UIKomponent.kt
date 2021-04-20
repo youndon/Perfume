@@ -22,6 +22,7 @@ import javafx.util.Duration
 import tornadofx.*
 import tornadofx.osgi.ViewProvider
 import tornadofx.osgi.addViewsWhen
+import java.nio.file.Paths
 
 class UIKomponent(override val root: Parent) :UIComponent() { init {
     with(root){
@@ -38,7 +39,7 @@ class UIKomponent(override val root: Parent) :UIComponent() { init {
         addTo(pane())
 //            addDecorator() // todo
         addChildIfPossible(this)
-        addStageIcon(Image("Amazing.jpg"))
+        addStageIcon(Image(Paths.get("Amazing.jpg").toUri().toURL().toString()))
         addClass("")
         addPseudoClass("")
         addViewsWhen {viewProvider: ViewProvider -> true}
