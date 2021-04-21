@@ -1,4 +1,4 @@
-package com.example.demo.javaFx
+package com.example.demo
 
 import javafx.animation.Interpolator
 import javafx.css.PseudoClass
