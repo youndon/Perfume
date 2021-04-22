@@ -1,16 +1,19 @@
 package com.example.demo.view
 
-import javafx.scene.Parent
-import javafx.scene.image.Image
+import com.github.thomasnield.rxkotlinfx.tabSelections
+import javafx.scene.control.Button
+import javafx.scene.control.SplitPane
+import javafx.scene.layout.StackPane
+import javafx.scene.paint.Color
 import tornadofx.*
-import java.nio.file.Paths
+
 
 fun main() {
-//    launch<MainLand>()
+    launch<MainLand>()
 }
  class MainLand:App(MainView::class)
-class MainView:View(){
-    override val root = vbox {
+class MainView:View() {
+    override val root = pane {
 
     }
 }
