@@ -1,12 +1,15 @@
 Label is a non-editable text control. A Label is useful for displaying text that is required to fit within a specific space, and thus may need to use an ellipsis or truncation to size the string to fit. Labels also are useful in that they can have mnemonics which, if used, will send focus to the Control listed as the target of the labelFor property.
 ```kotlin
 class MainView:View() {
-    override val root = label("kotlin") {
+    override val root = label("Hollow kotlin") {
         this.labelFor
     }
 }
 ```
 A simple button control. The button control can contain text and/or a graphic. A button control has three different modes
+Normal: A normal push button.
+Default: A default Button is the button that receives a keyboard VK_ENTER press, if no other node in the scene consumes it.
+Cancel: A Cancel Button is the button that receives a keyboard VK_ESC press, if no other node in the scene consumes it.
 ```kotlin
 class MainView:View() {
     override val root = button("click it") {
@@ -15,6 +18,81 @@ class MainView:View() {
     }
 }
 ```
+A ButtonBar is essentially a HBox, with the additional functionality for operating system specific button placement. In other words, any Node may be annotated (via the setButtonData(Node, ButtonBar.ButtonData) method, placed inside a ButtonBar (via the getButtons() list), and will then be positioned relative to all other nodes in the button list based on their annotations, as well as the overarching button order specified for the ButtonBar. Uniform button sizing
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        buttonbar {
+            this.buttonMinWidth
+            this.buttonOrder
+            this.buttons
+
+            button("Yes")
+            button("No")
+            button("Maybe!")
+        }
+    }
+}
+```
+The Text class defines a node that displays a text. Paragraphs are separated by '\n' and the text is wrapped on paragraph boundaries.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        text("something!!"){
+         this.boundsType
+         this.font
+         this.fontSmoothingType
+         this.isStrikethrough
+         this.isUnderline
+         this.lineSpacing
+         this.text
+         this.textAlignment
+         this.textOrigin   
+        }
+    }
+}
+```
+TextFlow is special layout designed to lay out rich text. It can be used to layout several Text nodes in a single text flow. The TextFlow uses the text and the font of each Text node inside of it plus it own width and text alignment to determine the location for each child. A single Text node can span over several lines due to wrapping and the visual location of Text node can differ from the logical location due to bidi reordering.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        textflow { 
+            this.lineSpacing
+            this.textAlignment
+        }
+    }
+}
+```
+Text input component that allows a user to enter multiple lines of plain text. Unlike in previous releases of JavaFX, support for single line input is not available as part of the TextArea control, however this is the sole-purpose of the TextField control. Additionally, if you want a form of rich-text editing, there is also the HTMLEditor control.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        textarea { 
+            this.isWrapText
+            this.paragraphs
+            this.prefColumnCount
+            this.prefRowCount
+            this.scrollLeft
+            this.scrollTop
+        }
+    }
+}
+```
+Text input component that allows a user to enter a single line of unformatted text. Unlike in previous releases of JavaFX, support for multi-line input is not available as part of the TextField control,
+```kotlin
+class MainView:View() {
+    override val root = pane {
+       textfield { 
+           this.alignment
+           this.characters
+           this.onAction
+           this.prefColumnCount
+       }
+    }
+}
+```
+
+Base class for layout panes which need to expose the children list as public so that users of the subclass can freely add/remove children.
 ```kotlin
 class MainView:View(){
     override val root = pane{
