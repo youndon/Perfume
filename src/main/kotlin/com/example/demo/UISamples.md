@@ -34,6 +34,46 @@ class MainView:View() {
     }
 }
 ```
+A ToggleButton is a specialized control which has the ability to be selected. Typically a ToggleButton is rendered similarly to a Button. However, they are two different types of Controls. A Button is a "command" button which invokes a function when clicked. A ToggleButton on the other hand is simply a control with a Boolean indicating whether it has been selected.
+```kotlin
+class MainView:View() {
+    override val root = vbox {
+        togglebutton("...")
+    }
+}
+```
+class which contains a reference to all Toggles whose selected variables should be managed such that only a single Toggle within the ToggleGroup may be selected at any one time.
+Generally ToggleGroups are managed automatically simply by specifying the name of a ToggleGroup on the Toggle, but in some situations it is desirable to explicitly manage which ToggleGroup is used by Toggles.
+```kotlin
+class MainView:View() {
+    override val root = vbox {
+        togglegroup {
+            this.properties
+            this.selectedToggle
+            this.toggles
+            this.userData
+            this.hasProperties()
+//            this.selectToggle()
+//            this.bind()
+            this.selectedToggleProperty()
+//            this.selectedValueProperty<>()
+        }
+    }
+}
+```
+
+```kotlin
+class MainView:View() {
+    override val root = vbox {
+        togglegroup {
+         togglebutton("yes",this)
+         togglebutton("no",this)
+         togglebutton("maybe",this)
+        }
+    }
+}
+```
+
 The Text class defines a node that displays a text. Paragraphs are separated by '\n' and the text is wrapped on paragraph boundaries.
 ```kotlin
 class MainView:View() {
@@ -88,6 +128,196 @@ class MainView:View() {
            this.onAction
            this.prefColumnCount
        }
+    }
+}
+```
+Text field that masks entered characters.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        passwordfield {
+
+        }
+    }
+}
+```
+An implementation of the ComboBoxBase abstract class for the most common form of ComboBox, where a popup list is shown to users providing them with a choice that they may select from. For more information around the general concepts and API of ComboBox, refer to the ComboBoxBase class documentation.
+On top of ComboBoxBase, the ComboBox class introduces additional API. Most importantly, it adds an items property that works in much the same way as the ListView items property. In other words, it is the content of the items list that is displayed to users when they click on the ComboBox button.
+The ComboBox exposes the valueProperty() from ComboBoxBase, but there are some important points of the value property that need to be understood in relation to ComboBox. These include:
+The value property is not constrained to items contained within the items list - it can be anything as long as it is a valid value of type T.
+If the value property is set to a non-null object, and subsequently the items list is cleared, the value property is not nulled out.
+Clearing the selection in the selection model does not null the value property - it remains the same as before.
+It is valid for the selection model to have a selection set to a given index even if there is no items in the list (or less items in the list than the given index). Once the items list is further populated, such that the list contains enough items to have an item in the given index, both the selection model SelectionModel.selectedItemProperty() and value property will be updated to have this value. This is inconsistent with other controls that use a selection model, but done intentionally for ComboBox.
+```kotlin
+class MainView:View() {
+    val list = listOf(1,2,3,4,5,6).observable()
+    override val root = pane {
+        combobox<Int> { 
+            this.buttonCell
+            this.cellFactory
+            this.converter
+            this.editor
+            this.items
+            this.placeholder
+            this.selectionModel
+            this.visibleRowCount
+            this.selectedItem
+            this.valueSelections
+            this.asyncItems {  }
+            this.makeAutocompletable {  }
+            this.cellFormat {  }
+            
+            items = list
+        }
+    }
+}
+```
+A ListView displays a horizontal or vertical list of items from which the user may select, or with which the user may interact. A ListView is able to have its generic type set to represent the type of data in the backing model. Doing this has the benefit of making various methods in the ListView, as well as the supporting classes (mentioned below), type-safe. In addition, making use of the generic supports substantially simplifies development of applications making use of ListView, as all modern IDEs are able to auto-complete far more successfully with the additional type information.
+Populating a ListView
+```kotlin
+class MainView:View() {
+    val list = listOf(1, 2, 3, 4, 5, 6).observable()
+    override val root = pane {
+        listview<Int> { 
+            this.cellFactory
+            this.editingIndex
+            this.edit()
+            this.fixedCellSize
+            this.focusModel
+            this.isEditable
+            this.items
+            this.onEditCancel
+            this.onEdit()
+            this.onEditCommit
+            this.onEditStart
+            this.onScrollTo
+            this.refresh()
+            this.scrollTo()
+            this.selectedItem
+            this.useCheckbox {  }
+            this.asyncItems {  }
+            this.bindSelected()
+            this.cellCache {  }
+            this.cellFormat {  }
+            this.multiSelect()
+            this.onUserDelete {  }
+            this.onUserSelect {  }
+            this.selectWhere {  }
+            
+            items = list
+        }
+    }
+}
+```
+
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        listmenu {
+            this.activeItem
+            this.activeItemProperty
+            this.graphicFixedSizeProperty
+            this.graphicFixedSized
+            this.iconPosition
+            this.iconPositionProperty
+            this.items
+            this.item {  }
+            this.theme
+            this.themeProperty
+            this.orientation
+            this.orientationProperty           
+            
+            
+            this.items.add(ListMenuItem("One"))
+            this.items.add(ListMenuItem("Tow"))
+            this.items.add(ListMenuItem("Three"))
+            this.items.add(ListMenuItem("Four"))
+        }
+    }
+}
+```
+A MenuBar control traditionally is placed at the very top of the user interface, and embedded within it are Menus. To add a menu to a menubar, you add it to the menus ObservableList. By default, for each menu added to the menubar, it will be represented as a button with the Menu text value displayed.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        menubar {
+            this.menus
+            this.isUseSystemMenuBar
+            this.menu {  }
+            this.useSystemMenuBarProperty()
+            
+            this.menus.add(Menu("File"))
+            this.menus.add(Menu("Edit"))
+            this.menus.add(Menu("View"))
+            this.menus.add(Menu("Build"))
+            this.menus.add(Menu("Help"))
+        }
+    }
+}
+```
+MenuButton is a button which, when clicked or pressed, will show a ContextMenu. A MenuButton shares a very similar API to the Menu control, insofar that you set the items that should be shown in the items ObservableList, and there is a text property to specify the label shown within the MenuButton.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        menubutton {
+            this.isShowing
+            this.items
+            this.popupSide
+            this.item("")
+            this.hide()
+            this.show()
+            this.showingProperty()
+
+            this.item("one")
+            this.item("tow")
+            this.item("three")
+        }
+    }
+}
+```
+A ToolBar is a control which displays items horizontally or vertically. The most common items to place within a ToolBar are Buttons, ToggleButtons and Separators, but you are not restricted to just these, and can insert any Node into them.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+     toolbar(){
+         this.items
+         this.orientation
+         this.orientationProperty()
+         this.button {  }
+         this.separator {  }
+         this.spacer {  }
+     }
+    }
+}
+```
+A popup control containing an ObservableList of menu items. The items ObservableList allows for any MenuItem type to be inserted, including its subclasses Menu, MenuItem, RadioMenuItem, CheckMenuItem and CustomMenuItem. If an arbitrary Node needs to be inserted into a menu, a CustomMenuItem can be used. One exception to this general rule is that SeparatorMenuItem could be used for inserting a separator.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        contextmenu {
+            this.isImpl_showRelativeToWindow
+            this.items
+            this.item("")
+            this.onAction
+            this.show(ownerWindow)
+            this.checkmenuitem("")
+            this.customitem {  }
+            this.menu {  }
+            this.radiomenuitem("")
+            this.separator()
+        }
+    }
+}
+```
+
+A control that allows for users to edit text, and apply styling to this text. The underlying data model is HTML, although this is not shown visually to the end-user.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+     htmleditor { 
+         this.htmlText
+         this.print(PrinterJob.createPrinterJob())
+     }
     }
 }
 ```
@@ -301,3 +531,58 @@ class MainView:View() {
     }
 }
 ```
+
+A specialization of the ProgressIndicator which is represented as a horizontal bar.
+ProgressBar sets focusTraversable to false.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        progressbar {
+            progress = 0.5
+        }
+    }
+}
+```
+A circular control which is used for indicating progress, either infinite (aka indeterminate) or finite. Often used with the Task API for representing progress of background Tasks.
+```kotlin
+class MainView:View() {
+    override val root = pane {
+        progressindicator {
+            this.isIndeterminate
+            this.progress = 0.5
+        }
+    }
+}
+```
+RadioButtons create a series of items where only one item can be selected. RadioButtons are a specialized ToggleButton. When a RadioButton is pressed and released a javafx.event.ActionEvent is sent. Your application can perform some action based on this event by implementing an javafx.event.EventHandler to process the javafx.event.ActionEvent.
+```kotlin
+class MainView:View() {
+    override val root = vbox {
+            radiobutton ("radioButton")
+    }
+}
+```
+
+```kotlin
+class MainView:View() {
+    override val root = vbox {
+        togglegroup { 
+            radiobutton("yes",this)
+            radiobutton("no",this)
+        }
+    }
+}
+```
+A tri-state selection Control typically skinned as a box with a checkmark or tick mark when checked. 
+```kotlin
+class MainView:View() {
+    override val root = vbox {
+       checkbox("qdfqsd") {
+           this.isAllowIndeterminate
+           this.isIndeterminate
+           this.isSelected
+       }
+    }
+}
+```
+

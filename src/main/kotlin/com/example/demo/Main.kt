@@ -1,9 +1,11 @@
 package com.example.demo.view
 
+import com.github.thomasnield.rxkotlinfx.valueSelections
+import javafx.print.PrinterJob
 import javafx.scene.AccessibleRole
-import javafx.scene.control.Button
-import javafx.scene.control.ButtonBar
+import javafx.scene.control.*
 import javafx.scene.control.ButtonBar.ButtonData
+import javafx.stage.Window
 import tornadofx.*
 import javax.accessibility.AccessibleText
 
@@ -18,9 +20,12 @@ class MainLand:App(MainView::class){
      }
  }
 class MainView:View() {
-    override val root = pane {
-      button {
-      }
+    override val root = vbox {
+       checkbox("qdfqsd") {
+           this.isAllowIndeterminate
+           this.isIndeterminate
+           this.isSelected
+       }
     }
 }
 
