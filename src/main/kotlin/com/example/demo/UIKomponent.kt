@@ -724,7 +724,6 @@ class UIKomponent(override val root: Parent) :UIComponent() { init {
         styleableParent
         startDragAndDrop()
         startFullDrag()
-        svgpath { }
         stackpane { }
         show()
 //            select<Node>() // todo
@@ -742,7 +741,6 @@ class UIKomponent(override val root: Parent) :UIComponent() { init {
         savableWhen { needsLayoutProperty()}
         subscribedEvents
         subscribe<FXEvent> { }
-        stackpane { }
         stackpaneConstraints { }
 //            setInScope<ScopedInstance>(workspace)
         setWindowMaxSize(1,1)
@@ -755,7 +753,6 @@ class UIKomponent(override val root: Parent) :UIComponent() { init {
         squeezebox { }
         splitpane()
         slideshow { }
-        svgpath { }
         sequentialTransition { }
 
         // t.
