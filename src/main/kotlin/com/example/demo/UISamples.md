@@ -1,21 +1,27 @@
-Label is a non-editable text control. A Label is useful for displaying text that is required to fit within a specific space, and thus may need to use an ellipsis or truncation to size the string to fit. Labels also are useful in that they can have mnemonics which, if used, will send focus to the Control listed as the target of the labelFor property.
+
+## introduction:
+...
+
+
+
+Label is a non-editable text control.
+A Label is useful for displaying text that is required to fit within a specific space, and thus may need to use an ellipsis or truncation to size the string to fit.
+Labels also are useful in that they can have mnemonics which, if used, will send focus to the Control listed as the target of the labelFor property.
+
 ```kotlin
-class MainView:View() {
-    override val root = label("Hollow kotlin") {
+    label("Hollow kotlin") {
         this.labelFor
     }
-}
 ```
-A simple button control. The button control can contain text and/or a graphic. A button control has three different modes
-Normal: A normal push button.
-Default: A default Button is the button that receives a keyboard VK_ENTER press, if no other node in the scene consumes it.
-Cancel: A Cancel Button is the button that receives a keyboard VK_ESC press, if no other node in the scene consumes it.
+A simple button control. The button control can contain text and/or a graphic.
+A button control has three different modes
+**Normal**: A normal push button.
+**Default**: A default Button is the button that receives a keyboard VK_ENTER press, if no other node in the scene consumes it.
+**Cancel**: A Cancel Button is the button that receives a keyboard VK_ESC press, if no other node in the scene consumes it.
 ```kotlin
-class MainView:View() {
-    override val root = button("click it") {
-        this.isCancelButton
-        this.isDefaultButton
-    }
+button("click it") {
+    this.isCancelButton
+    this.isDefaultButton
 }
 ```
 A ButtonBar is essentially a HBox, with the additional functionality for operating system specific button placement. In other words, any Node may be annotated (via the setButtonData(Node, ButtonBar.ButtonData) method, placed inside a ButtonBar (via the getButtons() list), and will then be positioned relative to all other nodes in the button list based on their annotations, as well as the overarching button order specified for the ButtonBar. Uniform button sizing
@@ -163,13 +169,19 @@ class MainView:View() {
     }
 }
 ```
-An implementation of the ComboBoxBase abstract class for the most common form of ComboBox, where a popup list is shown to users providing them with a choice that they may select from. For more information around the general concepts and API of ComboBox, refer to the ComboBoxBase class documentation.
-On top of ComboBoxBase, the ComboBox class introduces additional API. Most importantly, it adds an items property that works in much the same way as the ListView items property. In other words, it is the content of the items list that is displayed to users when they click on the ComboBox button.
-The ComboBox exposes the valueProperty() from ComboBoxBase, but there are some important points of the value property that need to be understood in relation to ComboBox. These include:
+An implementation of the ComboBoxBase abstract class for the most common form of ComboBox, where a popup list is shown to users providing them with a choice that they may select from. 
+For more information around the general concepts and API of ComboBox, refer to the ComboBoxBase class documentation.
+On top of ComboBoxBase, the ComboBox class introduces additional API.
+Most importantly, it adds an items property that works in much the same way as the ListView items property.
+In other words, it is the content of the items list that is displayed to users when they click on the ComboBox button.
+The ComboBox exposes the valueProperty() from ComboBoxBase, but there are some important points of the value property that need to be understood in relation to ComboBox. 
+These include:
 The value property is not constrained to items contained within the items list - it can be anything as long as it is a valid value of type T.
 If the value property is set to a non-null object, and subsequently the items list is cleared, the value property is not nulled out.
 Clearing the selection in the selection model does not null the value property - it remains the same as before.
-It is valid for the selection model to have a selection set to a given index even if there is no items in the list (or less items in the list than the given index). Once the items list is further populated, such that the list contains enough items to have an item in the given index, both the selection model SelectionModel.selectedItemProperty() and value property will be updated to have this value. This is inconsistent with other controls that use a selection model, but done intentionally for ComboBox.
+It is valid for the selection model to have a selection set to a given index even if there is no items in the list (or less items in the list than the given index). 
+Once the items list is further populated, such that the list contains enough items to have an item in the given index, both the selection model SelectionModel.selectedItemProperty() and value property will be updated to have this value.
+This is inconsistent with other controls that use a selection model, but done intentionally for ComboBox.
 ```kotlin
 class MainView:View() {
     val list = listOf(1,2,3,4,5,6).observable()
@@ -1126,4 +1138,16 @@ class MainView: View() {
     }
 }
 ```
-
+JavaFX has an Accordion control that lets you group a set of `TilePanes` together to form an accordion of controls.
+The JavaFX Accordion only lets you open a single accordion fold at a time, and it has some other shortcomings.
+To solve this, TornadoFX comes with the `SqueezeBox` component that behaves and looks very similar to the Accordion, while providing some enhancements.
+```kotlin
+class MainView: View() {
+    override val root = vbox {
+        squeezebox {
+            this.fillHeight
+            this.multiselect
+        }
+    }
+}
+```
