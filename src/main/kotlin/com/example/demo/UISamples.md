@@ -4,35 +4,26 @@
 
 
 
-Label is a non-editable text control.
-A Label is useful for displaying text that is required to fit within a specific space, and thus may need to use an ellipsis or truncation to size the string to fit.
-Labels also are useful in that they can have mnemonics which, if used, will send focus to the Control listed as the target of the labelFor property.
 
-```kotlin
-    label("Hollow kotlin") {
-        this.labelFor
-    }
-```
-A simple button control. The button control can contain text and/or a graphic.
-A button control has three different modes
-**Normal**: A normal push button.
-**Default**: A default Button is the button that receives a keyboard VK_ENTER press, if no other node in the scene consumes it.
-**Cancel**: A Cancel Button is the button that receives a keyboard VK_ESC press, if no other node in the scene consumes it.
-```kotlin
-button("click it") {
-    this.isCancelButton
-    this.isDefaultButton
-}
-```
-A ButtonBar is essentially a HBox, with the additional functionality for operating system specific button placement. In other words, any Node may be annotated (via the setButtonData(Node, ButtonBar.ButtonData) method, placed inside a ButtonBar (via the getButtons() list), and will then be positioned relative to all other nodes in the button list based on their annotations, as well as the overarching button order specified for the ButtonBar. Uniform button sizing
+ButtonBar:
+-------
+
+A `ButtonBar` is essentially a `HBox`, with the additional functionality for operating system specific button placement. 
+In other words, any `Node` may be annotated (via the setButtonData(`Node`, `ButtonBar.ButtonData`) method, placed inside a `ButtonBar` (via the `getButtons()` list),
+and will then be positioned relative to all other nodes in the button list based on their annotations, as well as the overarching button order specified for the `ButtonBar`. 
+Uniform button sizing
+
+Extensions |      Property | Description
+  -----     |       ----     | ------
+`buttonMinWidth` | `buttonMinWidthProperty()`  | Returns the minimum width of all buttons placed in this button bar.
+`buttonOrder` | `buttonOrderProperty()` | Returns the current button order.
+`buttons` |  Yes | **Returns**: A list containing all buttons currently in the button bar, and allowing for further buttons to be added or removed.
+`button()` | No  | A Simple Button.
+
 ```kotlin
 class MainView:View() {
     override val root = pane {
         buttonbar {
-            this.buttonMinWidth
-            this.buttonOrder
-            this.buttons
-
             button("Yes")
             button("No")
             button("Maybe!")
