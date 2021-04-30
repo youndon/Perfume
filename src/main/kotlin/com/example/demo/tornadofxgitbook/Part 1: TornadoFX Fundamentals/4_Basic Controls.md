@@ -129,7 +129,7 @@ class MyView : View() {
 }
 ```
 The builder pattern becomes especially powerful when you start nesting controls into other controls. 
-Using these builder extension functions, you can easily populate and nest multiple `HBox` instances into a `VBox`, and create `UI` code that is clearly structured (Figure 4.1).
+Using these builder extension functions, you can easily populate and nest multiple `HBox` instances into a `VBox`, and create `UI` code that is clearly structured .
 ```kotlin
 import tornadofx.*
 

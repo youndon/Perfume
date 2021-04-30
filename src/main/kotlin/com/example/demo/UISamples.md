@@ -2,79 +2,8 @@
 ## introduction:
 ...
 
-
-
-
-ButtonBar:
--------
-
-A `ButtonBar` is essentially a `HBox`, with the additional functionality for operating system specific button placement. 
-In other words, any `Node` may be annotated (via the setButtonData(`Node`, `ButtonBar.ButtonData`) method, placed inside a `ButtonBar` (via the `getButtons()` list),
-and will then be positioned relative to all other nodes in the button list based on their annotations, as well as the overarching button order specified for the `ButtonBar`. 
-Uniform button sizing
-
-Extensions |      Property | Description
-  -----     |       ----     | ------
-`buttonMinWidth` | `buttonMinWidthProperty()`  | Returns the minimum width of all buttons placed in this button bar.
-`buttonOrder` | `buttonOrderProperty()` | Returns the current button order.
-`buttons` |  Yes | **Returns**: A list containing all buttons currently in the button bar, and allowing for further buttons to be added or removed.
-`button()` | No  | A Simple Button.
-
-```kotlin
-class MainView:View() {
-    override val root = pane {
-        buttonbar {
-            button("Yes")
-            button("No")
-            button("Maybe!")
-        }
-    }
-}
-```
-A ToggleButton is a specialized control which has the ability to be selected. Typically a ToggleButton is rendered similarly to a Button. However, they are two different types of Controls. A Button is a "command" button which invokes a function when clicked. A ToggleButton on the other hand is simply a control with a Boolean indicating whether it has been selected.
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-        togglebutton("...")
-    }
-}
-```
-class which contains a reference to all Toggles whose selected variables should be managed such that only a single Toggle within the ToggleGroup may be selected at any one time.
-Generally ToggleGroups are managed automatically simply by specifying the name of a ToggleGroup on the Toggle, but in some situations it is desirable to explicitly manage which ToggleGroup is used by Toggles.
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-        togglegroup {
-            this.properties
-            this.selectedToggle
-            this.toggles
-            this.userData
-            this.hasProperties()
-//            this.selectToggle()
-//            this.bind()
-            this.selectedToggleProperty()
-//            this.selectedValueProperty<>()
-        }
-    }
-}
-```
-
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-        togglegroup {
-         togglebutton("yes",this)
-         togglebutton("no",this)
-         togglebutton("maybe",this)
-        }
-    }
-}
-```
-
 The Text class defines a node that displays a text. Paragraphs are separated by '\n' and the text is wrapped on paragraph boundaries.
 ```kotlin
-class MainView:View() {
-    override val root = pane {
         text("something!!"){
          this.boundsType
          this.font
@@ -86,8 +15,6 @@ class MainView:View() {
          this.textAlignment
          this.textOrigin   
         }
-    }
-}
 ```
 TextFlow is special layout designed to lay out rich text. It can be used to layout several Text nodes in a single text flow. The TextFlow uses the text and the font of each Text node inside of it plus it own width and text alignment to determine the location for each child. A single Text node can span over several lines due to wrapping and the visual location of Text node can differ from the logical location due to bidi reordering.
 ```kotlin
@@ -354,7 +281,6 @@ class MainView:View(){
     }
 }
 ```
-pane.jpg
 
 ```kotlin
 class MainView:View() {
@@ -378,7 +304,7 @@ class MainView:View() {
     }
 }
 ```
-borderpane.jpg
+
 
 ## anchorpane:
 AnchorPane allows the edges of child nodes to be anchored to an offset from the anchor pane's edges. If the anchor pane has a border and/or padding set, the offsets will be measured from the inside edge of those insets.
@@ -407,7 +333,15 @@ FlowPane lays out its children in a flow that wraps at the flowpane's boundary.
 A horizontal flowpane (the default) will layout nodes in rows, wrapping at the flowpane's width. A vertical flowpane lays out nodes in columns, wrapping at the flowpane's height. If the flowpane has a border and/or padding set, the content will be flowed within those insets.
 
 ```kotlin
-
+  flowpane { 
+            this.alignment
+            this.columnHalignment
+            this.hgap
+            this.vgap
+            this.orientation
+            this.prefWrapLength
+            this.rowValignment
+        }
 ```
 
 GridPane lays out its children within a flexible grid of rows and columns. If a border and/or padding is set, then its content will be layed out within those insets.
