@@ -2,6 +2,7 @@ package appeanaFx
 
 
 import javafx.scene.control.Alert
+import javafx.scene.control.ButtonType
 import tornadofx.*
 import tornadofx.osgi.impl.*
 
@@ -24,11 +25,11 @@ private fun some(){
 //    booleanBinding()
 //    booleanListBinding()
     box(null)
-    c("",1.0)
+    c("#ffff",1.0) // color.
     chooseDirectory {  }
     chooseFile("",arrayOf())
     command {  }
-//    confirm() {}
+    confirm("header","content", ButtonType.APPLY, ButtonType.CANCEL,null, "title") {}
     confirmation("")
     cssclass()
     csselement()
