@@ -404,3 +404,190 @@ class MainView: View() {
 **Output:**
 
 ![](Pics/combobox.png)
+
+ListView.
+-------
+
+A ListView displays a horizontal or vertical list of items from which the user may select,
+or with which the user may interact.
+A `ListView` is able to have its generic type set to represent the type of data in the backing model.
+Doing this has the benefit of making various methods in the `ListView`, as well as the supporting classes (mentioned below), type-safe.
+In addition, making use of the generic supports substantially simplifies development of applications making use of `ListView`,
+as all modern IDEs are able to auto-complete far more successfully with the additional type information.
+Populating a `ListView`
+
+Extensions    |    Property   |  Description
+  -------     |    -------    |   --------
+`cellFactory` | `cellFactoryProperty()` | Sets a new cell factory to use in the `ListView`. This forces all old ListCell's to be thrown away, and new ListCell's created with the new cell factory.
+`editingIndex` | `editingIndexProperty()` | **Returns** the index of the item currently being edited in the ListView, or -1 if no item is being edited.
+`edit()` | No | Instructs the `ListView` to begin editing the item in the given index, if the `ListView` is editable. Once this method is called, if the current `cellFactoryProperty()` is set up to support editing, the Cell will switch its visual state to enable for user input to take place. **Params**:itemIndex – The index of the item in the `ListView` that should be edited.
+`fixedCellSize` | `fixedCellSizeProperty()` | **Returns** the fixed cell size value. A value less than or equal to zero is used to represent that fixed cell size mode is disabled, and a value greater than zero represents the size of all cells in this control.
+`focusModel` | `focusModelProperty()` | **Returns** the currently installed FocusModel.
+`isEditable` | `editableProperty()` | Specifies whether this `ListView` is editable - only if the ListView and the ListCells within it are both editable will a ListCell be able to go into their editing state.
+`items` | `itemsProperty()` | **Returns** an ObservableList that contains the items currently being shown to the user. This may be null if setItems(ObservableList) has previously been called, however, by default it is an empty ObservableList.
+`itemSelections` | No | ...
+`onEditCancel` | `onEditCancelProperty()` | **Returns** the EventHandler that will be called when the user cancels an edit.
+`onEdit()` | No | ...
+`onEditStart` | `onEditStartProperty()` | **Returns** the EventHandler that will be called when the user begins an edit, **Also** `setOnEditStart{}`:Sets the EventHandler that will be called when the user begins an edit.
+`onEditCommit` | `onEditCommitProperty()` | **Returns** the EventHandler that will be called when the user commits an edit, **Also** `setOnEditCommit{}`:Sets the EventHandler that will be called when the user has completed their editing.
+`onEditCancel` | `onEditCancelProperty()` | **Returns** the EventHandler that will be called when the user cancels an edit, **Also** `setOnEditCancel{}`:Sets the EventHandler that will be called when the user cancels an edit.
+`onScrollTo` | `onScrollToProperty()` | Called when there's a request to scroll an index into view using scrollTo(int) or scrollTo(Object), **Also** `setOnScrollTo{}`:Sets the EventHandler that will be called when the user scrolling.
+`scrollTo()` | No | Scrolls the `ListView` such that the item in the given index is visible to the end user, **Params**:index – The index that should be made visible to the user, assuming of course that it is greater than, or equal to `0`, and less than the size of the items list contained within the given `ListView`.
+`refresh()` | No | Calling `refresh()` forces the `ListView` control to recreate and repopulate the cells necessary to populate the visual bounds of the control. In other words, this forces the ListView to update what it is showing to the user. This is useful in cases where the underlying data source has changed in a way that is not observed by the `ListView` itself.
+`selectedItem` | No |
+`useCheckbox{}` | No | ...
+`asyncItems{}` | No |  ... 
+`bindSelected()` | No |  ... 
+`cellCache{}` | No |  ... 
+`cellFormat{}` | No |  ... 
+`multiSelect()` | No |  ... 
+`onUserDelete{}` | No |  ... 
+`onUserSelect{}` | No |  ... 
+`selectWhere{}` | No |  ... 
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    val cal = ('A'..'Z').toList().observable()
+    override val root = vbox {
+        listview<Char> {
+            items = cal
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/listview.png)
+
+ListMenu.
+-------
+
+Extensions    |    Property   |  Description
+  -------     |    -------    |   --------
+`item{...}` | No | ...
+`items` | Yes | ...
+`activeItem` | `activeItemProperty` | ...
+`theme` | `themeProperty` | ...
+`graphicFixedSized` | `graphicFixedSizeProperty` | ...
+`iconPosition` | `iconPositionProperty` | ...
+`orientation` | `orientationProperty` | ...
+
+`item()` Extensions    |   `item()` Property   | `item()` Description
+  -------              |    -------           |   --------
+`active` | `activeProperty` | ...
+`graphic` | `graphicProperty` | ...
+`text` | `textProperty` | ...
+`needsLayout()` | No | ...
+`whenSelected{}` | No | ...
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    val str = listOf("First", "Second", "Third", "Fourth", "Fifth")
+    override val root = vbox {
+        listmenu {
+            str.forEach {
+                item(it) {
+                    whenSelected {
+                        println("$text is active now.")
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/listmenu.png)
+
+when the item is selected the console output:
+
+`Third is active now.`
+
+MenuBar.
+------
+
+A MenuBar control traditionally is placed at the very top of the user interface, and embedded within it are Menus. 
+To add a menu to a `menubar`, you add it to the menus `ObservableList`. 
+By default, for each menu added to the `menubar`, it will be represented as a button with the Menu text value displayed.
+
+Extensions    |    Property   |  Description
+  -------     |    -------    |   --------
+`isUseSystemMenuBar` | `useSystemMenuBarProperty()` | Use the system menu bar if the current platform supports it. This should not be set on more than one MenuBar instance per Stage. If this property is set to true on more than one MenuBar in the same Stage, then the behavior is undefined.
+`menus` | No | The menus to show within this MenuBar. If this ObservableList is modified at runtime, the MenuBar will update as expected.
+`menu{...}` | No | ...
+
+`menu()` Extensions    |   `menu()` Property   | `menu()` Description
+  -------     |    -------    |   --------
+`isShowing` | No | Indicates whether the ContextMenu is currently visible.
+`items` | No | The items to show within this menu. If this `ObservableList` is modified at runtime, the Menu will update as expected.
+`onHidden` | `onHiddenProperty()` | Called just after the ContextMenu has been hidden, **Also** `setOnHidden{}`
+`onHiding` | `onHidingProperty()` | Called just prior to the ContextMenu being hidden, **Also** `setOnHiding{}`
+`onShown` | `onShownProperty()` | Called just after the ContextMenu is shown, **Also** `setOnShown{}`
+`onShowing` | `onShowingProperty()` | Called just prior to the ContextMenu being shown, even if the menu has no items to show. _Note_ however that this won't be called if the menu does not have a valid anchor node, **Also** `setOnShowing{}`
+`hide()` | No | Hides the ContextMenu if it was previously showing, and any showing submenus. If this menu is not showing, then invoking this function has no effect.
+`show()` | No | If the Menu is not disabled and the ContextMenu is not already showing, then this will cause the ContextMenu to be shown.
+`item(){...}` | No | ...
+`checkmenuitem(){...}` | No | ...
+`radiomenuitem()` | No | ...
+`customitem()` | No | ...
+`separator()` | No | ...
+
+`item()` Extensions    |   `item()` Property   | `item()` Description
+-------     |    -------    |   --------
+`accelerator` | `acceleratorProperty()` | The accelerator property enables accessing the associated action in one keystroke. It is a convenience offered to perform quickly a given action.
+`graphic` | `graphicProperty()` | An optional graphic for the MenuItem. This will normally be an javafx.scene.image.ImageView node, but there is no requirement for this to be the case.
+`isDisable` | `disableProperty()` | Setting disable to true will cause this MenuItem to become disabled.
+`disableWhen{}` | No | ...
+`isMnemonicParsing` | `mnemonicParsingProperty()` | MnemonicParsing property to enable/disable text parsing. If this is set to true, then the MenuItem text will be parsed to see if it contains the mnemonic parsing
+`isVisible` | `visibleProperty()` | Specifies whether this MenuItem should be rendered as part of the scene graph.
+`visibleWhen{}` | No | ...
+`onAction` | `onActionProperty()` | The action, which is invoked whenever the MenuItem is fired. This may be due to the user clicking on the button with the mouse, or by a touch event, or by a key press, or if the developer programatically invokes the `fire()` method, Also `setOnAction{}`
+`action{}`  | No | ...
+`actionEvents()` | No | ...
+`addEventHandler`() | No | Registers an event handler to this MenuItem. The handler is called when the menu item receives an Event of the specified type during the bubbling phase of event delivery.
+`onMenuValidation` | `onMenuValidationProperty()` | The event handler that is associated with invocation of an accelerator for a MenuItem. This can happen when a key sequence for an accelerator is pressed. The event handler is also invoked when onShowing event handler is called, Also `setOnMenuValidation{}`
+`enableWhen{}` | No | ...
+`parentMenu` | `parentMenuProperty()` | This is the Menu in which this MenuItem exists. It is possible for an instance of this class to not have a parentMenu - this means that this instance is either:
+                                      |* Not yet associated with its parentMenu.
+                                      |* A 'root' Menu (i.e. it is a context menu, attached directly to a MenuBar, MenuButton, or any of the other controls that use Menu internally.
+`parentPopup` | `parentPopupProperty()` | This is the ContextMenu in which this MenuItem exists.
+`properties` | Yes |**Returns** an observable map of properties on this menu item for use primarily by application developers.
+                   |**Returns:** an observable map of properties on this menu item for use primarily by application developers
+`text` | `textProperty()` | The text to display in the MenuItem.
+`userData` | No |**Returns** a previously set Object property, or null if no such property has been set using the `setUserData(Object)` method.
+                |**Returns:** The Object that was previously set, or null if no property has been set or if null was set.
+                |**Params:**
+                |* eventType – the type of the events to receive by the handler
+                |* eventHandler – the handler to register
+`fire()` | No | Fires a new ActionEvent.
+No |`styleProperty()` | A string representation of the **CSS** style associated with this specific MenuItem. This is analogous to the `"style"` attribute of an **HTML** element.
+`command` | `commandProperty` | ...
+`commandParameter` | commandParameterProperty | ...
+
+`checkmenuitem()` Extensions    |   `checkmenuitem()` Property   | `checkmenuitem()` Description
+  -------                       |    -------                     |   --------
+`isSelected` | `selectedProperty()` | Represents the current state of this CheckMenuItem. Bind to this to be informed whenever the user interacts with the CheckMenuItem (and causes the selected state to be toggled).
+
+
+`customitem()` Extensions    |   `customitem()` Property   | `customitem()` Description
+  -------                       |    -------                     |   --------
+`content` | `contentProperty()` | The node to display within this CustomMenuItem.
+`isHideOnClick` | `hideOnClickProperty()` | If true, this menu item, and all visible menus, will be hidden when this menu item is clicked on.
+
+`separator()` Extensions    |   `separator()` Property   | `separator()` Description
+  -------                       |    -------                     |   --------
+`orientation` | `orientationProperty()` | The orientation of the Separator can either be horizontal or vertical.
+`halignment` | `halignmentProperty()` | For vertical separators, specifies the horizontal position of the separator line within the separator control's space. Ignored for horizontal separators.
+`valignment` | `valignmentProperty()` | For horizontal separators, specifies the vertical alignment of the separator line within the separator control's space. Ignored for vertical separators.
+
+**Example:**
+```kotlin
+
+```
