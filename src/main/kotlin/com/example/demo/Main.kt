@@ -30,23 +30,18 @@ class MainView: View() {
 
     override val root = vbox {
         menubar {
-            str.forEach {
-                menu() {
-//                   when(it){
-//                       "View" -> this.isDisable=true
-//                       "File" -> file.forEach { item -> item(item) }
-//                       "Edit" -> edit.forEach { item -> item(item) }
-//                       "Build" -> build.forEach { item -> item(item) }
-//                       "Help" -> help.forEach { item -> item(item) }
-//                   }
+            listOf("File", "Edit", "View", "Build", "Help").forEach {
+                menu(it) {
+                    when (it) {
+                        "View" -> this.isDisable = true
+                        "File" -> listOf("New", "Open", "Setting", "Save All", "Exit").forEach { item -> item(item) }
+                        "Edit" -> listOf("Cut", "Copy", "Paste", "Delete", "Find").forEach { item -> item(item) }
+                        "Build" -> listOf("Build P", "Build M", "Recompile", "Rebuild").forEach { item -> item(item) }
+                        "Help" -> listOf("Help", "Check Update", "About").forEach { item -> item(item) }
+                    }
                 }
             }
         }
     }
-    val str = listOf("File", "Edit", "View", "Build", "Help")
-    val file = listOf("New","Open","Setting","Save All","Exit")
-    val edit = listOf("Cut","Copy","Paste","Delete","Find")
-    val build = listOf("Build P","Build M","Recompile","Rebuild")
-    val help = listOf("Help","Check Update","About")
 }
 

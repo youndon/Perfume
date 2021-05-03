@@ -569,7 +569,7 @@ Extensions    |    Property   |  Description
 `fire()` | No | Fires a new ActionEvent.
 No |`styleProperty()` | A string representation of the **CSS** style associated with this specific MenuItem. This is analogous to the `"style"` attribute of an **HTML** element.
 `command` | `commandProperty` | ...
-`commandParameter` | commandParameterProperty | ...
+`commandParameter` | `commandParameterProperty` | ...
 
 `checkmenuitem()` Extensions    |   `checkmenuitem()` Property   | `checkmenuitem()` Description
   -------                       |    -------                     |   --------
@@ -589,5 +589,25 @@ No |`styleProperty()` | A string representation of the **CSS** style associated 
 
 **Example:**
 ```kotlin
-
+class MainView: View() {
+    override val root = vbox {
+        menubar {
+            listOf("File", "Edit", "View", "Build", "Help").forEach {
+                menu(it) {
+                    when (it) {
+                        "View" -> this.isDisable = true
+                        "File" -> listOf("New", "Open", "Setting", "Save All", "Exit").forEach { item -> item(item) }
+                        "Edit" -> listOf("Cut", "Copy", "Paste", "Delete", "Find").forEach { item -> item(item) }
+                        "Build" -> listOf("Build P", "Build M", "Recompile", "Rebuild").forEach { item -> item(item) }
+                        "Help" -> listOf("Help", "Check Update", "About").forEach { item -> item(item) }
+                    }
+                }
+            }
+        }
+    }
+}
 ```
+
+**Output:**
+
+![](Pics/menubar.png)
