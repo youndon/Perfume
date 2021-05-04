@@ -2,59 +2,6 @@
 ## introduction:
 ...
 
-A specialization of the ProgressIndicator which is represented as a horizontal bar.
-ProgressBar sets focusTraversable to false.
-```kotlin
-class MainView:View() {
-    override val root = pane {
-        progressbar {
-            progress = 0.5
-        }
-    }
-}
-```
-A circular control which is used for indicating progress, either infinite (aka indeterminate) or finite. Often used with the Task API for representing progress of background Tasks.
-```kotlin
-class MainView:View() {
-    override val root = pane {
-        progressindicator {
-            this.isIndeterminate
-            this.progress = 0.5
-        }
-    }
-}
-```
-RadioButtons create a series of items where only one item can be selected. RadioButtons are a specialized ToggleButton. When a RadioButton is pressed and released a javafx.event.ActionEvent is sent. Your application can perform some action based on this event by implementing an javafx.event.EventHandler to process the javafx.event.ActionEvent.
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-            radiobutton ("radioButton")
-    }
-}
-```
-
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-        togglegroup { 
-            radiobutton("yes",this)
-            radiobutton("no",this)
-        }
-    }
-}
-```
-A tri-state selection Control typically skinned as a box with a checkmark or tick mark when checked. 
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-       checkbox("qdfqsd") {
-           this.isAllowIndeterminate
-           this.isIndeterminate
-           this.isSelected
-       }
-    }
-}
-```
 The ChoiceBox is used for presenting the user with a relatively small set of predefined choices from which they may choose. The ChoiceBox, when "showing", will display to the user these choices and allow them to pick exactly one choice. When not showing, the current choice is displayed.
 ```kotlin
 class MainView:View() {
@@ -75,16 +22,7 @@ class MainView:View() {
     }
 }
 ```
-ColorPicker control allows the user to select a color from either a standard palette of colors with a simple one click selection OR define their own custom color.
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-        colorpicker { 
-            this.customColors
-        }
-    }
-}
-```
+
 The DatePicker control allows the user to enter a date as text or to select a date from a calendar popup. The calendar is based on either the standard ISO-8601 chronology or any of the other chronology classes defined in the java.time.chrono package.
 ```kotlin
 class MainView:View() {

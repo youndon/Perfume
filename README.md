@@ -554,18 +554,11 @@ Extensions    |    Property   |  Description
 `addEventHandler`() | No | Registers an event handler to this MenuItem. The handler is called when the menu item receives an Event of the specified type during the bubbling phase of event delivery.
 `onMenuValidation` | `onMenuValidationProperty()` | The event handler that is associated with invocation of an accelerator for a MenuItem. This can happen when a key sequence for an accelerator is pressed. The event handler is also invoked when onShowing event handler is called, Also `setOnMenuValidation{}`
 `enableWhen{}` | No | ...
-`parentMenu` | `parentMenuProperty()` | This is the Menu in which this MenuItem exists. It is possible for an instance of this class to not have a parentMenu - this means that this instance is either:
-                                      |* Not yet associated with its parentMenu.
-                                      |* A 'root' Menu (i.e. it is a context menu, attached directly to a MenuBar, MenuButton, or any of the other controls that use Menu internally.
+`parentMenu` | `parentMenuProperty()` | This is the Menu in which this MenuItem exists. It is possible for an instance of this class to not have a parentMenu - this means that this instance is either:  _Not yet associated_ with its parentMenu. _A 'root' Menu_ (i.e. it is a context menu, attached directly to a MenuBar, MenuButton, or any of the other controls that use Menu internally.
 `parentPopup` | `parentPopupProperty()` | This is the ContextMenu in which this MenuItem exists.
-`properties` | Yes |**Returns** an observable map of properties on this menu item for use primarily by application developers.
-                   |**Returns:** an observable map of properties on this menu item for use primarily by application developers
+`properties` | Yes |**Returns** an observable map of properties on this menu item for use primarily by application developers. **Returns:** an observable map of properties on this menu item for use primarily by application developers
 `text` | `textProperty()` | The text to display in the MenuItem.
-`userData` | No |**Returns** a previously set Object property, or null if no such property has been set using the `setUserData(Object)` method.
-                |**Returns:** The Object that was previously set, or null if no property has been set or if null was set.
-                |**Params:**
-                |* eventType – the type of the events to receive by the handler
-                |* eventHandler – the handler to register
+`userData` | No |**Returns** a previously set Object property, or null if no such property has been set using the `setUserData(Object)` method. **Returns:** The Object that was previously set, or null if no property has been set or if null was set. **Params:** _eventType_ – the type of the events to receive by the handler  _eventHandler_ – the handler to register
 `fire()` | No | Fires a new ActionEvent.
 No |`styleProperty()` | A string representation of the **CSS** style associated with this specific MenuItem. This is analogous to the `"style"` attribute of an **HTML** element.
 `command` | `commandProperty` | ...
@@ -611,3 +604,148 @@ class MainView: View() {
 **Output:**
 
 ![](Pics/menubar.png)
+
+ProgressBar.
+----------
+
+A specialization of the ProgressIndicator which is represented as a horizontal bar.
+`ProgressBar` sets focusTraversable to `false`.
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = borderpane {
+        center = progressbar(0.7){
+            this.useMaxWidth=true
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/progressbar.png)
+
+ProgressIndicating.
+----------------
+
+A circular control which is used for indicating progress, either infinite (aka indeterminate) or finite.
+Often used with the Task **API** for representing progress of background Tasks.
+
+Extensions    |    Property   |  Description
+  -------     |    -------    |   --------
+`isIndeterminate` | `indeterminateProperty()` | A flag indicating whether it is possible to determine the `progress` of the `ProgressIndicator`. Typically indeterminate progress bars are rendered with some form of animation indicating potentially `"infinite"` progress.
+`progress` | `progressProperty()` | The actual `progress` of the `ProgressIndicator`. A negative value for progress indicates that the progress is indeterminate. A positive value between `0` and `1` indicates the percentage of progress where `0` is `0%` and `1` is `100%`. Any value greater than `1` is interpreted as `100%`.
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = borderpane {
+        center = progressindicator {
+            progress=0.7
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/progressindicator.png)
+
+RadioButtons.
+-----------
+
+RadioButtons create a series of items where only one item can be selected. 
+RadioButtons are a specialized ToggleButton. 
+When a RadioButton is pressed and released a `javafx.event.ActionEvent` is sent.
+Your application can perform some action based on this event by implementing an `javafx.event.EventHandler` to process the `javafx.event.ActionEvent`.
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = borderpane {
+        center = radiobutton("turn on")
+    }
+}
+
+```
+**Output:**
+
+![](Pics/radiobutton.png)
+
+radiobutton normally work with `togglegroup`
+
+```kotlin
+class MainView:View() {
+    override val root = vbox {
+        togglegroup { 
+            radiobutton("first",this)
+            radiobutton("second",this)
+            radiobutton("third",this)
+        }
+    }
+}
+```
+
+CheckBox.
+-------
+
+A tri-state selection Control typically skinned as a box with a checkmark or tick mark when checked.
+
+Extensions    |    Property   |  Description
+  -------     |    -------    |   --------
+`isAllowIndeterminate` | `allowIndeterminateProperty()` |Determines whether the user toggling the `CheckBox` should cycle through all three states: _checked_, _unchecked_, and undefined. If `true` then all three states will be cycled through; if `false` then only checked and unchecked will be cycled.
+`isIndeterminate` | `indeterminateProperty()` |Determines whether the `CheckBox` is in the indeterminate state.
+`isSelected` | `selectedProperty()` | Indicates whether this `CheckBox` is checked.
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = vbox {
+        checkbox("Mobile Dev")
+        checkbox("Web Dev")
+        checkbox("Desktop Dev")
+        checkbox("I.T")
+        checkbox("Data Analyse")
+        checkbox("Git Dev")
+        checkbox("A.I")
+    }
+}
+```
+
+**Output:**
+
+![](Pics/checkbox.png)
+
+ColorPicker.
+----------
+
+ColorPicker control allows the user to select a color from either a standard palette of colors with a simple one click selection OR define their own custom color.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`customColors` | Yes | Gets the list of custom colors added to the Color Palette by the user.
+`validator()` | No | ...
+```kotlin
+class MainView: View() {
+    var color = ColorPicker()
+    override val root = borderpane {
+        top{
+            color = colorpicker()
+        }
+        center {
+            button("change background").action {
+                this.style { backgroundColor.plusAssign(color.value) }
+            }
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/colorpicker1.png) ![](Pics/colorpicker2.png)

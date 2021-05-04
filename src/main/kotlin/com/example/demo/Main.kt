@@ -20,6 +20,7 @@ import javafx.scene.text.Font
 import javafx.scene.text.FontSmoothingType
 import javafx.scene.text.TextAlignment
 import javafx.scene.text.TextBoundsType
+import kotlinx.datetime.DateTimePeriod
 import kotlinx.datetime.DateTimeUnit
 import tornadofx.*
 
@@ -27,21 +28,13 @@ fun main() = launch<MainApp>()
 class MainApp: App(MainView::class)
 
 class MainView: View() {
-
     override val root = vbox {
-        menubar {
-            listOf("File", "Edit", "View", "Build", "Help").forEach {
-                menu(it) {
-                    when (it) {
-                        "View" -> this.isDisable = true
-                        "File" -> listOf("New", "Open", "Setting", "Save All", "Exit").forEach { item -> item(item) }
-                        "Edit" -> listOf("Cut", "Copy", "Paste", "Delete", "Find").forEach { item -> item(item) }
-                        "Build" -> listOf("Build P", "Build M", "Recompile", "Rebuild").forEach { item -> item(item) }
-                        "Help" -> listOf("Help", "Check Update", "About").forEach { item -> item(item) }
-                    }
-                }
-            }
-        }
+        checkbox("Mobile Dev")
+        checkbox("Web Dev")
+        checkbox("Desktop Dev")
+        checkbox("I.T")
+        checkbox("Data Analyse")
+        checkbox("Git Dev")
+        checkbox("A.I")
     }
 }
-
