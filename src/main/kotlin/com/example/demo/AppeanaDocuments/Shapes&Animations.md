@@ -138,16 +138,3 @@ class MainView: View() {
     }
 }
 ```
-JavaFX has an Accordion control that lets you group a set of `TilePanes` together to form an accordion of controls.
-The JavaFX Accordion only lets you open a single accordion fold at a time, and it has some other shortcomings.
-To solve this, TornadoFX comes with the `SqueezeBox` component that behaves and looks very similar to the Accordion, while providing some enhancements.
-```kotlin
-class MainView: View() {
-    override val root = vbox {
-        squeezebox {
-            this.fillHeight
-            this.multiselect
-        }
-    }
-}
-```
