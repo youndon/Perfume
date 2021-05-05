@@ -749,3 +749,113 @@ class MainView: View() {
 **Output:**
 
 ![](Pics/colorpicker1.png) ![](Pics/colorpicker2.png)
+
+ChoiceBox.
+--------
+
+The ChoiceBox is used for presenting the user with a relatively small set of predefined choices from which they may choose. 
+The ChoiceBox, when `showing`, will display to the user these choices and allow them to pick exactly one choice.
+When not `showing`, the current choice is displayed.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`converter` | `converterProperty()` | Allows a way to specify how to represent objects in the items list. When a StringConverter is set, the object toString method is not called and instead its `toString(object T)` is called, passing the objects in the items list. This is useful when using domain objects in a ChoiceBox as this property allows for customization of the representation. 
+`isShowing` | `showingProperty()` | Indicates whether the drop down is displaying the list of choices to the user. This is a readonly property which should be manipulated by means of the **#show** and **#hide** methods.
+`items` | `itemsProperty()` | The items to display in the choice box. The selected item (as indicated in the selection model) must always be one of these items.
+`onAction` | `onActionProperty()` | The ChoiceBox action, which is invoked whenever the ChoiceBox value property is changed. This may be due to the value property being programmatically changed or when the user selects an item in a popup menu, Also `setOnAction{}`
+`onHidden` | `onHiddenProperty()` | Called just after the ChoiceBox popup has been hidden,Also `setOnHidden{}`
+`onShowing` | `onShowingProperty()` |Called just prior to the ChoiceBox popup being shown,Also `setOnShowing{}`
+`onShown` | `onShownProperty()` | Called just after the ChoiceBox popup is shown,Also `setOnShown{}`
+`selectionModel` | `selectionModelProperty()` | The selection model for the ChoiceBox. Only a single choice can be made, hence, the ChoiceBox supports only a SingleSelectionModel. Generally, the main interaction with the selection model is to explicitly set which item in the items list should be selected, or to listen to changes in the selection to know which item has been chosen.
+`value` | `valueProperty()` | The value of this ChoiceBox is defined as the selected item in the ChoiceBox selection model. The valueProperty is synchronized with the selectedItem. This property allows for bi-directional binding of external properties to the ChoiceBox and updates the selection model accordingly.
+`hide()` | No | Closes the list of choices.
+`show()` | No | Opens the list of choices.
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    val list = (0..20).toList().observable()
+    override val root = vbox {
+        choicebox<Int> {
+            items = list
+        }
+    }
+}
+```
+
+DatePicker.
+---------
+
+The DatePicker control allows the user to enter a date as text or to select a date from a calendar popup.
+The calendar is based on either the standard `ISO-8601` chronology or any of the other chronology classes defined in the `java.time.chrono` package.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`chronology` | `chronologyProperty()` | The calendar system used for parsing, displaying, and choosing dates in the DatePicker control. The default value is returned from a call to `Chronology.ofLocale(Locale.getDefault(Locale.Category.FORMAT))`. The default is usually IsoChronology unless provided explicitly in the Locale by use of a Locale calendar extension.
+`converter` | `converterProperty()` | Converts the input text to an object of type LocalDate and vice versa. If not set by the application, the DatePicker skin class will set a converter based on a `java.time.format.DateTimeFormatter` for the current Locale and chronology. This formatter is then used to parse and display the current date value. Setting the value to null will restore the default converter.
+`dayCellFactory` | `dayCellFactoryProperty()` | A custom cell factory can be provided to customize individual day cells in the DatePicker popup. Refer to DateCell and Cell for more information on cell factories, Also `setDayCellFactory{}`
+`editor` | `editorProperty()` | The editor for the DatePicker.
+`isShowWeekNumbers` | `showWeekNumbersProperty()` | Whether the DatePicker popup should display a column showing week numbers. The default value is specified in a resource bundle, and depends on the country of the current locale.
+
+```
+...
+        datepicker()
+...
+```
+
+**Output:**
+
+![](Pics/datepicker.png)
+
+Canvas.
+-----
+
+Canvas is an image that can be drawn on using a set of graphics commands provided by a `GraphicsContext`.
+A Canvas node is constructed with a `width` and `height` that specifies the size of the image into which the canvas drawing commands are rendered.
+All drawing operations are clipped to the bounds of that image.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`graphicsContext2D` | No | **Returns** the `GraphicsContext` associated with this Canvas.
+`height` | `heightProperty()` | Defines the height of the canvas.
+`width` | `widthProperty()` | Defines the width of the canvas.
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = group {
+        canvas(250.0, 250.0).graphicsContext2D.apply {
+            fill = Color.BLUE
+            fillRect(75.0, 75.0, 100.0, 100.0)
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/canvas.png)
+
+DataGrid.
+--------
+
+`cellCache` | `cellCacheProperty`  | ...
+`cellFactory` |  `cellFactoryProperty` | ...
+`cellFormat` |  `cellFormatProperty`  | ...
+`cellFragment` | `cellFragmentProperty`   | ...
+`cellHeight` |  `cellHeightProperty`  | ...
+`cellWidth` |  `cellWidthProperty`  | ...
+`focusModel` |  No | ...
+`horizontalCellSpacing` |  `horizontalCellSpacingProperty` | ...
+`items` | `itemsProperty`  | ...
+`maxCellsInRow` | `maxCellsInRowProperty`  | ...
+`maxRows` |  `maxRowsProperty` | ...
+`multiSelect` |  No | ...
+`scope` |  `scopeProperty` | ...
+`selectedItem` | No  | ...
+`singleSelect` |  No | ...
+`selectionModel` |  No | ...
+`verticalCellSpacing` | `verticalCellSpacingProperty`  | ...
+`onUserSelect{}` | No  | ...

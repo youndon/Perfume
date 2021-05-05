@@ -2,99 +2,11 @@
 ## introduction:
 ...
 
-The ChoiceBox is used for presenting the user with a relatively small set of predefined choices from which they may choose. The ChoiceBox, when "showing", will display to the user these choices and allow them to pick exactly one choice. When not showing, the current choice is displayed.
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-      choicebox<Int> {
-          this.converter
-          this.isShowing
-          this.items
-          this.onAction
-          this.onHidden
-          this.onShowing
-          this.onShown
-          this.selectionModel
-          this.value
-          this.hide()
-          this.show()
-      }
-    }
-}
-```
-
-The DatePicker control allows the user to enter a date as text or to select a date from a calendar popup. The calendar is based on either the standard ISO-8601 chronology or any of the other chronology classes defined in the java.time.chrono package.
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-        datepicker { 
-            this.chronology
-            this.converter
-            this.dayCellFactory
-            this.editor
-            this.isShowWeekNumbers
-            this.setDayCellFactory {  }
-        }
-    }
-}
-```
-Canvas is an image that can be drawn on using a set of graphics commands provided by a GraphicsContext.
-A Canvas node is constructed with a width and height that specifies the size of the image into which the canvas drawing commands are rendered. All drawing operations are clipped to the bounds of that image.
-```kotlin
-class MainView:View() {
-    override val root = vbox {
-        canvas { 
-            this.graphicsContext2D
-            this.height
-            this.width
-        }
-    }
-}
-```
-
 ```kotlin
 class MainView:View() {
     val list = (0..20).toList().observable()
     override val root = vbox {
-        datagrid(list) { 
-            this.cellCache
-            this.cellFactory
-            this.cellFormat
-            this.cellFragment
-            this.cellHeight
-            this.cellWidth
-            this.focusModel
-            this.horizontalCellSpacing
-            this.items
-            this.maxCellsInRow
-            this.maxRows
-            this.multiSelect
-            this.scope
-            this.selectedItem
-            this.singleSelect
-            this.selectionModel
-            this.verticalCellSpacing
-            this.onUserSelect { }
-        }
-    }
-}
-```
-```kotlin
-class MainView:View() {
-    val list = (0..20).toList().observable()
-    override val root = vbox {
-        drawer { 
-            this.buttonArea
-            this.contentArea
-            this.contextMenu
-            this.dockingSide
-            this.fixedContentSize
-            this.floatingDrawers
-            this.items
-            this.item{}
-            this.maxContentSize
-            this.multiselect
-        }
+       
     }
 }
 ```
