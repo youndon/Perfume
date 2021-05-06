@@ -878,3 +878,32 @@ Extensions    |    Property   |  Description
 `maxContentSize` | `maxContentSizeProperty()` | ...
 `multiselect` | `multiselectProperty()` | ...
 
+
+An HTML like label which can be a graphic and/or text which responds to rollovers and clicks.
+When a hyperlink is clicked/pressed isVisited becomes true.
+A Hyperlink behaves just like a Button.
+When a hyperlink is pressed and released a `ActionEvent` is sent, and your application can perform some action based on this event.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`isVisited` | `visitedProperty()` | Indicates whether this link has already been `"visited"`.
+
+**Example:**
+
+```kotlin
+class MainView:View() {
+    class MainView : View() {
+        override val root = group {
+            hyperlink("Open home file") {
+                action {
+                    Desktop.getDesktop().open(File(System.getProperty("user.home")))
+                }
+            }
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/hyperlink.png)
