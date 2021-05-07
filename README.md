@@ -808,6 +808,13 @@ Extensions    |    Property   |  Description
 
 ![](Pics/datepicker.png)
 
+Group.
+----
+
+A Group node contains an ObservableList of children that are rendered in order whenever this node is rendered.
+A Group will take on the collective bounds of its children and is not directly resizable.
+Any transform, effect, or state applied to a Group will be applied to all children of that group. Such transforms and effects will NOT be included in this Group's layout bounds, however if transforms and effects are set directly on children of this Group, those will be included in this Group's layout bounds.
+
 Canvas.
 -----
 
@@ -907,3 +914,121 @@ class MainView:View() {
 **Output:**
 
 ![](Pics/hyperlink.png)
+
+ImageView.
+--------
+
+The ImageView is a `Node` used for painting images loaded with `Image` class.
+This c``lass allows resizing the displayed image (with or without preserving the original aspect ratio) and specifying a viewport into the source image for restricting the pixels displayed by this `ImageView`.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`fitHeight` | `fitHeightProperty()` | The height of the bounding box within which the source image is resized as necessary to fit. If set to a value `<= 0`, then the intrinsic height of the image will be used as the `fitHeight`.
+`fitWidth` | `fitWidthProperty()` | The width of the bounding box within which the source image is resized as necessary to fit. If set to a value `<= 0`, then the intrinsic width of the image will be used as the `fitWidth`.
+`image` | `imageProperty()` | The `Image` to be painted by this `ImageView`.
+`isPreserveRatio` | `preserveRatioProperty()` | Indicates whether to preserve the aspect ratio of the source image when scaling to fit the image within the fitting bounding box.
+`isSmooth` | `smoothProperty()` | Indicates whether to use a better quality filtering algorithm, or a faster one when transforming or scaling the source image to fit within the bounding box provided by fitWidth and fitHeight. If set to `true` a better quality filtering will be used, if set to `false` a faster but lesser quality filtering will be used.
+`viewport` | `viewportProperty()` | The rectangular `viewport` into the image. The `viewport` is specified in the coordinates of the image, prior to scaling or any other transformations.
+`x` | `xProperty()` | The current x coordinate of the `ImageView` origin.
+`y` | `yProperty()` | The current y coordinate of the `ImageView` origin.
+
+`image` Extensions    |   `image` Property   |  `image` Description
+-------     |    -------    |   --------
+`exception`  | `exceptionProperty()`  | The exception which caused image loading to fail. Contains a non-null value only if the error property is set to `true`.
+`height`  | `heightProperty()`  | The image height or `0` if the image loading fails. While the image is being loaded it is set to `0`. 
+`width`  | `widthProperty()`  | The image width or `0` if the image loading fails. While the image is being loaded it is set to `0`. 
+`isBackgroundLoading`  | No  | Indicates whether the image is being loaded in the background. **Returns:** `true` if the image is loaded in the background 
+`isPreserveRatio`  |  No | 
+`isError`  | No  | Indicates whether an error was detected while loading an image.
+`isSmooth`  |  No | 
+`pixelReader`  | No  | This method returns a `PixelReader` that provides access to read the pixels of the image, if the image is readable. If this method returns null then this image does not support reading at this time. This method will return null if the image is being loaded from a source and is still incomplete {the progress is still `< 1.0`) or if there was an error. This method may also return null for some images in a format that is not supported for reading and writing pixels to. **Returns:** the `PixelReader` for reading the pixel data of the image
+`progress`  |   | This is package private *only* for the sake of testing. We need a way to feed fake progress values. It would be better if Image were refactored to be testable (for example, by allowing the test code to provide its own implementation of background loading), but this is a simpler and safer change for now.
+`requestedHeight`  | No  | Gets the height of the bounding box within which the source image is resized as necessary to fit. If set to a value `<= 0`, then the intrinsic height of the image will be used.
+`requestedWidth`  | No  | Gets the width of the bounding box within which the source image is resized as necessary to fit. If set to a value `<= 0`, then the intrinsic width of the image will be used. 
+`cancel()`  | No  | Cancels the background loading of this image. Has no effect if this image isn't loaded in background or if loading has already completed.
+
+**Example:**
+
+Normally it work by method like this:
+
+```kotlin
+imageview("Image.jpg")
+```
+if not:
+
+```kotlin
+class MainView: View() {
+    override val root = group {
+        imageview(Paths.get("Tornado.jpg").toUri().toURL().toString())
+    }
+}
+```
+
+**Output:**
+
+![](Pics/Tornado.jpg)
+
+KeyboardLayout.
+------------
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`rows` | Yes | ...
+`row{...}` | No | ...
+`unitSize` | `unitSizeProperty` | ...
+`load()` | No | ...
+`toJSON()` | No | ...
+`toKeyboardLayoutEditorFormat()` | No | ...
+
+**row{}.**
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`keyboard` | No | ... 
+`key()` | No | ...
+`keys` | Yes | ...
+`spacer()` | No | ...
+
+**key().**
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`code` | `codeProperty()` | ...
+`keyHeight` | `keyHeightProperty()` | ...
+`keyWidth` | `keyWidthProperty()` | ...
+`svg` | `svgProperty()` | ...
+
+
+A ToolBar is a control which displays items horizontally or vertically. The most common items to place within a `ToolBar` are `Buttons`, `ToggleButtons` and `Separators`, but you are not restricted to just these, and can insert any Node into them.
+If there are too many items to fit in the `ToolBar` an overflow button will appear. The overflow button allows you to select items that are not currently visible in the toolbar.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`items` | No | The items contained in the `ToolBar`.
+`orientation` | `orientationProperty()` | The orientation of the `ToolBar` - this can either be horizontal or vertical.
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    private val fontAwesome = GlyphFontRegistry.font("FontAwesome")
+    val list = listOf(
+        "ALIGN_CENTER" to FontAwesome.Glyph.ALIGN_CENTER,
+        "ALIGN_JUSTIFY" to FontAwesome.Glyph.ALIGN_JUSTIFY,
+        "ALIGN_LEFT" to FontAwesome.Glyph.ALIGN_LEFT,
+        "ALIGN_RIGHT" to FontAwesome.Glyph.ALIGN_RIGHT
+    )
+    override val root = vbox {
+        toolbar {
+            orientation= Orientation.VERTICAL
+            list.forEach {
+                button("", fontAwesome.create(it.second)) { }
+            }
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/toolbar.png)
