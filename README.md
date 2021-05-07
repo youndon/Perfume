@@ -811,9 +811,38 @@ Extensions    |    Property   |  Description
 Group.
 ----
 
-A Group node contains an ObservableList of children that are rendered in order whenever this node is rendered.
+A Group node contains an `ObservableList` of children that are rendered in order whenever this node is rendered.
 A Group will take on the collective bounds of its children and is not directly resizable.
-Any transform, effect, or state applied to a Group will be applied to all children of that group. Such transforms and effects will NOT be included in this Group's layout bounds, however if transforms and effects are set directly on children of this Group, those will be included in this Group's layout bounds.
+Any transform, effect, or state applied to a Group will be applied to all children of that group.
+Such transforms and effects will **NOT** be included in this Group's layout bounds, however if transforms and effects are set directly on children of this Group,
+those will be included in this Group's layout bounds.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`isAutoSizeChildren` | `autoSizeChildrenProperty()` | Controls whether or not this Group will automatically resize any managed resizable children to their preferred sizes during the layout pass. If set to `false`, then the application is responsible for setting the size of this Group's resizable children, otherwise such nodes may end up with a zero `width/height` and will not be visible. This variable has no effect on content nodes which are not resizable (`Shape`, `Text`, etc).
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = group {
+        (0..5).forEach {
+            rectangle {
+                y = it * 40.0
+                width = 200.0
+                height = 20.0
+                fill = Color.RED
+            }
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/group.png)
+
+
 
 Canvas.
 -----
@@ -1032,3 +1061,102 @@ class MainView: View() {
 **Output:**
 
 ![](Pics/toolbar.png)
+
+ContextMenu.
+----------
+
+A popup control containing an ObservableList of menu items. 
+The items `ObservableList` allows for any `MenuItem` type to be inserted, including its subclasses `Menu`, `MenuItem`, `RadioMenuItem`, `CheckMenuItem` and `CustomMenuItem`. 
+If an arbitrary `Node` needs to be inserted into a menu, a `CustomMenuItem` can be used.
+One exception to this general rule is that `SeparatorMenuItem` could be used for inserting a separator.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`items` | Yes | The menu items on the context menu. If this `ObservableList` is modified at runtime, the `ContextMenu` will update as expected.
+`menu()` | | see [MenuBar]
+`item(){...}` | No | ...
+`checkmenuitem(){...}` | No | ...
+`radiomenuitem()` | No | ...
+`customitem()` | No | ...
+`separator()` | No | ...
+`onAction` | `onActionProperty()` | Callback function to be informed when an item contained within this `ContextMenu` has been activated. The current implementation informs all parent menus as well, so that it is not necessary to listen to all sub menus for events, Also `setOnAction{}`
+`show()` | No | ... 
+`isImpl_showRelativeToWindow` | `impl_showRelativeToWindowProperty()` | Deprecated This is an internal **API** that is not intended for use and will be removed in the next version
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = vbox {
+        contextmenu {
+            item("Show Context Action")
+            item("Paste")
+            separator()
+            menu("Copy/Paste Special"){
+                item("Copy Reference")
+                item("Paste as Plain Text")
+                item("Paste from History")
+            }
+            item("Column Selection Mode")
+            separator()
+            menu("Refactor"){
+                item("Changing Signature..")
+                separator()
+                item("Move..")
+                item("Copy..")
+            }
+            menu("Folding"){
+                item("Expand")
+                item("Expand Recursively")
+                item("Expand All")
+            }
+            menu("Analyze"){
+                item("Inspect Code..")
+                item("Code Cleanup..")
+                item("Slender Code Cleanup..")
+            }
+
+        }
+    }
+}
+```
+
+SqueezBox.
+--------
+
+**JavaFX** has an Accordion control that lets you group a set of `TilePanes` together to form an accordion of controls.
+The **JavaFX** Accordion only lets you open a single accordion fold at a time, and it has some other shortcomings.
+To solve this, TornadoFX comes with the `SqueezeBox` component that behaves and looks very similar to the Accordion, while providing some enhancements.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`fillHeight` | `fillHeightProperty` | ...
+`multiselect` | `multiselectProperty` | ...
+
+**Example:**
+
+```kotlin
+class MainView: View() {
+    override val root = vbox {
+        squeezebox {
+            fold("Customer Editor",true) {
+                form {
+                    fieldset("Customer Details") {
+                        field("Name") { textfield() }
+                        field("Password") { textfield() }
+                    }
+                }
+            }
+            fold("Some other editor",false) {
+                stackpane {
+                    label("Nothing here")
+                }
+            }
+        }
+    }
+}
+```
+
+**Output:**
+
+![](Pics/squeezbox.png)
