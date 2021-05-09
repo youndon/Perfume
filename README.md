@@ -1160,3 +1160,30 @@ class MainView: View() {
 **Output:**
 
 ![](Pics/squeezbox.png)
+
+HTMLEditor.
+---------
+
+A control that allows for users to edit text, and apply styling to this text.
+The underlying data model is **HTML**, although this is not shown visually to the end-user.
+
+Extensions    |    Property   |  Description
+-------     |    -------    |   --------
+`htmlText` | No | **Returns** the `HTML` content of the editor.
+`print()` | No | Prints the content of the editor using the given printer job. This method does not modify the state of the job, nor does it call `PrinterJob.endJob`, so the job may be safely reused afterwards. **Params:** job – printer job used for printing
+
+**Example:**
+```kotlin
+class MainView: View() {
+    override val root = htmleditor()
+}
+```
+
+See Also.
+-------
+[]
+[]
+[]
+[]
+
+
