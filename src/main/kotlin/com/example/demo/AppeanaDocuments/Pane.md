@@ -19,6 +19,7 @@ class MainView:View(){
 
 BorderPane.
 ----------
+*********
 
 Extensions    |    Property   |  Description
 -------     |    -------    |   --------
@@ -59,6 +60,7 @@ class MainView:View() {
 
 AnchorPane.
 ----------
+*********
 
 AnchorPane allows the edges of child nodes to be anchored to an offset from the anchor pane's edges.
 If the anchor pane has a border and/or padding set, the offsets will be measured from the inside edge of those insets.
@@ -122,6 +124,7 @@ Extensions    |    Property   |  Description
 
 GridPane.
 -------
+*******
 
 GridPane lays out its children within a flexible grid of rows and columns. 
 If a border and/or padding is set, then its content will be layed out within those insets.
@@ -203,54 +206,90 @@ class MainView: View() {
 
 _This not button inside button but button over button._
 
+TilePane.
+-------
+******
+
 TilePane lays out its children in a grid of uniformly sized `"tiles"`.
-A horizontal `tilepane` (the default) will tile nodes in rows, wrapping at the tilepane's `width`. A vertical `tilepane` will tile nodes in columns, wrapping at the tilepane's `height`.
+A horizontal `tilepane` (the default) will tile nodes in rows, wrapping at the tilepane's `width`.
+A vertical `tilepane` will tile nodes in columns, wrapping at the tilepane's `height`.
 
 Extensions    |    Property   |  Description
 -------     |    -------    |   --------
+`hgap` | `hgapProperty()` | The amount of horizontal space between each tile in a `row`.
+`vgap` | `vgapProperty()` | The amount of vertical space between each tile in a `column`.
+`prefRows` | `prefRowsProperty()` | The preferred number of rows for a vertical `tilepane`. This value is used only to compute the preferred size of the `tilepane` and may not reflect the actual number of rows, which may change if the `tilepane` is resized to something other than its preferred `height`.
+`prefColumns` | `prefColumnsProperty()` | The preferred number of columns for a horizontal `tilepane`. This value is used only to compute the preferred size of the `tilepane` and may not reflect the actual number of rows, which may change if the `tilepane` is resized to something other than its preferred `height`.
+`alignment` | `alignmentProperty()` | The overall `alignment` of the tilepane's content within its `width` and `height`. For a **horizontal** `tilepane`, each row will be aligned within the tilepane's width using the alignment's hpos value, and the rows will be aligned within the tilepane's height using the alignment's `vpos` value. For a **vertical** `tilepane`, each `column` will be aligned within the tilepane's `height` using the alignment's `vpos` value, and the columns will be aligned within the tilepane's width using the alignment's `hpos` value.
+`orientation` | `orientationProperty()` | The orientation of this `tilepane`. A horizontal `tilepane` lays out `children` in tiles, left to right, wrapping tiles at the tilepane's width boundary. A vertical `tilepane` lays out children in tiles, `top` to `bottom`, wrapping at the tilepane's `height`. The default is horizontal.
+`prefTileHeight` | `prefTileHeightProperty()` | The preferred `height` of each tile. If equal to `USE_COMPUTED_SIZE` (the default) the tile `height` will be automatically recomputed by the `tilepane` when the preferred size of `children` changes to accommodate the tallest child.
+`prefTileWidth` | `prefTileWidthProperty()` | The preferred `height` of each tile. If equal to `USE_COMPUTED_SIZE` (the default) the tile height will be automatically recomputed by the `tilepane` when the preferred size of `children` changes to accommodate the tallest child.
+`tileAlignment` | `tileAlignmentProperty()` | The default `alignment` of each child within its tile. This may be overridden on individual `children` by setting the child's `alignment` constraint.
+`tileHeight` | `tileHeightProperty()` | The actual `height` of each tile. This property is read-only.
+`tileWidth` | `tileWidthProperty()` | The actual `width` of each tile. This property is read-only.
+
+**Example:**
 
 ```kotlin
-class MainView:View() {
+class MainView: View() {
     override val root = tilepane {
-        this.hgap
-        this.vgap
-        this.prefColumns 
-        this.prefRows 
-        this.alignment
-        this.orientation
-        this.prefTileHeight
-        this.prefTileWidth
-        this.tileAlignment
-        this.tileHeight
-        this.tileWidth
-        (0..20).forEach { 
-            label(it.toString())
+        hgap=8.0
+        prefColumns=4
+        (0..10).forEach {
+            imageview(Paths.get("idea.png").toUri().toURL().toString())
         }
     }
 }
 ```
+
+**Output:**
+
+![](Picturs/titlepane.png)
+
+TitledPane.
+---------
+*********
+
 A TitledPane is a panel with a title that can be opened and closed.
-The panel in a TitledPane can be any Node such as UI controls or groups of nodes added to a layout container.
+The panel in a `TitledPane` can be any **Node** such as UI controls or groups of nodes added to a layout container.
 
 Extensions    |    Property   |  Description
 -------     |    -------    |   --------
+`content` | `contentProperty()` | The content of the `TitledPane`. Null is returned when if there is no content.
+`isAnimated` | `animatedProperty()` | **Returns** the animated state of the `TitledPane`.
+`isCollapsible` | `collapsibleProperty()` | **Returns** the collapsible state of the `TitlePane`.
+`isExpanded` | `expandedProperty()` | **Returns** the expanded state of the `TitledPane`.
+
+**Example:**
 
 ```kotlin
-class MainView:View() {
-    override val root = titledpane("title") {
-        this.content
-        this.isAnimated
-        this.isCollapsible
-        this.isExpanded
-        label("one")
-        label("tow")
-        label("three")
+class MainView: View() {
+    override val root = vbox {
+        titledpane("Customer Editor") {
+            form {
+                fieldset("Customer Details") {
+                    field("Name") { textfield() }
+                    field("Password") { textfield() }
+                }
+            }
+        }
+        titledpane("Some other editor") {
+            isAnimated=false ; isExpanded=false
+            stackpane {
+                label("Nothing here")
+            }
+        }
     }
-}
+}   
 ```
 
-ScrolPane.
---------
+**Output:**
+
+![](Picturs/titledpane.png)
+
+ScrollPane.
+---------
+*********
 
 A Control that provides a scrolled, clipped viewport of its contents. It allows the user to scroll the content around either directly (panning) or by using scroll bars. 
 The `ScrollPane` allows specification of the scroll bar policy, which determines when scroll bars are displayed: **always**, **never**, or **only** when they are needed. 
@@ -278,13 +317,13 @@ Extensions    |    Property   |  Description
 `isPannable` | No | Specifies whether the user should be able to pan the viewport by using the mouse. If mouse events reach the `ScrollPane` (that is, if mouse events are not blocked by the contained node or one of its children) then pannable is consulted to determine if the events should be used for panning.
 `viewportBounds` | `viewportBoundsProperty()` | The actual `Bounds` of the` ScrollPane` Viewport. This is the `Bounds` of the content node.
 
-**`viewportBounds`**
+###viewportBounds.block
 
 Extensions    |    Property   |  Description
 -------     |    -------    |   --------
-`height` | No | The height of this Bounds.
-`width` | No | The width of this Bounds.
-`depth` | No | The depth of this Bounds.
+`height` | No | The `height` of this Bounds.
+`width` | No | The `width` of this Bounds.
+`depth` | No | The `depth` of this Bounds.
 `maxX` | No | The `x` coordinate of the lower-right corner of this Bounds.
 `maxY` | No | The `y` coordinate of the lower-right corner of this Bounds.
 `maxZ` | No | The maximum `z` coordinate of this Bounds.
@@ -295,6 +334,8 @@ Extensions    |    Property   |  Description
 `contains()` | No | Tests if the interior of this `Bounds` entirely contains the specified rectangular area.
 `intersects()` | No | **Returns:** `true` if the interior of this Bounds and the interior of the rectangular area intersect.
 
+**Example:**
+
 ```kotlin
 class MainView: View() {
     override val root = scrollpane {
@@ -303,53 +344,77 @@ class MainView: View() {
 }
 ```
 
+SplitPane.
+--------
+********
+
 A control that has two or more sides, each separated by a divider, which can be dragged by the user to give more space to one of the sides, resulting in the other side shrinking by an equal amount.
-Nodes can be positioned horizontally next to each other, or stacked vertically. This can be controlled by setting the orientationProperty().
-The dividers in a SplitPane have the following behavior
-Dividers cannot overlap another divider
-Dividers cannot overlap a node.
-Dividers moving to the left/top will stop when the node's min size is reached.
-Dividers moving to the right/bottom will stop when the node's max size is reached.
+Nodes can be positioned horizontally next to each other, or stacked vertically.
+This can be controlled by setting the `orientationProperty()`.
+The dividers in a `SplitPane` have the following behavior
+* Dividers cannot overlap another divider
+* Dividers cannot overlap a node.
+* Dividers moving to the `left/top` will stop when the node's min size is reached.
+* Dividers moving to the `right/bottom` will stop when the node's max size is reached.
 
 Extensions    |    Property   |  Description
 -------     |    -------    |   --------
+`dividerPositions` | No | **Returns:** an array of double containing the position of each divider.
+`dividers` | Yes | **Returns** an unmodifiable list of all the dividers in this `SplitPane`.
+`items` | Yes | **Returns** an `ObservableList` which can be use to modify the contents of the `SplitPane`. The order the nodes are placed into this list will be the same order in the `SplitPane`.
+`orientation` | `orientationProperty()` | The orientation for the `SplitPane`.
+`setDividerPosition()` | No | Sets the position of the divider at the specified divider index. **Params:** `dividerIndex` – the index of the divider. `position` – the divider position, between `0.0` and `1.0` (inclusive).
+`setDividerPositions()` | No | Sets the position of the divider, **Params:** `positions` – the divider position, between `0.0` and `1.0` (inclusive).
+
+**Example:**
 
 ```kotlin
-class MainView:View() {
-    override val root = splitpane() {
-        this.dividerPositions
-        this.dividers
-        this.items
-        this.orientation
-        this.setDividerPosition(0,0.0)
-        this.setDividerPositions(0.0)
-
-        this.items.add(button("Button One"))
-        this.items.add(button("Button Two"))
-        this.setDividerPositions(0.3, 0.6, 0.9)
+class MainView: View() {
+    val list = listOf(Main(1,"adidas"),Main(2,"reebok")).observable()
+    override val root = splitpane {
+        items.add(tableview(list){
+            readonlyColumn("ID",Main::id)
+            readonlyColumn("MARK",Main::mark)
+        })
+        items.add(form {
+            fieldset(""){
+                field("id") {textfield {  }}
+                field("mark") {textfield {  }}
+            }
+        })
     }
 }
+class Main (val id:Int,val mark:String)
 ```
-A control that allows switching between a group of Tabs. Only one tab is visible at a time. Tabs are added to the TabPane by using the getTabs.
-Tabs in a TabPane can be positioned at any of the four sides by specifying the Side.
-A TabPane has two modes floating or recessed. Applying the styleclass STYLE_CLASS_FLOATING will change the TabPane mode to floating.
+
+**Output:**
+
+![](Picturs/splitpane.png)
+
+A control that allows switching between a group of Tabs. 
+Only one tab is visible at a time.
+Tabs are added to the TabPane by using the getTabs.
+Tabs in a `TabPane` can be positioned at any of the four sides by specifying the Side.
+A `TabPane` has two modes floating or recessed. 
+Applying the `styleclass` `STYLE_CLASS_FLOATING` will change the `TabPane` mode to floating.
 
 Extensions    |    Property   |  Description
 -------     |    -------    |   --------
+`tabs` | Yes | The tabs to display in this `TabPane`. Changing this `ObservableList` will immediately result in the `TabPane` updating to display the new contents of this `ObservableList`.
+`tabSelections` | No | ...
+`tabClosingPolicy` | `tabClosingPolicyProperty()` | The closing policy for the tabs.
+`tabMaxHeight` | `tabMaxHeightProperty()` | The maximum height of the tabs in the `TabPane`.
+`tabMaxWidth` | `tabMaxWidthProperty()` | The maximum width of the tabs in the `TabPane`.
+`tabMinHeight` | `tabMinHeightProperty()`| The minimum height of the tabs in the `TabPane`.
+`tabMinWidth` | `tabMinWidthProperty()` | The minimum width of the tabs in the `TabPane`.
+`side` | `sideProperty()` | The current position of the tabs in the `TabPane`. The default position for the tabs is `Side.Top`.
+`selectionModel` | `selectionModelProperty()` | Gets the model used for tab selection.
+`isRotateGraphic` | `rotateGraphicProperty()` | **Returns** true if the `graphic` inside a Tab is rotated. The default is `false`
 
 ```kotlin
 class MainView:View() {
     override val root = tabpane {
-       this.isRotateGraphic = true
-        this.selectionModel
-        this.side
-        this.tabClosingPolicy
-        this.tabMaxHeight
-        this.tabMaxWidth
-        this.tabMinHeight
-        this.tabMinWidth
-        this.tabs
-        this.tabSelections
+      
         this.tab("tab 1"){
         }
         this.tab("tab 2"){

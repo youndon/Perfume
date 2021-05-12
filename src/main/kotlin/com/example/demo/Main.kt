@@ -1,3 +1,4 @@
+import com.github.thomasnield.rxkotlinfx.tabSelections
 import javafx.geometry.Orientation
 import javafx.scene.layout.AnchorPane
 import javafx.scene.paint.Color
@@ -9,10 +10,7 @@ fun main() = launch<MainApp>()
 class MainApp: App(MainView::class)
 
 class MainView: View() {
-    override val root = scrollpane {
-        this.viewportBounds.run {
-            this.contains(0.0,0.0,0.0,0.0,0.0,0.0)
-            this.intersects(0.0,0.0,0.0,0.0,0.0,0.0)
-        }
+    override val root = tabpane {
+
     }
 }

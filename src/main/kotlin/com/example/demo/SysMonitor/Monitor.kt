@@ -17,35 +17,29 @@ sealed class Monitor {
 
     companion object {
         val sigar = Sigar()
-        val userPath = System.getProperty("user.path")
-        val shell = System.getenv("SHELL")
+        val userPath: String = System.getProperty("user.path")
+        val shell: String = System.getenv("SHELL")
         var lisCpu = arrayListOf(
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
-            arrayListOf(0L,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
+            (0L..60L).toList() as ArrayList,(0L..60L).toList() as ArrayList,(0..60L).toList() as ArrayList,(0..60L).toList() as ArrayList,
+            (0L..60L).toList() as ArrayList,(0L..60L).toList() as ArrayList,(0..60L).toList() as ArrayList,(0..60L).toList() as ArrayList,
         )
     }
 
     object SWAP {
-        fun total(): Long = (sigar.swap.total)
+        private fun total(): Long = (sigar.swap.total)
         fun used(): Long = (sigar.swap.used)
         fun free(): Long = (sigar.swap.free)
         fun freePerc() = (free().toDouble() * 100) / total()
         fun usedPerc() = (used().toDouble() * 100) / total()
 
         // format.
-        fun totalF() = Sigar.formatSize(total())
-        fun freeF() = Sigar.formatSize(free())
-        fun usedF() = Sigar.formatSize(used())
+        fun totalF(): String = Sigar.formatSize(total())
+        fun freeF(): String = Sigar.formatSize(free())
+        fun usedF(): String = Sigar.formatSize(used())
     }
 
     object MEM {
-        fun total(): Long = (sigar.mem.total)
+        private fun total(): Long = (sigar.mem.total)
         fun totalF(): String = Sigar.formatSize(sigar.mem.total)
         fun used(): String? = Sigar.formatSize(sigar.mem.used)
         fun actualUsed(): Long = (sigar.mem.actualUsed)
@@ -62,9 +56,9 @@ sealed class Monitor {
 
     object NETWORK {
         fun totalDownloads() = sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).rxBytes
-        fun totalDownloadsF() = Sigar.formatSize(sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).rxBytes)
+        fun totalDownloadsF(): String = Sigar.formatSize(sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).rxBytes)
         fun totalUploads() = sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).txBytes
-        fun totalUploadsF() = Sigar.formatSize(sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).txBytes)
+        fun totalUploadsF(): String = Sigar.formatSize(sigar.getNetInterfaceStat(sigar.netInterfaceList[1]).txBytes)
 
         fun traffic(): Pair<Long, Long> {
             var beforeLastDown: Long;
@@ -190,18 +184,18 @@ sealed class Monitor {
 
     object OS_INFO {
         // User
-        val hostName = InetAddress.getLocalHost().hostName
-        val userName = System.getenv("USER")
+        val hostName: String = InetAddress.getLocalHost().hostName
+        val userName: String = System.getenv("USER")
         // OS name
-        val os = OperatingSystem.getInstance().name
+        val os: String = OperatingSystem.getInstance().name
         // Description
-        val description = OperatingSystem.getInstance().vendor
+        val description: String = OperatingSystem.getInstance().vendor
         // Version
-        val version = OperatingSystem.getInstance().vendorVersion
+        val version: String = OperatingSystem.getInstance().vendorVersion
         // Kernel
-        val kernel = OperatingSystem.getInstance().version
+        val kernel: String = OperatingSystem.getInstance().version
         // Arch -> 64bit
-        val archName = ArchName.getName()
+        val archName: String = ArchName.getName()
         // DE -> gnome
         val de = System.getenv("XDG_MENU_PREFIX").toUpperCase()
         // UpTime
@@ -210,11 +204,11 @@ sealed class Monitor {
 //        }
 
         // Language
-        val lang = System.getenv("LANGUAGE")
+        val lang: String = System.getenv("LANGUAGE")
         // WindowingSystem -> x11
-        val ws = System.getenv("XDG_SESSION_TYPE")
+        val ws: String = System.getenv("XDG_SESSION_TYPE")
         // Home
-        val home = System.getenv("HOME")
+        val home: String = System.getenv("HOME")
 
         //CPU
         fun cpu(): String {
@@ -234,13 +228,13 @@ sealed class Monitor {
         }
 
         // DNS
-        val dns = sigar.netInfo.defaultGateway
+        val dns: String = sigar.netInfo.defaultGateway
         // NetMask
-        val netmask = sigar.netInterfaceConfig.netmask
+        val netmask: String = sigar.netInterfaceConfig.netmask
         // Hardware Address
-        val hwaddr = sigar.netInterfaceConfig.hwaddr
+        val hwaddr: String = sigar.netInterfaceConfig.hwaddr
         // IPv4
-        val address = sigar.netInterfaceConfig.address
+        val address: String = sigar.netInterfaceConfig.address
 
         fun command(command: String): StringBuffer {
             System.setProperty("java.io.tmpdir","$userPath/")
