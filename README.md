@@ -28,8 +28,15 @@ _Note_: I used style in the example, but you'll see more details later about sty
 
 ![](Pics/label.png)
 
+VBox/HBox.
+---------
+*********
+
+
 Button.
------
+------
+******
+
 A simple button control.
 The button control can contain text and/or a graphic.
 
@@ -63,8 +70,14 @@ class MainView: View() {
 
 ![](Pics/button.png)
 
-ButtonBar.
+ToolTip.
 -------
+******
+
+
+ButtonBar.
+--------
+********
 
 A `ButtonBar` is essentially a `HBox`, with the additional functionality for operating system specific button placement.
 In other words, any `Node` may be annotated (via the setButtonData(`Node`, `ButtonBar.ButtonData`) method, placed inside a `ButtonBar` (via the `getButtons()` list),
