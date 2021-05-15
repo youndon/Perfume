@@ -20,7 +20,7 @@ Extensions    |    Property   |  Description
 `name` | `nameProperty()` | The user displayable name for this `series`
 `node` | `nodeProperty()` | The node to display for this series. This is created by the chart if it uses nodes to represent the whole series. For example line chart uses this for the line but scatter chart does not use it. This node will be set as soon as the series is added to the chart. You can then get it to add mouse listeners etc.
 
-**data{}**
+## `data{}` Extensions. 
 
 Extensions    |    Property   |  Description
 -------     |    -------    |   --------
