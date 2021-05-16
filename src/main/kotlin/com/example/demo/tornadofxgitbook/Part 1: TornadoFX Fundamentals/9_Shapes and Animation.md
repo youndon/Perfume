@@ -179,7 +179,6 @@ The following helper functions can be used to constuct the path:
 
 `lineTo(x, y)`
 
-
 `arcTo(radiusX, radiusY, xAxisRotation, x, y, largeArcFlag, sweepFlag)`
 
 `closepath()`
