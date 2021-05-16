@@ -1,6 +1,9 @@
 
+# I.Shapes.
+
 Rectangle.
 ---------
+*********
 
 The Rectangle class defines a rectangle with the specified size and location.
 By default, the rectangle has sharp corners.
@@ -317,3 +320,5 @@ class MainView: View() {
 **Output:**
 
 ![](Picturs/path.png)
+
+# II.Animations.
