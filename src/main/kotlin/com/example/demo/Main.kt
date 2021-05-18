@@ -1,7 +1,5 @@
-import javafx.beans.property.LongProperty
-import javafx.beans.property.SimpleLongProperty
-import javafx.beans.property.SimpleStringProperty
-import javafx.beans.property.StringProperty
+import com.example.demo.CRUD.CRUD_User
+import javafx.beans.property.*
 import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeTableColumn
 import javafx.scene.control.cell.TreeItemPropertyValueFactory
@@ -13,65 +11,48 @@ fun main() = launch<MainApp>()
 class MainApp: App(MainView::class)
 
 class MainView:View() {
+    val model = UserModel(User())
     val list = listOf(
-        User(1, "dspdojfsf"),
-        User(2, "sdpfhsdpof")
+        User(1, "Coby Brain"),
+        User(2, "Maikel Jordan")
     ).observable()
-    override val root = vbox {
-
-        treetableview<File> {
-            this.root
-            this.columnResizePolicy
-            this.columns
-            this.comparator
-            this.editingCell
-            this.isEditable
-            this.expandedItemCount
-            this.fixedCellSize
-            this.focusModel
-            this.isShowRoot
-            this.isTableMenuButtonVisible
-            this.onScrollTo
-            this.onScrollToColumn
-            this.placeholder
-            this.onSort
-            this.rowFactory
-            this.selectionModel
-            this.sortMode
-            this.sortOrder
-            this.sortPolicy
-            this.treeColumn
-            this.visibleLeafColumns
-            this.column()
-            this.edit()
-            this.getRow()
-            this.sort()
-            this.getTreeItem(0)
-            this.getTreeItem()
-            this.getTreeItemLevel()
-            this.refresh()
-            this.resizeColumn()
-            this.scrollTo()
-            this.scrollToColumnIndex()
-            this.scrollToColumn()
-            selectedCell
-            selectedColumn
-            selectedItem
-            selectedValue
-            selectFirst()
-            addColumnInternal()
-            bindSelected()
-            nestedColumn()
-            onUserSelect()
-            populate()
-            resizeColumnsToFitContent()
-            multiSelect()
+    override val root = borderpane {
+        right = tableview(list) {
+        multiSelect(true)
+            readonlyColumn("ID",User::id)
+            column("FullName",User::fullName)
+            model.rebindOnChange(this) {
+                item = it ?: User()
+            }
         }
-
+        left = form{
+            fieldset("admin") {
+                field("ID") {
+                    textfield(model.bindid) {  }
+                }
+                field("FullName") {
+                    textfield(model.bindfullname) {  }
+                }
+            }
+        }
     }
 }
 
-class User(var id:Int,val fullName:String)
+class User(id:Int=0,fullName:String?=null){
+     val simpleIdProperty = SimpleIntegerProperty(id)
+    var id by simpleIdProperty
+     val simpleFullNameProperty = SimpleStringProperty(fullName)
+    var fullName: String by simpleFullNameProperty
+}
+
+class UserModel(user:User?):ItemViewModel<User>(user){
+    val bindid = bind(User::simpleIdProperty)
+    val bindfullname = bind(User::simpleFullNameProperty)
+}
+
+
+
+
 
 class Files {
     private var name: StringProperty? = null
