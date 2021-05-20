@@ -66,11 +66,58 @@ Extensions    |    Property   |  Description
 **Example:**
 
 ```kotlin
-
+class MainView:View() {
+    val model = UserModel(User())
+    var userTable: TableView<User> by singleAssign()
+    val list = listOf(
+        User(1, "Coby Brain"),
+        User(2, "Maikel Jordan")
+    ).observable()
+    override val root = borderpane {
+        right {
+            userTable = tableview(list) {
+                multiSelect(true)
+                readonlyColumn("ID", User::id)
+                column("FullName", User::fullName)
+                model.rebindOnChange(this) {
+                    item = it ?: User()
+                }
+            }
+        }
+        left {
+            form {
+                fieldset("admin") {
+                    field("ID") {
+                        textfield(model.bindid) {
+                        }
+                    }
+                    field("FullName") {
+                        textfield(model.bindfullname) { }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+```kotlin
+class User(id:Int=0,fullName:String?=null){
+     val simpleIdProperty = SimpleIntegerProperty(id)
+    var id by simpleIdProperty
+     val simpleFullNameProperty = SimpleStringProperty(fullName)
+    var fullName: String by simpleFullNameProperty
+}
+```
+```kotlin
+class UserModel(user:User?):ItemViewModel<User>(user) {
+  val bindid = bind(User::simpleIdProperty)
+  val bindfullname = bind(User::simpleFullNameProperty)
+}
 ```
 
 **Output:**
 
+![](Picturs/tableview.png)
 
 TreeTableView.
 -------------
