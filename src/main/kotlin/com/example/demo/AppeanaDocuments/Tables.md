@@ -185,7 +185,8 @@ Extensions    |    Property   |  Description
 `populate()` | No | ...
 `resizeColumnsToFitContent()` | No | ...
 `multiSelect()` | No | ...
-
+Example:
 ```kotlin
 
 ``` 
+Output:

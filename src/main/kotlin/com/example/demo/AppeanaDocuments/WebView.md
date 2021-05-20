@@ -1,3 +1,6 @@
+WebView.
+-------
+
 WebView is a Node that manages a WebEngine and displays its content.
 The associated `WebEngine` is created automatically at construction time and cannot be changed afterwards.
 `WebView` handles mouse and some keyboard events, and manages scrolling automatically, so there's no need to put it into a `ScrollPane`.
