@@ -75,35 +75,34 @@ class MainView:View() {
                         this.createDocument() // Params: namespaceURI – The namespace URI of the document element to create or null. qualifiedName – The qualified name of the document element to be created or null. doctype – The type of document to be created or null. When doctype is not null, its Node.ownerDocument attribute is set to the document being created. Returns: A new Document object with its document element. If the NamespaceURI, qualifiedName, and doctype are null, the returned Document is empty with no document element.
                         this.createDocumentType() // Creates an empty DocumentType node. Entity declarations and notations are not made available. Entity reference expansions and default attribute additions do not occur. Params: qualifiedName – The qualified name of the document type to be created. publicId – The external subset public identifier. systemId – The external subset system identifier.
                     }
-                    this.inputEncoding
-                    this.strictErrorChecking
-                    this.xmlEncoding
-                    this.xmlStandalone
-                    this.xmlVersion
-                    this.adoptNode()
-                    this.createAttribute()
-                    this.createAttributeNS()
-                    this.createCDATASection()
-                    this.createComment()
-                    this.createDocumentFragment()
-                    this.createElement()
-                    this.createElementNS()
-                    this.createEntityReference()
-                    this.createProcessingInstruction()
-                    this.createTextNode()
-                    this.getElementById()
-                    this.getElementsByTagName()
-                    this.getElementsByTagNameNS()
-                    this.importNode()
-                    this.normalizeDocument()
-                    this.renameNode()
+                    this.inputEncoding // An attribute specifying the encoding used for this document at the time of the parsing. This is null when it is not known, such as when the Document was created in memory.
+                    this.strictErrorChecking // An attribute specifying whether error checking is enforced or not. When set to false, the implementation is free to not test every possible error case normally defined on DOM operations, and not raise any DOMException on DOM operations or report errors while using Document
+                    this.xmlEncoding // An attribute specifying, as part of the [XML declaration] , the encoding of this document. This is null when unspecified or when it is not known, such as when the Document was created in memory.
+                    this.xmlStandalone // An attribute specifying, as part of the [XML declaration] , whether this document is standalone. This is false when unspecified.
+                    this.xmlVersion // An attribute specifying, as part of the [XML declaration] , the version number of this document. If there is no declaration and if this document supports the "XML" feature, the value is "1.0". If this document does not support the "XML" feature, the value is always null.
+                    this.adoptNode() // Attempts to adopt a node from another document to this document. If supported, it changes the ownerDocument of the source node, its children, as well as the attached attribute nodes if there are any. Params: source – The node to move into this document.
+                    this.createAttribute() // Creates an Attr of the given name. Note that the Attr instance can then be set on an Element using the setAttributeNode method. To create an attribute with a qualified name and namespace URI, use the createAttributeNS method. Params: name – The name of the attribute.
+                    this.createAttributeNS() // Creates an attribute of the given qualified name and namespace URI. Per [XML Namespaces ] , applications must use the value null as the namespaceURI parameter for methods if they wish to have no namespace. Params: namespaceURI – The namespace URI of the attribute to create. qualifiedName – The qualified name of the attribute to instantiate.
+                    this.createCDATASection() // Creates a CDATASection node whose value is the specified string. Params: data – The data for the CDATASection contents.
+                    this.createComment() // Creates a Comment node given the specified string. Params: data – The data for the node.
+                    this.createDocumentFragment() // Creates an empty DocumentFragment object.
+                    this.createElement() // Creates an element of the type specified. Note that the instance returned implements the Element interface, so attributes can be specified directly on the returned object. Params: tagName – The name of the element type to instantiate. For XML, this is case-sensitive, otherwise it depends on the case-sensitivity of the markup language in use.
+                    this.createElementNS() // Creates an element of the given qualified name and namespace URI. Per [XML Namespaces ] , applications must use the value null as the namespaceURI parameter for methods if they wish to have no namespace. Params: namespaceURI – The namespace URI of the element to create. qualifiedName – The qualified name of the element type to instantiate.
+                    this.createEntityReference() // Creates an EntityReference object. In addition, if the referenced entity is known, the child list of the EntityReference node is made the same as that of the corresponding Entity node. Params: name – The name of the entity to reference.Unlike Document.createElementNS or Document.createAttributeNS, no namespace well-formed checking is done on the entity name.
+                    this.createProcessingInstruction() // Creates a ProcessingInstruction node given the specified name and data strings. Params: target – The target part of the processing instruction.Unlike Document.createElementNS or Document.createAttributeNS, no namespace well-formed checking is done on the target name.
+                    this.createTextNode() // Creates a Text node given the specified string. Params: data – The data for the node.
+                    this.getElementById() // Returns the Element that has an ID attribute with the given value. Params: elementId – The unique id value for an element.
+                    this.getElementsByTagName() // Returns a NodeList of all the Elements in document order with a given tag name and are contained in the document. Params: tagname – The name of the tag to match on. The special value "*" matches all tags. For XML, the tagname parameter is case-sensitive, otherwise it depends on the case-sensitivity of the markup language in use.
+                    this.getElementsByTagNameNS() // Returns a NodeList of all the Elements with a given local name and namespace URI in document order. Params: namespaceURI – The namespace URI of the elements to match on. The special value "*" matches all namespaces. localName – The local name of the elements to match on. The special value "*" matches all local names.
+                    this.importNode() // Imports a node from another document to this document, without altering or removing the source node from the original document; this method creates a new copy of the source node. Params: importedNode – The node to import. deep – If true, recursively import the subtree under the specified node; if false, import only the node itself, as explained above. This has no effect on nodes that cannot have any children, and on Attr, and EntityReference nodes.                    this.normalizeDocument()
+                    this.renameNode() // Rename an existing node of type ELEMENT_NODE or ATTRIBUTE_NODE. When possible this simply changes the name of the given node, otherwise this creates a new node with the specified name and replaces the existing node with the new node as described below. Params: n – The node to rename. namespaceURI – The new namespace URI. qualifiedName – The new qualified name.
                 }
-                this.createPopupHandler
-                this.confirmHandler
-                this.isJavaScriptEnabled
-                this.loadWorker.run {
-                    this.exception.run {
-                        this.localizedMessage
+                this.createPopupHandler // Returns the JavaScript popup handler.
+                this.confirmHandler // Returns the JavaScript confirm handler.
+                this.isJavaScriptEnabled // Specifies whether JavaScript execution is enabled.
+                this.loadWorker.run { // A Worker is an object which performs some work in one or more background threads, and who's state is observable and available to JavaFX applications and is usable from the main JavaFX Application thread. This interface is primarily implemented by both Task and Service, providing a common API among both classes which makes it easier for libraries and frameworks to provide workers which work well when developing user interfaces.
+                    this.exception.run { // The Throwable class is the superclass of all errors and exceptions in the Java language.
+                        this.localizedMessage // just put those methods in without showing any description.
                         this.stackTrace
                         this.suppressed
                         this.cause
@@ -113,31 +112,31 @@ class MainView:View() {
                         this.initCause()
                         this.printStackTrace()
                     }
-                    this.isRunning
-                    this.message
-                    this.progress
-                    this.state
-                    this.title
-                    this.totalWork
-                    this.value
-                    this.workDone
-                    this.cancel()
+                    this.isRunning // True if the state is either SCHEDULED or RUNNING. When binding a Worker to a javafx.scene.control.ProgressIndicator, you will typically bind the visibility of the ProgressIndicator to the Worker's running property, and the progress of the ProgressIndicator to the Worker's progress property.
+                    this.message // Gets a message associated with the current state of this Worker. This may be something such as "Processing image 1 of 3", for example.
+                    this.progress // Indicates the current progress of this Worker in terms of percent complete. A value between zero and one indicates progress toward completion.
+                    this.state // Specifies the current state of this Worker. The initial value is State.READY. A Task may be restarted, in which case it will progress from one of these end states (SUCCEEDED, CANCELLED, or FAILED) back to READY and then immediately to SCHEDULED and RUNNING.
+                    this.title // An optional title that should be associated with this Worker. This may be something such as "Modifying Images".
+                    this.totalWork // Indicates a maximum value for the workDoneProperty property. The totalWork will either be -1 (indicating that the amount of work to do is indeterminate), or it will be a non-zero value less than or equal to Double.MAX_VALUE.
+                    this.value // Specifies the value, or result, of this Worker.
+                    this.workDone // Indicates the current amount of work that has been completed. Zero or a positive value indicate progress toward completion.
+                    this.cancel() // Terminates execution of this Worker. Calling this method will either remove this Worker from the execution queue or stop execution.
                 }
-                this.location
-                this.onAlert
-                this.onError
-                this.onResized
-                this.onStatusChanged
-                this.onVisibilityChanged
-                this.title
-                this.userAgent
-                this.userDataDirectory
-                this.userStyleSheetLocation
-                this.executeScript()
-                this.load()
-                this.loadContent()
-                this.print()
-                this.reload()
+                this.location // Returns URL of the current Web page. If the current page has no URL, returns an empty String.
+                this.onAlert // Returns the JavaScript alert handler.
+                this.onError // The event handler called when an error occurs.
+                this.onResized // Returns the JavaScript window resize handler.
+                this.onStatusChanged // Returns the JavaScript status handler.
+                this.onVisibilityChanged // Returns the JavaScript window visibility handler.
+                this.title // Returns title of the current Web page. If the current page has no title, returns null.
+                this.userAgent // Specifies user agent ID string. This string is the value of the User-Agent HTTP header.
+                this.userDataDirectory // Specifies the directory to be used by this WebEngine to store local user data.
+                this.userStyleSheetLocation // Location of the user stylesheet as a string URL. This should be a local URL, i.e. either 'data:', 'file:', or 'jar:'. Remote URLs are not allowed for security reasons.
+                this.executeScript() // Executes a script in the context of the current page.
+                this.load() // Loads a Web page into this engine. This method starts asynchronous loading and returns immediately. Params: url – URL of the web page to load
+                this.loadContent() // Loads the given content directly. This method is useful when you have content composed in memory, or loaded from some system which cannot be reached via a URL (for example, the SVG text may have come from a database).
+                this.print() // Prints the current Web page using the given printer job. This method does not modify the state of the job, nor does it call PrinterJob.endJob, so the job may be safely reused afterwards. Params: job – printer job used for printing
+                this.reload() // Reloads the current page, whether loaded from URL or directly from a String in one of the loadContent methods.
             }
         }
     }
