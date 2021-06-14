@@ -10,7 +10,7 @@ import tornadofx.*
 class CalculatorView() : UIComponent() {
     // the buttons:
     val list = listOf(
-        listOf("AV", "(", ")", "AC"),
+        listOf("AV", "(", ")", "C"),
         listOf("7", "8", "9", "/"),
         listOf("4", "5", "6", "*"),
         listOf("1", "2", "3", "-"),
@@ -31,7 +31,7 @@ class CalculatorView() : UIComponent() {
             // to filter type of input(Numbers & MathematicsSymbols) only.
             textProperty().onChange {
                 if (!text.matches("\\d*".toRegex())) {
-                    text = text.replace("[^\\d+*/\\-().^%e]".toRegex(), "")
+                    text = text.replace("[^\\d+*/\\-().]".toRegex(),"")
                 }
             }
         }
